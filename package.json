@@ -45,5 +45,8 @@
   },
   "peerDependencies": {
     "react": ">=0.13.3 || ^0.14.0-beta3"
+  },
+  "dependencies": {
+    "react-mixin": "^1.7.0"
   }
 }
