@@ -4,6 +4,27 @@ React JSON Viewer Component, Extracted from [redux-devtools](https://github.com/
 
 ![](https://img.shields.io/npm/v/react-json-tree.svg)
 
+### Usage
+
+```js
+import JSONTree from 'react-json-tree'
+
+// Inside a React component:
+const json = {
+  array: [1, 2, 3],
+  bool: true,
+  object: {
+    foo: 'bar'
+  }  
+}
+
+<JSONTree data={ json } />
+```
+
+Result:
+
+![](http://cl.ly/image/0P2j2n0n3Y24/screenshot%202015-08-24%20at%207.37.18%20PM.png)
+
 ### Credits
 
 - All credits to [Dave Vedder](http://www.eskimospy.com/) ([veddermatic@gmail.com](mailto:veddermatic@gmail.com)), who wrote the original code as [JSONViewer](https://bitbucket.org/davevedder/react-json-viewer/).
