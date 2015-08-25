@@ -7,6 +7,7 @@ import React from 'react';
 import objectType from './obj-type';
 import JSONObjectNode from './JSONObjectNode';
 import JSONArrayNode from './JSONArrayNode';
+import solarized from './themes/solarized';
 
 const styles = {
     tree: {
@@ -29,6 +30,10 @@ export default class JSONTree extends React.Component {
       React.PropTypes.array,
       React.PropTypes.object
     ]).isRequired
+  };
+
+  static defaultProps = {
+    theme: solarized
   };
 
   constructor(props) {
