@@ -1,4 +1,4 @@
 lib
 **/node_modules
 **/webpack.config.js
-examples/**/server.j
+examples/**/server.js
