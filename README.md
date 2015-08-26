@@ -71,6 +71,12 @@ const theme = {
 - [Iterable support](https://github.com/gaearon/redux-devtools/pull/79) thanks to [Daniel K](https://github.com/FredyC).
 - npm package created by [Shu Uesugi](http://github.com/chibicode) ([shu@chibicode.com](mailto:shu@chibicode.com)) per [this issue](https://github.com/gaearon/redux-devtools/issues/85).
 
+### Similar Libraries
+
+- [react-treeview](https://github.com/chenglou/react-treeview)
+- [react-json-inspector](https://github.com/Lapple/react-json-inspector)
+- [react-object-inspector](https://github.com/xyc/react-object-inspector)
+
 ### License
 
 MIT
