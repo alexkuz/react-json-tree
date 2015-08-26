@@ -38,7 +38,9 @@ export default class App extends Component {
       <div>
         <JSONTree data={ data } />
         <br />
-        <JSONTree data={ data } theme={ theme } />
+        <div style={{ backgroundColor: theme.base00 }}>
+          <JSONTree data={ data } theme={ theme } />
+        </div>
       </div>
     );
   }

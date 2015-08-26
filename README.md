@@ -57,12 +57,14 @@ const theme = {
   base0F: '#cc6633'
 };
 
-<JSONTree data={ data } theme={ theme } />
+<div style={{ backgroundColor: theme.base00 }}>
+  <JSONTree data={ data } theme={ theme } />
+</div>
 ```
 
-#### Result (Monokai Theme):
+#### Result (Monokai theme, dark background):
 
-![](http://cl.ly/image/2N0a0Z2R3B0z/screenshot%202015-08-26%20at%2010.28.40%20AM.png)
+![](http://cl.ly/image/330o2L1J3V0h/screenshot%202015-08-26%20at%2010.48.24%20AM.png)
 
 ### Credits
 
