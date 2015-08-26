@@ -8,6 +8,7 @@ React JSON Viewer Component, Extracted from [redux-devtools](https://github.com/
 
 ```js
 import JSONTree from 'react-json-tree'
+// If you're using Immutable.js: `npm i --save immutable`
 import { Map } from 'immutable'
 
 // Inside a React component:
