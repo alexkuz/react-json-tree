@@ -1,6 +1,7 @@
+/*eslint new-cap: [2, {"capIsNewExceptions": ["Map"]}]*/
 import React, { Component } from 'react';
 import JSONTree from 'react-json-tree';
-import { Map } from 'immutable'
+import { Map } from 'immutable';
 
 export default class App extends Component {
   render() {
