@@ -8,14 +8,14 @@ import JSONNumberNode from './JSONNumberNode';
 import JSONBooleanNode from './JSONBooleanNode';
 import JSONNullNode from './JSONNullNode';
 
-export default function(key, value, prevValue, theme) {
+export default function(key, value, prevValue, theme, initialExpanded = false) {
   const nodeType = objType(value);
   if (nodeType === 'Object') {
-    return <JSONObjectNode data={value} previousData={prevValue} theme={theme} keyName={key} key={key} />;
+    return <JSONObjectNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} />;
   } else if (nodeType === 'Array') {
-    return <JSONArrayNode data={value} previousData={prevValue} theme={theme} keyName={key} key={key} />;
+    return <JSONArrayNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} />;
   } else if (nodeType === 'Iterable') {
-    return <JSONIterableNode data={value} previousData={prevValue} theme={theme} keyName={key} key={key} />;
+    return <JSONIterableNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} />;
   } else if (nodeType === 'String') {
     return <JSONStringNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
   } else if (nodeType === 'Number') {
