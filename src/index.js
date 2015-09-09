@@ -5,6 +5,7 @@
 
 import React from 'react';
 import objectType from './obj-type';
+import grabNode from './grab-node';
 import JSONObjectNode from './JSONObjectNode';
 import JSONArrayNode from './JSONArrayNode';
 import solarized from './themes/solarized';
@@ -42,13 +43,8 @@ export default class JSONTree extends React.Component {
 
   render() {
     const nodeType = objectType(this.props.data);
-    let rootNode = false;
     const keyName = this.props.keyName || 'root';
-    if (nodeType === 'Object') {
-      rootNode = <JSONObjectNode theme={this.props.theme} data={this.props.data} previousData={this.props.previousData} keyName={keyName} initialExpanded={true} />;
-    } else if (nodeType === 'Array') {
-      rootNode = <JSONArrayNode theme={this.props.theme} data={this.props.data} previousData={this.props.previousData} initialExpanded={true} keyName={keyName} />;
-    }
+    const rootNode = grabNode(keyName, this.props.data, this.props.previousData, this.props.theme, true);
     return (
       <ul style={{
         ...styles.tree,
