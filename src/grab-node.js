@@ -7,6 +7,7 @@ import JSONStringNode from './JSONStringNode';
 import JSONNumberNode from './JSONNumberNode';
 import JSONBooleanNode from './JSONBooleanNode';
 import JSONNullNode from './JSONNullNode';
+import JSONDateNode from './JSONDateNode';
 
 export default function(key, value, prevValue, theme, initialExpanded = false) {
   const nodeType = objType(value);
@@ -22,8 +23,10 @@ export default function(key, value, prevValue, theme, initialExpanded = false) {
     return <JSONNumberNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
   } else if (nodeType === 'Boolean') {
     return <JSONBooleanNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
-  } else if (nodeType === 'Null') {
+  } else if (nodeType === 'Date') {
+    return <JSONDateNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
+  }else if (nodeType === 'Null') {
     return <JSONNullNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
-  }
+  } 
   return false;
 }

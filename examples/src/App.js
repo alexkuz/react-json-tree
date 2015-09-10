@@ -8,6 +8,7 @@ export default class App extends Component {
     const data = {
       array: [1, 2, 3],
       bool: true,
+      date: new Date(),
       object: {
         foo: 'bar'
       },
@@ -33,6 +34,7 @@ export default class App extends Component {
       base0D: '#66d9ef',
       base0E: '#ae81ff',
       base0F: '#cc6633'
+      
     };
 
     return (
