@@ -8,7 +8,7 @@ export default class App extends Component {
     const data = {
       array: [1, 2, 3],
       bool: true,
-      date: Date(),
+      date: new Date(),
       object: {
         foo: 'bar'
       },

@@ -32,7 +32,7 @@ export default class JSONDateNode extends React.Component {
         }}>
           {this.props.keyName}:
         </label>
-        <span style={{ color: this.props.theme.base0B }}>"{this.props.value}"</span>
+        <span style={{ color: this.props.theme.base0B }}>{this.props.value.toISOString()}</span>
       </li>
     );
   }
