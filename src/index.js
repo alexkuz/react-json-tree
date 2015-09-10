@@ -4,10 +4,7 @@
 // port by Daniele Zannotti http://www.github.com/dzannotti <dzannotti@me.com>
 
 import React from 'react';
-import objectType from './obj-type';
 import grabNode from './grab-node';
-import JSONObjectNode from './JSONObjectNode';
-import JSONArrayNode from './JSONArrayNode';
 import solarized from './themes/solarized';
 
 const styles = {
@@ -42,7 +39,6 @@ export default class JSONTree extends React.Component {
   }
 
   render() {
-    const nodeType = objectType(this.props.data);
     const keyName = this.props.keyName || 'root';
     const rootNode = grabNode(keyName, this.props.data, this.props.previousData, this.props.theme, true);
     return (
