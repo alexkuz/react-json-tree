@@ -34,7 +34,6 @@ export default class App extends Component {
       base0D: '#66d9ef',
       base0E: '#ae81ff',
       base0F: '#cc6633'
-      
     };
 
     return (
