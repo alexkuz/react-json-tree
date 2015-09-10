@@ -22,8 +22,10 @@ export default function(key, value, prevValue, theme, initialExpanded = false) {
     return <JSONNumberNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
   } else if (nodeType === 'Boolean') {
     return <JSONBooleanNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
-  } else if (nodeType === 'Null') {
+  } else if (nodeType === 'Date') {
     return <JSONNullNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
-  }
+  }else if (nodeType === 'Null') {
+    return <JSONNullNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
+  } 
   return false;
 }
