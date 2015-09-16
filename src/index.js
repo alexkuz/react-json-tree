@@ -22,6 +22,8 @@ const styles = {
     }
 };
 
+const getEmptyStyle = () => ({});
+
 export default class JSONTree extends React.Component {
   static propTypes = {
     data: React.PropTypes.oneOfType([
@@ -31,7 +33,13 @@ export default class JSONTree extends React.Component {
   };
 
   static defaultProps = {
-    theme: solarized
+    theme: solarized,
+    getArrowStyle: getEmptyStyle,
+    getListStyle: getEmptyStyle,
+    getPreviewStyle: getEmptyStyle,
+    getLabelStyle: getEmptyStyle,
+    getValueStyle: getEmptyStyle,
+    getItemString: (type, data, itemString, itemType) => <span>{itemType} {itemString}</span>
   };
 
   constructor(props) {
@@ -40,7 +48,14 @@ export default class JSONTree extends React.Component {
 
   render() {
     const keyName = this.props.keyName || 'root';
-    const rootNode = grabNode(keyName, this.props.data, this.props.previousData, this.props.theme, true);
+    const getStyles = {
+      getArrowStyle: this.props.getArrowStyle,
+      getListStyle: this.props.getListStyle,
+      getPreviewStyle: this.props.getPreviewStyle,
+      getLabelStyle: this.props.getLabelStyle,
+      getValueStyle: this.props.getValueStyle
+    };
+    const rootNode = grabNode(keyName, this.props.data, this.props.previousData, this.props.theme, getStyles, this.props.getItemString, true);
     return (
       <ul style={{
         ...styles.tree,

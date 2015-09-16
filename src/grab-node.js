@@ -9,24 +9,24 @@ import JSONBooleanNode from './JSONBooleanNode';
 import JSONNullNode from './JSONNullNode';
 import JSONDateNode from './JSONDateNode';
 
-export default function(key, value, prevValue, theme, initialExpanded = false) {
+export default function(key, value, prevValue, theme, styles, getItemString, initialExpanded = false) {
   const nodeType = objType(value);
   if (nodeType === 'Object') {
-    return <JSONObjectNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} />;
+    return <JSONObjectNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} styles={styles} getItemString={getItemString} />;
   } else if (nodeType === 'Array') {
-    return <JSONArrayNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} />;
+    return <JSONArrayNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} styles={styles} getItemString={getItemString} />;
   } else if (nodeType === 'Iterable') {
-    return <JSONIterableNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} />;
+    return <JSONIterableNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} styles={styles} getItemString={getItemString} />;
   } else if (nodeType === 'String') {
-    return <JSONStringNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
+    return <JSONStringNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
   } else if (nodeType === 'Number') {
-    return <JSONNumberNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
+    return <JSONNumberNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
   } else if (nodeType === 'Boolean') {
-    return <JSONBooleanNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
+    return <JSONBooleanNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
   } else if (nodeType === 'Date') {
-    return <JSONDateNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
+    return <JSONDateNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
   } else if (nodeType === 'Null') {
-    return <JSONNullNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} />;
+    return <JSONNullNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
   }
   return false;
 }

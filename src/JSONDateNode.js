@@ -28,11 +28,15 @@ export default class JSONDateNode extends React.Component {
       <li style={{ ...styles.base, backgroundColor }} onClick={::this.handleClick}>
         <label style={{
           ...styles.label,
-          color: this.props.theme.base0D
+          color: this.props.theme.base0D,
+          ...this.props.styles.getLabelStyle('Date', true)
         }}>
           {this.props.keyName}:
         </label>
-        <span style={{ color: this.props.theme.base0B }}>{this.props.value.toISOString()}</span>
+        <span style={{
+          color: this.props.theme.base0B,
+          ...this.props.styles.getValueStyle('Date', true)
+        }}>{this.props.value.toISOString()}</span>
       </li>
     );
   }
