@@ -116,7 +116,7 @@ export default class JSONObjectNode extends React.Component {
         </label>
         <span style={{
           ...spanStyle,
-          ...this.props.styles.getPreviewStyle('Object', this.state.expanded)
+          ...this.props.styles.getItemStringStyle('Object', this.state.expanded)
         }} onClick={::this.handleClick}>
           {this.getItemString(<span style={styles.spanType}>&#123;&#125;</span>)}
         </span>

@@ -36,7 +36,7 @@ export default class JSONTree extends React.Component {
     theme: solarized,
     getArrowStyle: getEmptyStyle,
     getListStyle: getEmptyStyle,
-    getPreviewStyle: getEmptyStyle,
+    getItemStringStyle: getEmptyStyle,
     getLabelStyle: getEmptyStyle,
     getValueStyle: getEmptyStyle,
     getItemString: (type, data, itemString, itemType) => <span>{itemType} {itemString}</span>
@@ -51,7 +51,7 @@ export default class JSONTree extends React.Component {
     const getStyles = {
       getArrowStyle: this.props.getArrowStyle,
       getListStyle: this.props.getListStyle,
-      getPreviewStyle: this.props.getPreviewStyle,
+      getItemStringStyle: this.props.getItemStringStyle,
       getLabelStyle: this.props.getLabelStyle,
       getValueStyle: this.props.getValueStyle
     };

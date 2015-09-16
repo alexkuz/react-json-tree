@@ -115,7 +115,7 @@ export default class JSONArrayNode extends React.Component {
         </label>
         <span style={{
           ...spanStyle,
-          ...this.props.styles.getPreviewStyle('Array', this.state.expanded)
+          ...this.props.styles.getItemStringStyle('Array', this.state.expanded)
         }} onClick={::this.handleClick}>
           {this.getItemString(<span style={styles.spanType}>[]</span>)}
         </span>

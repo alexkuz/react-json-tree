@@ -133,7 +133,7 @@ export default class JSONIterableNode extends React.Component {
         </label>
         <span style={{
           ...spanStyle,
-          ...this.props.styles.getPreviewStyle('Iterable', this.state.expanded)
+          ...this.props.styles.getItemStringStyle('Iterable', this.state.expanded)
         }} onClick={::this.handleClick}>
           {this.getItemString(<span style={styles.spanType}>()</span>)}
         </span>
