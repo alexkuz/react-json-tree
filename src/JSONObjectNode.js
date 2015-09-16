@@ -80,7 +80,7 @@ export default class JSONObjectNode extends React.Component {
       const len = Object.keys(this.props.data).length;
       this.itemString = len + ' key' + (len !== 1 ? 's' : '');
     }
-    return this.props.getItemString('Object', this.props.data, this.itemString, itemType);
+    return this.props.getItemString('Object', this.props.data, itemType, this.itemString);
   }
 
   render() {

@@ -96,7 +96,7 @@ export default class JSONIterableNode extends React.Component {
       }
       this.itemString = count + ' entr' + (count !== 1 ? 'ies' : 'y');
     }
-    return this.props.getItemString('Iterable', this.props.data, this.itemString, itemType);
+    return this.props.getItemString('Iterable', this.props.data, itemType, this.itemString);
   }
 
   render() {

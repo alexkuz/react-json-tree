@@ -39,7 +39,7 @@ export default class JSONTree extends React.Component {
     getItemStringStyle: getEmptyStyle,
     getLabelStyle: getEmptyStyle,
     getValueStyle: getEmptyStyle,
-    getItemString: (type, data, itemString, itemType) => <span>{itemType} {itemString}</span>
+    getItemString: (type, data, itemType, itemString) => <span>{itemType} {itemString}</span>
   };
 
   constructor(props) {
