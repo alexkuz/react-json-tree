@@ -8,7 +8,9 @@ const styles = {
     paddingTop: 3,
     paddingBottom: 3,
     paddingRight: 0,
-    marginLeft: 14
+    marginLeft: 14,
+    WebkitUserSelect: 'text',
+    MozUserSelect: 'text'
   },
   label: {
     display: 'inline-block',
