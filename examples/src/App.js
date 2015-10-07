@@ -36,12 +36,32 @@ export default class App extends Component {
       base0F: '#cc6633'
     };
 
+    const getStyle = (type, expanded) => {};
+    const getItemString = (type, data, itemType, itemString) => (<span> // {type}</span>);
+
     return (
       <div>
         <JSONTree data={ data } />
         <br />
+        <h3>Dark Theme</h3>
         <div style={{ backgroundColor: theme.base00 }}>
           <JSONTree data={ data } theme={ theme } />
+        </div>
+        <br />
+        <h3>Style Customization</h3>
+        <ul>
+          <li>Text changes between uppercase/lowercase based on the expanded state.</li>
+          <li>The labels of objects, arrays, and iterables are customized as "// type".</li>
+          <li>See code for details.</li>
+        </ul>
+        <div>
+          <JSONTree data={ data } theme={ theme }
+                    getArrowStyle={ getStyle }
+                    getItemStringStyle={ getStyle }
+                    getListStyle={ getStyle }
+                    getLabelStyle={ getStyle }
+                    getValueStyle={ getStyle }
+                    getItemString={ getItemString }/>
         </div>
       </div>
     );
