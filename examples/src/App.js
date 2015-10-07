@@ -36,7 +36,7 @@ export default class App extends Component {
       base0F: '#cc6633'
     };
 
-    const getStyle = (type, expanded) => {};
+    const getStyle = (type, expanded) => (expanded ? { textTransform: 'uppercase' } : { textTransform: 'lowercase' });
     const getItemString = (type, data, itemType, itemString) => (<span> // {type}</span>);
 
     return (
