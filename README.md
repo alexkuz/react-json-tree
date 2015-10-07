@@ -67,6 +67,56 @@ const theme = {
 
 ![](http://cl.ly/image/330o2L1J3V0h/screenshot%202015-08-26%20at%2010.48.24%20AM.png)
 
+### Customization
+
+#### Customize CSS
+
+You can pass the following properties to customize styling (all optional):
+
+```js
+<JSONTree getArrowStyle={(type, expanded) => ({})}
+    getItemStringStyle={(type, expanded) => ({})}
+    getListStyle={(type, expanded) => ({})}
+    getLabelStyle={(type, expanded) => ({})}
+    getValueStyle={(type, expanded) => ({})} />
+```
+
+Here `type` is a string representing type of data, `expanded` is a current state for expandable items. Each function returns a style object, which extends corresponding default style.
+
+For example, if you pass the following function:
+
+```js
+const getStyle = (type, expanded) =>
+  (expanded ? { textTransform: 'uppercase' } :
+              { textTransform: 'lowercase' });
+```
+
+Then expanded nodes will all be in uppercase:
+
+![](http://cl.ly/image/460Y0P3C453Q/screenshot%202015-10-07%20at%203.38.33%20PM.png)
+
+#### Customize Labels for Arrays, Objects, and Iterables
+
+You can pass `getItemString` to customize the way arrays, objects, and iterable nodes are displayed (optional).
+
+By default, it'll be:
+
+```js
+<JSONTree getArrowStyle={(type, data, itemType, itemString)
+  => <span>{itemType} {itemString}</span>}
+```
+
+But if you pass the following:
+
+```js
+const getItemString = (type, data, itemType, itemString)
+  => (<span> // {type}</span>);
+```
+
+Then the preview of child elements now look like this:
+
+![](http://cl.ly/image/1J1a0b0T0K3c/screenshot%202015-10-07%20at%203.44.31%20PM.png)
+
 ### Credits
 
 - All credits to [Dave Vedder](http://www.eskimospy.com/) ([veddermatic@gmail.com](mailto:veddermatic@gmail.com)), who wrote the original code as [JSONViewer](https://bitbucket.org/davevedder/react-json-viewer/).

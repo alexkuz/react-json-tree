@@ -30,11 +30,15 @@ export default class JSONNullNode extends React.Component {
       <li style={{ ...styles.base, backgroundColor }} onClick={::this.handleClick}>
         <label style={{
           ...styles.label,
-          color: this.props.theme.base0D
+          color: this.props.theme.base0D,
+          ...this.props.styles.getLabelStyle('Null', true)
         }}>
           {this.props.keyName}:
         </label>
-        <span style={{ color: this.props.theme.base08 }}>null</span>
+        <span style={{
+          color: this.props.theme.base08,
+          ...this.props.styles.getValueStyle('Null', true)
+        }}>null</span>
       </li>
     );
   }

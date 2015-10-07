@@ -70,7 +70,7 @@ export default class JSONIterableNode extends React.Component {
         if (typeof this.props.previousData !== 'undefined' && this.props.previousData !== null) {
           prevData = this.props.previousData[key];
         }
-        const node = grabNode(key, value, prevData, this.props.theme);
+        const node = grabNode(key, value, prevData, this.props.theme, this.props.styles, this.props.getItemString);
         if (node !== false) {
           childNodes.push(node);
         }
@@ -83,7 +83,7 @@ export default class JSONIterableNode extends React.Component {
 
   // Returns the "n entries" string for this node, generating and
   // caching it if it hasn't been created yet.
-  getItemString() {
+  getItemString(itemType) {
     if (!this.itemString) {
       const { data } = this.props;
       let count = 0;
@@ -96,7 +96,7 @@ export default class JSONIterableNode extends React.Component {
       }
       this.itemString = count + ' entr' + (count !== 1 ? 'ies' : 'y');
     }
-    return this.itemString;
+    return this.props.getItemString('Iterable', this.props.data, itemType, this.itemString);
   }
 
   render() {
@@ -123,18 +123,24 @@ export default class JSONIterableNode extends React.Component {
     }
     return (
       <li style={containerStyle}>
-        <JSONArrow theme={this.props.theme} open={this.state.expanded} onClick={::this.handleClick}/>
+        <JSONArrow theme={this.props.theme} open={this.state.expanded} onClick={::this.handleClick} style={this.props.styles.getArrowStyle(this.state.expanded)} />
         <label style={{
           ...styles.label,
-          color: this.props.theme.base0D
+          color: this.props.theme.base0D,
+          ...this.props.styles.getLabelStyle('Iterable', this.state.expanded)
         }} onClick={::this.handleClick}>
           {this.props.keyName}:
         </label>
-        <span style={spanStyle} onClick={::this.handleClick}>
-          <span style={styles.spanType}>()</span>
-          {this.getItemString()}
+        <span style={{
+          ...spanStyle,
+          ...this.props.styles.getItemStringStyle('Iterable', this.state.expanded)
+        }} onClick={::this.handleClick}>
+          {this.getItemString(<span style={styles.spanType}>()</span>)}
         </span>
-        <ol style={childListStyle}>
+        <ol style={{
+          ...childListStyle,
+          ...this.props.styles.getListStyle('Iterable', this.state.expanded)
+        }}>
           {childNodes}
         </ol>
       </li>

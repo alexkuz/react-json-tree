@@ -61,7 +61,7 @@ export default class JSONObjectNode extends React.Component {
           if (typeof this.props.previousData !== 'undefined' && this.props.previousData !== null) {
             prevData = this.props.previousData[k];
           }
-          const node = grabNode(k, obj[k], prevData, this.props.theme);
+          const node = grabNode(k, obj[k], prevData, this.props.theme, this.props.styles, this.props.getItemString);
           if (node !== false) {
             childNodes.push(node);
           }
@@ -75,12 +75,12 @@ export default class JSONObjectNode extends React.Component {
 
   // Returns the "n Items" string for this node, generating and
   // caching it if it hasn't been created yet.
-  getItemString() {
+  getItemString(itemType) {
     if (!this.itemString) {
       const len = Object.keys(this.props.data).length;
       this.itemString = len + ' key' + (len !== 1 ? 's' : '');
     }
-    return this.itemString;
+    return this.props.getItemString('Object', this.props.data, itemType, this.itemString);
   }
 
   render() {
@@ -106,18 +106,24 @@ export default class JSONObjectNode extends React.Component {
     }
     return (
       <li style={containerStyle}>
-        <JSONArrow theme={this.props.theme} open={this.state.expanded} onClick={::this.handleClick}/>
+        <JSONArrow theme={this.props.theme} open={this.state.expanded} onClick={::this.handleClick} style={this.props.styles.getArrowStyle(this.state.expanded)} />
         <label style={{
           ...styles.label,
-          color: this.props.theme.base0D
+          color: this.props.theme.base0D,
+          ...this.props.styles.getLabelStyle('Object', this.state.expanded)
         }} onClick={::this.handleClick}>
           {this.props.keyName}:
         </label>
-        <span style={spanStyle} onClick={::this.handleClick}>
-          <span style={styles.spanType}>&#123;&#125;</span>
-          {this.getItemString()}
+        <span style={{
+          ...spanStyle,
+          ...this.props.styles.getItemStringStyle('Object', this.state.expanded)
+        }} onClick={::this.handleClick}>
+          {this.getItemString(<span style={styles.spanType}>&#123;&#125;</span>)}
         </span>
-        <ul style={childListStyle}>
+        <ul style={{
+          ...childListStyle,
+          ...this.props.styles.getListStyle('Object', this.state.expanded)
+        }}>
           {this.getChildNodes()}
         </ul>
       </li>

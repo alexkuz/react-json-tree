@@ -31,11 +31,15 @@ export default class JSONBooleanNode extends React.Component {
       <li style={{ ...styles.base, backgroundColor }} onClick={::this.handleClick}>
         <label style={{
           ...styles.label,
-          color: this.props.theme.base0D
+          color: this.props.theme.base0D,
+          ...this.props.styles.getLabelStyle('Boolean', true)
         }}>
           {this.props.keyName}:
         </label>
-        <span style={{ color: this.props.theme.base09 }}>{truthString}</span>
+        <span style={{
+          color: this.props.theme.base09,
+          ...this.props.styles.getValueStyle('Boolean', true)
+        }}>{truthString}</span>
       </li>
     );
   }

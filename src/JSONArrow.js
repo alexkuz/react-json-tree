@@ -37,6 +37,10 @@ export default class JSONArrow extends React.Component {
         ...styles.open
       };
     }
+    style = {
+      ...style,
+      ...this.props.style
+    };
     return <div style={style} onClick={this.props.onClick}/>;
   }
 }
