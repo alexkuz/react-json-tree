@@ -10,7 +10,8 @@ export default class App extends Component {
       bool: true,
       date: new Date(),
       object: {
-        foo: 'bar'
+        foo: 'bar',
+        baz: undefined
       },
       immutable: Map({ key: 'value' })
     };
