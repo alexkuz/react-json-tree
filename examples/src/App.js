@@ -11,7 +11,8 @@ export default class App extends Component {
       date: new Date(),
       object: {
         foo: 'bar',
-        baz: undefined
+        baz: undefined,
+        func: (function User() {})
       },
       immutable: Map({ key: 'value' })
     };
