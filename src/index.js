@@ -33,6 +33,7 @@ export default class JSONTree extends React.Component {
   };
 
   static defaultProps = {
+    expandRoot: true,
     theme: solarized,
     getArrowStyle: getEmptyStyle,
     getListStyle: getEmptyStyle,
@@ -55,7 +56,8 @@ export default class JSONTree extends React.Component {
       getLabelStyle: this.props.getLabelStyle,
       getValueStyle: this.props.getValueStyle
     };
-    const rootNode = grabNode(keyName, this.props.data, this.props.previousData, this.props.theme, getStyles, this.props.getItemString, true);
+    const {data, previousData, theme, getItemString, expandRoot} = this.props;
+    const rootNode = grabNode(keyName, data, previousData, theme, getStyles, getItemString, expandRoot);
     return (
       <ul style={{
         ...styles.tree,
