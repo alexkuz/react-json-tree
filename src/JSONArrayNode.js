@@ -36,7 +36,7 @@ function getItemString(itemType, context) {
   return context.props.getItemString('Array', context.props.data, itemType, context.itemString);
 }
 
-// Configures <JSONNestedNode> to render an Array 
+// Configures <JSONNestedNode> to render an Array
 export default function JSONArrayNode({ ...props }) {
   return (
     <JSONNestedNode

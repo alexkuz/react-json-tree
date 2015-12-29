@@ -23,7 +23,7 @@ const styles = {
 };
 
 const getEmptyStyle = () => ({});
-const getRenderedDefault = text => text;
+const identity = value => value;
 
 export default class JSONTree extends React.Component {
   static propTypes = {
@@ -41,10 +41,10 @@ export default class JSONTree extends React.Component {
     getListStyle: getEmptyStyle,
     getItemStringStyle: getEmptyStyle,
     getLabelStyle: getEmptyStyle,
-    getRenderedLabel: getRenderedDefault,
     getValueStyle: getEmptyStyle,
-    getRenderedValue: getRenderedDefault,
-    getItemString: (type, data, itemType, itemString) => <span>{itemType} {itemString}</span>
+    getItemString: (type, data, itemType, itemString) => <span>{itemType} {itemString}</span>,
+    labelRenderer: identity,
+    valueRenderer: identity
   };
 
   constructor(props) {
@@ -64,8 +64,8 @@ export default class JSONTree extends React.Component {
       data: value,
       expandRoot: initialExpanded,
       getItemString,
-      getRenderedLabel,
-      getRenderedValue,
+      labelRenderer,
+      valueRenderer,
       keyName: key,
       previousData,
       theme
@@ -73,14 +73,14 @@ export default class JSONTree extends React.Component {
 
     const rootNode = grabNode({
       getItemString,
-      getRenderedLabel,
-      getRenderedValue,
       initialExpanded,
       key,
       previousData,
       styles: getStyles,
       theme,
-      value
+      labelRenderer,
+      value,
+      valueRenderer
     });
 
     return (
