@@ -8,21 +8,22 @@ import grabNode from './grab-node';
 import solarized from './themes/solarized';
 
 const styles = {
-    tree: {
-      border: 0,
-      padding: 0,
-      marginTop: 8,
-      marginBottom: 8,
-      marginLeft: 2,
-      marginRight: 0,
-      fontSize: '0.90em',
-      listStyle: 'none',
-      MozUserSelect: 'none',
-      WebkitUserSelect: 'none'
-    }
+  tree: {
+    border: 0,
+    padding: 0,
+    marginTop: 8,
+    marginBottom: 8,
+    marginLeft: 2,
+    marginRight: 0,
+    fontSize: '0.90em',
+    listStyle: 'none',
+    MozUserSelect: 'none',
+    WebkitUserSelect: 'none'
+  }
 };
 
 const getEmptyStyle = () => ({});
+const getRenderedDefault = text => text;
 
 export default class JSONTree extends React.Component {
   static propTypes = {
@@ -34,12 +35,15 @@ export default class JSONTree extends React.Component {
 
   static defaultProps = {
     expandRoot: true,
+    keyName: 'root',
     theme: solarized,
     getArrowStyle: getEmptyStyle,
     getListStyle: getEmptyStyle,
     getItemStringStyle: getEmptyStyle,
     getLabelStyle: getEmptyStyle,
+    getRenderedLabel: getRenderedDefault,
     getValueStyle: getEmptyStyle,
+    getRenderedValue: getRenderedDefault,
     getItemString: (type, data, itemType, itemString) => <span>{itemType} {itemString}</span>
   };
 
@@ -48,7 +52,6 @@ export default class JSONTree extends React.Component {
   }
 
   render() {
-    const keyName = this.props.keyName || 'root';
     const getStyles = {
       getArrowStyle: this.props.getArrowStyle,
       getListStyle: this.props.getListStyle,
@@ -56,8 +59,30 @@ export default class JSONTree extends React.Component {
       getLabelStyle: this.props.getLabelStyle,
       getValueStyle: this.props.getValueStyle
     };
-    const {data, previousData, theme, getItemString, expandRoot} = this.props;
-    const rootNode = grabNode(keyName, data, previousData, theme, getStyles, getItemString, expandRoot);
+
+    const {
+      data: value,
+      expandRoot: initialExpanded,
+      getItemString,
+      getRenderedLabel,
+      getRenderedValue,
+      keyName: key,
+      previousData,
+      theme
+    } = this.props;
+
+    const rootNode = grabNode({
+      getItemString,
+      getRenderedLabel,
+      getRenderedValue,
+      initialExpanded,
+      key,
+      previousData,
+      styles: getStyles,
+      theme,
+      value
+    });
+
     return (
       <ul style={{
         ...styles.tree,
