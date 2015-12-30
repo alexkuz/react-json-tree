@@ -20,7 +20,6 @@ function renderItemString({
 function getChildNodes({
   data,
   getItemString,
-  initialExpanded,
   labelRenderer,
   previousData,
   styles,
@@ -36,7 +35,6 @@ function getChildNodes({
 
     const node = grabNode({
       getItemString,
-      initialExpanded,
       key,
       labelRenderer,
       previousData: previousDataValue,
