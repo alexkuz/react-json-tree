@@ -2,42 +2,60 @@ import React from 'react';
 import JSONNestedNode from './JSONNestedNode';
 import grabNode from './grab-node';
 
-// Returns the child nodes for each entry in iterable.
-// If we have generated them previously we return from cache; otherwise we create them.
-function getChildNodes(context) {
-  if (context.state.expanded && context.needsChildNodes) {
-    const obj = context.props.data;
-    let childNodes = [];
-    for (let k in obj) {
-      if (obj.hasOwnProperty(k)) {
-        let previousData;
-        if (typeof context.props.previousData !== 'undefined' && context.props.previousData !== null) {
-          previousData = context.props.previousData[k];
-        }
-        const node = grabNode({
-          ...context.props,
-          key: k,
-          previousData,
-          value: obj[k]
-        });
-        if (node !== false) {
-          childNodes.push(node);
-        }
-      }
-    }
-    context.needsChildNodes = false;
-    context.renderedChildren = childNodes;
+// Returns the "n Items" string for this node, generating and caching it if it hasn't been created yet.
+function renderItemString({
+  data,
+  getItemString,
+  itemString,
+  itemType
+}) {
+  if (!itemString) {
+    const len = Object.keys(data).length;
+    itemString = len + ' key' + (len !== 1 ? 's' : '');
   }
-  return context.renderedChildren;
+  return getItemString('Object', data, itemType, itemString);
 }
 
-// Returns the "n Items" string for context node, generating and caching it if it hasn't been created yet.
-function getItemString(itemType, context) {
-  if (!context.itemString) {
-    const len = Object.keys(context.props.data).length;
-    context.itemString = len + ' key' + (len !== 1 ? 's' : '');
+// Returns the child nodes for each entry in iterable.
+// If we have generated them previously we return from cache; otherwise we create them.
+function getChildNodes({
+  data,
+  getItemString,
+  initialExpanded,
+  labelRenderer,
+  previousData,
+  styles,
+  theme,
+  valueRenderer
+}) {
+  const childNodes = [];
+  for (let key in data) {
+    if (data.hasOwnProperty(key)) {
+      let previousDataValue;
+      if (typeof previousData !== 'undefined' && previousData !== null) {
+        previousDataValue = previousData[key];
+      }
+
+      const node = grabNode({
+        getItemString,
+        initialExpanded,
+        key,
+        labelRenderer,
+        previousData: previousDataValue,
+        renderItemString,
+        styles,
+        theme,
+        value: data[key],
+        valueRenderer
+      });
+
+      if (node !== false) {
+        childNodes.push(node);
+      }
+    }
   }
-  return context.props.getItemString('Object', context.props.data, itemType, context.itemString);
+
+  return childNodes;
 }
 
 // Configures <JSONNestedNode> to render an Object
@@ -46,9 +64,9 @@ export default function({ ...props }) {
     <JSONNestedNode
       {...props}
       getChildNodes={getChildNodes}
-      getItemStringWrapper={getItemString}
       nodeType='Object'
       nodeTypeIndicator='{}'
+      renderItemString={renderItemString}
     />
   );
 }

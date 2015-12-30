@@ -35,7 +35,6 @@ export default function({
   const nestedNodeProps = {
     ...simpleNodeProps,
     data: value,
-    getItemString,
     initialExpanded,
     keyName: key
   };

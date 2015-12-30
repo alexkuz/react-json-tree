@@ -73,6 +73,22 @@ export default class JSONNestedNode extends React.Component {
         color: this.props.theme.base03
       };
     }
+
+    if (this.state.expanded && this.needsChildNodes) {
+      this.needsChildNodes = false;
+      this.renderedChildren = this.props.getChildNodes({
+        ...this.props
+      });
+    }
+
+    const itemType = <span style={styles.spanType}>{this.props.nodeTypeIndicator}</span>;
+    const renderedItemString = this.props.renderItemString({
+      data: this.props.data,
+      getItemString: this.props.getItemString,
+      itemString: this.itemString,
+      itemType
+    });
+
     return (
       <li style={containerStyle}>
         <JSONArrow theme={this.props.theme} open={this.state.expanded} onClick={::this.handleClick} style={this.props.styles.getArrowStyle(this.state.expanded)} />
@@ -87,13 +103,13 @@ export default class JSONNestedNode extends React.Component {
           ...spanStyle,
           ...this.props.styles.getItemStringStyle(this.props.nodeType, this.state.expanded)
         }} onClick={::this.handleClick}>
-          {this.props.getItemStringWrapper(<span style={styles.spanType}>{this.props.nodeTypeIndicator}</span>, this)}
+          {renderedItemString}
         </span>
         <ul style={{
           ...childListStyle,
           ...this.props.styles.getListStyle(this.props.nodeType, this.state.expanded)
         }}>
-          {this.props.getChildNodes(this)}
+          {this.renderedChildren}
         </ul>
       </li>
     );
