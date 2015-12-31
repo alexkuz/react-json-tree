@@ -117,6 +117,19 @@ Then the preview of child elements now look like this:
 
 ![](http://cl.ly/image/1J1a0b0T0K3c/screenshot%202015-10-07%20at%203.44.31%20PM.png)
 
+#### Customize Rendering
+
+You can pass the following properties to customize rendered labels and values:
+
+```js
+<JSONTree
+    labelRenderer={raw => <strong>{raw}</strong>}
+    valueRenderer={raw => <em>{raw}</em>}
+/>
+```
+
+In this example the label and value will be rendered with `<strong>` and `<em>` wrappers respectively.
+
 ### Credits
 
 - All credits to [Dave Vedder](http://www.eskimospy.com/) ([veddermatic@gmail.com](mailto:veddermatic@gmail.com)), who wrote the original code as [JSONViewer](https://bitbucket.org/davevedder/react-json-viewer/).

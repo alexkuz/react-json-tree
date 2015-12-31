@@ -3,36 +3,64 @@ import objType from './obj-type';
 import JSONObjectNode from './JSONObjectNode';
 import JSONArrayNode from './JSONArrayNode';
 import JSONIterableNode from './JSONIterableNode';
-import JSONStringNode from './JSONStringNode';
-import JSONNumberNode from './JSONNumberNode';
-import JSONBooleanNode from './JSONBooleanNode';
-import JSONNullNode from './JSONNullNode';
-import JSONDateNode from './JSONDateNode';
-import JSONUndefinedNode from './JSONUndefinedNode';
-import JSONFunctionNode from './JSONFunctionNode';
+import JSONValueNode from './JSONValueNode';
 
-export default function(key, value, prevValue, theme, styles, getItemString, initialExpanded = false) {
+export default function({
+  getItemString,
+  initialExpanded = false,
+  key,
+  labelRenderer,
+  previousData,
+  styles,
+  theme,
+  value,
+  valueRenderer
+}) {
   const nodeType = objType(value);
-  if (nodeType === 'Object') {
-    return <JSONObjectNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} styles={styles} getItemString={getItemString} />;
-  } else if (nodeType === 'Array') {
-    return <JSONArrayNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} styles={styles} getItemString={getItemString} />;
-  } else if (nodeType === 'Iterable') {
-    return <JSONIterableNode data={value} previousData={prevValue} theme={theme} initialExpanded={initialExpanded} keyName={key} key={key} styles={styles} getItemString={getItemString} />;
-  } else if (nodeType === 'String') {
-    return <JSONStringNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
-  } else if (nodeType === 'Number') {
-    return <JSONNumberNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
-  } else if (nodeType === 'Boolean') {
-    return <JSONBooleanNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
-  } else if (nodeType === 'Date') {
-    return <JSONDateNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
-  } else if (nodeType === 'Null') {
-    return <JSONNullNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
-  } else if (nodeType === 'Undefined') {
-    return <JSONUndefinedNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
-  } else if (nodeType === 'Function') {
-    return <JSONFunctionNode keyName={key} previousValue={prevValue} theme={theme} value={value} key={key} styles={styles} />;
+
+  const simpleNodeProps = {
+    getItemString,
+    initialExpanded,
+    key,
+    keyName: key,
+    labelRenderer,
+    nodeType,
+    previousData,
+    styles,
+    theme,
+    value,
+    valueRenderer
+  };
+
+  const nestedNodeProps = {
+    ...simpleNodeProps,
+    data: value,
+    initialExpanded,
+    keyName: key
+  };
+
+  switch (nodeType) {
+    case 'Object':
+      return <JSONObjectNode {...nestedNodeProps} />;
+    case 'Array':
+      return <JSONArrayNode {...nestedNodeProps} />;
+    case 'Iterable':
+      return <JSONIterableNode {...nestedNodeProps} />;
+    case 'String':
+      return <JSONValueNode {...simpleNodeProps} />;
+    case 'Number':
+      return <JSONValueNode {...simpleNodeProps} />;
+    case 'Boolean':
+      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw ? 'true' : 'false'} />;
+    case 'Date':
+      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw.toISOString()} />;
+    case 'Null':
+      return <JSONValueNode {...simpleNodeProps} valueGetter={() => null} />;
+    case 'Undefined':
+      return <JSONValueNode {...simpleNodeProps} valueGetter={() => undefined} />;
+    case 'Function':
+      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw.toString()} />;
+    default:
+      return false;
   }
-  return false;
 }
