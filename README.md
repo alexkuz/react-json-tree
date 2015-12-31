@@ -123,8 +123,8 @@ You can pass the following properties to customize rendered labels and values:
 
 ```js
 <JSONTree
-    labelRenderer={raw => <strong>raw</strong>}
-    valueRenderer={raw => <em>raw</em>}
+    labelRenderer={raw => <strong>{raw}</strong>}
+    valueRenderer={raw => <em>{raw}</em>}
 />
 ```
 

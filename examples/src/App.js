@@ -65,6 +65,13 @@ export default class App extends Component {
                     getValueStyle={ getStyle }
                     getItemString={ getItemString }/>
         </div>
+        <h3>More Fine Grained Rendering</h3>
+        <p>Pass <code>labelRenderer</code> or <code>valueRenderer</code>.</p>
+        <div>
+          <JSONTree data={ data }
+                    labelRenderer={raw => <strong>{ raw }</strong>}
+                    valueRenderer={raw => <em>{ raw }</em>} />
+        </div>
       </div>
     );
   }
