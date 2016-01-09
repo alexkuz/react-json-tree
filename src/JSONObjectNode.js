@@ -29,7 +29,7 @@ function getChildNodes({
 }) {
   const childNodes = [];
   for (let key in data) {
-    if (data.hasOwnProperty(key)) {
+    if (Object.getPrototypeOf(data) === null || data.hasOwnProperty(key)) {
       let previousDataValue;
       if (typeof previousData !== 'undefined' && previousData !== null) {
         previousDataValue = previousData[key];
