@@ -12,6 +12,7 @@
     "no-console": 0,
     // Temporarily disabled due to babel-eslint issues:
     "block-scoped-var": 0,
+    "no-dupe-keys": 0,
     "padded-blocks": 0,
     "no-param-reassign": 0,
   },
