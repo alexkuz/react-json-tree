@@ -47,7 +47,7 @@ export default function({
     case 'Iterable':
       return <JSONIterableNode {...nestedNodeProps} />;
     case 'String':
-      return <JSONValueNode {...simpleNodeProps} />;
+      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => `"${raw}"`} />;
     case 'Number':
       return <JSONValueNode {...simpleNodeProps} />;
     case 'Boolean':
@@ -55,9 +55,9 @@ export default function({
     case 'Date':
       return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw.toISOString()} />;
     case 'Null':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={() => null} />;
+      return <JSONValueNode {...simpleNodeProps} valueGetter={() => 'null'} />;
     case 'Undefined':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={() => undefined} />;
+      return <JSONValueNode {...simpleNodeProps} valueGetter={() => 'undefined'} />;
     case 'Function':
       return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw.toString()} />;
     default:

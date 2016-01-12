@@ -46,8 +46,8 @@ export default class JSONValueNode extends React.Component {
         </label>
         <span style={{
           color: this.props.theme.base0B,
-          ...this.props.styles.getValueStyle('String', true)
-        }}>"{this.props.valueRenderer(this.props.valueGetter(this.props.value))}"</span>
+          ...this.props.styles.getValueStyle(this.props.nodeType, true)
+        }}>{this.props.valueRenderer(this.props.valueGetter(this.props.value))}</span>
       </li>
     );
   }
