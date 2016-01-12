@@ -47,19 +47,19 @@ export default function({
     case 'Iterable':
       return <JSONIterableNode {...nestedNodeProps} />;
     case 'String':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => `"${raw}"`} />;
+      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base0B} valueGetter={raw => `"${raw}"`} />;
     case 'Number':
-      return <JSONValueNode {...simpleNodeProps} />;
+      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base09} />;
     case 'Boolean':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw ? 'true' : 'false'} />;
+      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base09} valueGetter={raw => raw ? 'true' : 'false'} />;
     case 'Date':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw.toISOString()} />;
+      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base0B} valueGetter={raw => raw.toISOString()} />;
     case 'Null':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={() => 'null'} />;
+      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base08} valueGetter={() => 'null'} />;
     case 'Undefined':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={() => 'undefined'} />;
+      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base08} valueGetter={() => 'undefined'} />;
     case 'Function':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw.toString()} />;
+      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base08} valueGetter={raw => raw.toString()} />;
     default:
       return false;
   }
