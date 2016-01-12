@@ -26,7 +26,7 @@ const styles = {
 export default class JSONValueNode extends React.Component {
   static defaultProps = {
     valueGetter: value => value
-  }
+  };
 
   render() {
     let backgroundColor = 'transparent';
