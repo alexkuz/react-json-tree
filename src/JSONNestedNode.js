@@ -32,7 +32,8 @@ const styles = {
 export default class JSONNestedNode extends React.Component {
   defaultProps = {
     data: [],
-    initialExpanded: false
+    initialExpanded: false,
+    allExpanded: false
   };
 
   // cache store for the number of items string we display
@@ -47,7 +48,7 @@ export default class JSONNestedNode extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: this.props.initialExpanded,
+      expanded: this.props.initialExpanded || this.props.allExpanded,
       createdChildNodes: false
     };
   }

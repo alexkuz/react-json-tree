@@ -24,7 +24,8 @@ function getChildNodes({
   previousData,
   styles,
   theme,
-  valueRenderer
+  valueRenderer,
+  allExpanded
 }) {
   const childNodes = [];
   data.forEach((value, key) => {
@@ -42,7 +43,8 @@ function getChildNodes({
       styles,
       theme,
       value,
-      valueRenderer
+      valueRenderer,
+      allExpanded
     });
 
     if (node !== false) {

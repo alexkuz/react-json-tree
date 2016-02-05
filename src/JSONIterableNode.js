@@ -32,7 +32,8 @@ function getChildNodes({
   previousData,
   styles,
   theme,
-  valueRenderer
+  valueRenderer,
+  allExpanded
 }) {
   const childNodes = [];
   for (const entry of data) {
@@ -58,7 +59,8 @@ function getChildNodes({
       styles,
       theme,
       value,
-      valueRenderer
+      valueRenderer,
+      allExpanded
     });
 
     if (node !== false) {

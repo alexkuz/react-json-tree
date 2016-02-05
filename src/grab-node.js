@@ -8,6 +8,7 @@ import JSONValueNode from './JSONValueNode';
 export default function({
   getItemString,
   initialExpanded = false,
+  allExpanded,
   key,
   labelRenderer,
   previousData,
@@ -36,6 +37,7 @@ export default function({
     ...simpleNodeProps,
     data: value,
     initialExpanded,
+    allExpanded,
     keyName: key
   };
 
