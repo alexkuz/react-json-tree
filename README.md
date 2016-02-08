@@ -17,7 +17,7 @@ const json = {
   bool: true,
   object: {
     foo: 'bar'
-  }  
+  }
   immutable: Map({ key: 'value' })
 }
 
@@ -129,6 +129,10 @@ You can pass the following properties to customize rendered labels and values:
 ```
 
 In this example the label and value will be rendered with `<strong>` and `<em>` wrappers respectively.
+
+#### More Options
+
+- Add `expandAll` property to expand all nodes.
 
 ### Credits
 
