@@ -25,7 +25,8 @@ function getChildNodes({
   previousData,
   styles,
   theme,
-  valueRenderer
+  valueRenderer,
+  allExpanded
 }) {
   const childNodes = [];
   for (let key in data) {
@@ -44,7 +45,8 @@ function getChildNodes({
         styles,
         theme,
         value: data[key],
-        valueRenderer
+        valueRenderer,
+        allExpanded
       });
 
       if (node !== false) {
