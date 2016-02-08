@@ -48,7 +48,7 @@
     "rimraf": "^2.3.4"
   },
   "peerDependencies": {
-    "react": ">=0.13.1 || >=0.14.0-beta3"
+    "react": "^0.14.0"
   },
   "dependencies": {
     "babel-runtime": "^6.3.13",
