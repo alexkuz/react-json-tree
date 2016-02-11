@@ -1,4 +1,4 @@
 {
-  "plugins": ["transform-decorators-legacy"],
+  "plugins": ["transform-decorators-legacy", "transform-runtime"],
   "presets": ["es2015-loose", "stage-0", "react"]
 }
