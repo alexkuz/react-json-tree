@@ -18,7 +18,7 @@ function renderItemString({
 
 // Returns the child nodes for each entry in iterable.
 // If we have generated them previously we return from cache; otherwise we create them.
-function getChildNodes({
+export function getChildNodes({
   data,
   getItemString,
   labelRenderer,
