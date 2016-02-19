@@ -133,7 +133,7 @@ In this example the label and value will be rendered with `<strong>` and `<em>` 
 #### More Options
 
 - Add `expandAll` property to expand all nodes.
-
+- Add `hideRoot={true}` to hide a root node.
 ### Credits
 
 - All credits to [Dave Vedder](http://www.eskimospy.com/) ([veddermatic@gmail.com](mailto:veddermatic@gmail.com)), who wrote the original code as [JSONViewer](https://bitbucket.org/davevedder/react-json-viewer/).

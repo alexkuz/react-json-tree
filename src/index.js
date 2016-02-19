@@ -6,6 +6,7 @@
 import React from 'react';
 import grabNode from './grab-node';
 import solarized from './themes/solarized';
+import {getChildNodes} from './JSONObjectNode';
 
 const styles = {
   tree: {
@@ -30,12 +31,14 @@ export default class JSONTree extends React.Component {
     data: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.object
-    ]).isRequired
+    ]).isRequired,
+    hideRoot: React.PropTypes.bool
   };
 
   static defaultProps = {
     expandRoot: true,
     expandAll: false,
+    hideRoot: false,
     keyName: 'root',
     theme: solarized,
     getArrowStyle: getEmptyStyle,
@@ -73,25 +76,40 @@ export default class JSONTree extends React.Component {
       theme
     } = this.props;
 
-    const rootNode = grabNode({
-      getItemString,
-      initialExpanded,
-      allExpanded,
-      key,
-      previousData,
-      styles: getStyles,
-      theme,
-      labelRenderer,
-      value,
-      valueRenderer
-    });
+    var nodeToRender;
+
+    if (!this.props.hideRoot) {       
+      nodeToRender = grabNode({
+        getItemString,
+        initialExpanded,
+        allExpanded,
+        key,
+        previousData,
+        styles: getStyles,
+        theme,
+        labelRenderer,
+        value,
+        valueRenderer
+      });
+    } else {
+      nodeToRender = getChildNodes({
+        data: value,
+        getItemString,
+        labelRenderer,
+        previousData,
+        styles:getStyles,
+        theme,
+        valueRenderer,
+        allExpanded
+      });
+    }
 
     return (
       <ul style={{
         ...styles.tree,
         ...this.props.style
       }}>
-        {rootNode}
+        {nodeToRender}
       </ul>
     );
   }
