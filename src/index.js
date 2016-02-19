@@ -76,9 +76,9 @@ export default class JSONTree extends React.Component {
       theme
     } = this.props;
 
-    var nodeToRender;
+    let nodeToRender;
 
-    if (!this.props.hideRoot) {       
+    if (!this.props.hideRoot) {
       nodeToRender = grabNode({
         getItemString,
         initialExpanded,
@@ -97,7 +97,7 @@ export default class JSONTree extends React.Component {
         getItemString,
         labelRenderer,
         previousData,
-        styles:getStyles,
+        styles: getStyles,
         theme,
         valueRenderer,
         allExpanded
