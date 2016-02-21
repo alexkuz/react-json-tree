@@ -37,6 +37,7 @@ export default class JSONTree extends React.Component {
   static defaultProps = {
     expandRoot: true,
     expandAll: false,
+    shouldExpandNode: (keyName, data, level) => level === 0, // expands root by default,
     hideRoot: false,
     keyPath: ['root'],
     theme: solarized,
@@ -58,6 +59,14 @@ export default class JSONTree extends React.Component {
   }
 
   render() {
+    if (!this.props.expandRoot) {
+      console.error('The expandRoot property is deprecated, use "shouldExpandNode: () => false" instead');
+    }
+
+    if (this.props.expandAll) {
+      console.error('The expandAll property is deprecated, use "shouldExpandNode: () => true" instead');
+    }
+
     const getStyles = {
       getArrowStyle: this.props.getArrowStyle,
       getListStyle: this.props.getListStyle,
