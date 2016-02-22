@@ -73,7 +73,8 @@ const STYLES = {
   label: {
     margin: 0,
     padding: 0,
-    display: 'inline-block'
+    display: 'inline-block',
+    cursor: 'pointer'
   },
   span: {
     cursor: 'default'
