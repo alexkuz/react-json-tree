@@ -39,7 +39,7 @@ export default class JSONTree extends React.Component {
     expandRoot: true,
     expandAll: false,
     hideRoot: false,
-    keyName: 'root',
+    keyPath: ['root'],
     theme: solarized,
     getArrowStyle: getEmptyStyle,
     getListStyle: getEmptyStyle,
@@ -71,19 +71,19 @@ export default class JSONTree extends React.Component {
       getItemString,
       labelRenderer,
       valueRenderer,
-      keyName: key,
+      keyPath,
       previousData,
       theme
     } = this.props;
 
-    var nodeToRender;
+    let nodeToRender;
 
-    if (!this.props.hideRoot) {       
+    if (!this.props.hideRoot) {
       nodeToRender = grabNode({
         getItemString,
         initialExpanded,
         allExpanded,
-        key,
+        keyPath,
         previousData,
         styles: getStyles,
         theme,
@@ -97,10 +97,11 @@ export default class JSONTree extends React.Component {
         getItemString,
         labelRenderer,
         previousData,
-        styles:getStyles,
+        styles: getStyles,
         theme,
         valueRenderer,
-        allExpanded
+        allExpanded,
+        keyPath: []
       });
     }
 

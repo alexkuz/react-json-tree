@@ -25,7 +25,8 @@ function getChildNodes({
   styles,
   theme,
   valueRenderer,
-  allExpanded
+  allExpanded,
+  keyPath
 }) {
   const childNodes = [];
   data.forEach((value, key) => {
@@ -36,7 +37,7 @@ function getChildNodes({
 
     const node = grabNode({
       getItemString,
-      key,
+      keyPath: [key, ...keyPath],
       labelRenderer,
       previousData: previousDataValue,
       renderItemString,

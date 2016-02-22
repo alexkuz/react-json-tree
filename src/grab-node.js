@@ -9,7 +9,7 @@ export default function({
   getItemString,
   initialExpanded = false,
   allExpanded,
-  key,
+  keyPath,
   labelRenderer,
   previousData,
   styles,
@@ -22,8 +22,8 @@ export default function({
   const simpleNodeProps = {
     getItemString,
     initialExpanded,
-    key,
-    keyName: key,
+    key: keyPath[0],
+    keyPath,
     labelRenderer,
     nodeType,
     previousData,
@@ -38,7 +38,7 @@ export default function({
     data: value,
     initialExpanded,
     allExpanded,
-    keyName: key
+    keyPath
   };
 
   switch (nodeType) {

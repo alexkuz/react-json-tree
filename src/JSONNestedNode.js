@@ -98,7 +98,7 @@ export default class JSONNestedNode extends React.Component {
           color: this.props.theme.base0D,
           ...this.props.styles.getLabelStyle(this.props.nodeType, this.state.expanded)
         }} onClick={::this.handleClick}>
-          {this.props.labelRenderer(this.props.keyName)}:
+          {this.props.labelRenderer(...this.props.keyPath)}:
         </label>
         <span style={{
           ...spanStyle,

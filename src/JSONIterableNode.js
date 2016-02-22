@@ -33,7 +33,8 @@ function getChildNodes({
   styles,
   theme,
   valueRenderer,
-  allExpanded
+  allExpanded,
+  keyPath
 }) {
   const childNodes = [];
   for (const entry of data) {
@@ -53,7 +54,7 @@ function getChildNodes({
 
     const node = grabNode({
       getItemString,
-      key,
+      keyPath: [key, ...keyPath],
       labelRenderer,
       previousData: previousDataValue,
       styles,
