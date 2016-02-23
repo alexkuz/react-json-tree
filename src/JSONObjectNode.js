@@ -26,7 +26,8 @@ export function getChildNodes({
   styles,
   theme,
   valueRenderer,
-  allExpanded
+  allExpanded,
+  keyPath
 }) {
   const childNodes = [];
   for (let key in data) {
@@ -38,7 +39,7 @@ export function getChildNodes({
 
       const node = grabNode({
         getItemString,
-        key,
+        keyPath: [key, ...keyPath],
         labelRenderer,
         previousData: previousDataValue,
         renderItemString,
