@@ -130,6 +130,8 @@ You can pass the following properties to customize rendered labels and values:
 
 In this example the label and value will be rendered with `<strong>` and `<em>` wrappers respectively.
 
+For `labelRenderer`, you can provide a full path - [see this PR](https://github.com/chibicode/react-json-tree/pull/32).
+
 #### More Options
 
 - Add `expandAll` property to expand all nodes.
