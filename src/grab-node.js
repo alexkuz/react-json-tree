@@ -8,16 +8,17 @@ import JSONValueNode from './JSONValueNode';
 export default function({
   getItemString,
   initialExpanded = false,
-  allExpanded,
   keyPath,
   labelRenderer,
   previousData,
   styles,
   theme,
   value,
-  valueRenderer
+  valueRenderer,
+  isCustomNode,
+  ...rest
 }) {
-  const nodeType = objType(value);
+  const nodeType = isCustomNode(value) ? 'Custom' : objType(value);
 
   const simpleNodeProps = {
     getItemString,
@@ -34,11 +35,10 @@ export default function({
   };
 
   const nestedNodeProps = {
+    ...rest,
     ...simpleNodeProps,
     data: value,
-    initialExpanded,
-    allExpanded,
-    keyPath
+    isCustomNode
   };
 
   switch (nodeType) {
@@ -62,6 +62,8 @@ export default function({
       return <JSONValueNode {...simpleNodeProps} valueColor={theme.base08} valueGetter={() => 'undefined'} />;
     case 'Function':
       return <JSONValueNode {...simpleNodeProps} valueColor={theme.base08} valueGetter={raw => raw.toString()} />;
+    case 'Custom':
+      return <JSONValueNode {...simpleNodeProps} />;
     default:
       return false;
   }

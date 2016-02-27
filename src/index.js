@@ -6,7 +6,6 @@
 import React from 'react';
 import grabNode from './grab-node';
 import solarized from './themes/solarized';
-import {getChildNodes} from './JSONObjectNode';
 
 const styles = {
   tree: {
@@ -48,7 +47,10 @@ export default class JSONTree extends React.Component {
     getValueStyle: getEmptyStyle,
     getItemString: (type, data, itemType, itemString) => <span>{itemType} {itemString}</span>,
     labelRenderer: identity,
-    valueRenderer: identity
+    valueRenderer: identity,
+    postprocessValue: identity,
+    isCustomNode: () => false,
+    collectionLimit: 50
   };
 
   constructor(props) {
@@ -68,47 +70,30 @@ export default class JSONTree extends React.Component {
       data: value,
       expandRoot: initialExpanded,
       expandAll: allExpanded,
-      getItemString,
-      labelRenderer,
-      valueRenderer,
+      style,
       keyPath,
-      previousData,
-      theme
+      postprocessValue,
+      hideRoot,
+      ...rest
     } = this.props;
 
     let nodeToRender;
 
-    if (!this.props.hideRoot) {
-      nodeToRender = grabNode({
-        getItemString,
-        initialExpanded,
-        allExpanded,
-        keyPath,
-        previousData,
-        styles: getStyles,
-        theme,
-        labelRenderer,
-        value,
-        valueRenderer
-      });
-    } else {
-      nodeToRender = getChildNodes({
-        data: value,
-        getItemString,
-        labelRenderer,
-        previousData,
-        styles: getStyles,
-        theme,
-        valueRenderer,
-        allExpanded,
-        keyPath: []
-      });
-    }
+    nodeToRender = grabNode({
+      initialExpanded,
+      allExpanded,
+      keyPath: hideRoot ? [] : keyPath,
+      styles: getStyles,
+      value: postprocessValue(value),
+      postprocessValue,
+      hideRoot,
+      ...rest
+    });
 
     return (
       <ul style={{
         ...styles.tree,
-        ...this.props.style
+        ...style
       }}>
         {nodeToRender}
       </ul>
