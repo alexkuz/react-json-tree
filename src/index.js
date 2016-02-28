@@ -5,8 +5,10 @@
 
 import React from 'react';
 import grabNode from './grab-node';
+import objType from './obj-type';
 import solarized from './themes/solarized';
-import {getChildNodes} from './JSONObjectNode';
+import { getChildNodes as getObjectChildNodes } from './JSONObjectNode';
+import { getChildNodes as getIterableChildNodes } from './JSONIterableNode';
 
 const styles = {
   tree: {
@@ -77,6 +79,7 @@ export default class JSONTree extends React.Component {
     } = this.props;
 
     let nodeToRender;
+    let getChildNodes = objType(value) === 'Iterable' ? getIterableChildNodes : getObjectChildNodes;
 
     if (!this.props.hideRoot) {
       nodeToRender = grabNode({
