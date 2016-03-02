@@ -29,7 +29,7 @@ function getEntries(type, collection, from=0, to=Infinity) {
       if (idx > to) {
         done = false;
         break;
-      } if (from < idx) {
+      } if (from <= idx) {
         entries.push({ key: idx, value: item });
       }
       idx++;
