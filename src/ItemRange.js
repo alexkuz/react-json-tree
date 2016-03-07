@@ -19,7 +19,7 @@ export default class ItemRange extends Component {
   }
 
   static propTypes = {
-  }
+  };
 
   shouldComponentUpdate = shouldPureComponentUpdate;
 
