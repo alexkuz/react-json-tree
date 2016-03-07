@@ -1,75 +1,22 @@
 import React from 'react';
 import JSONNestedNode from './JSONNestedNode';
-import grabNode from './grab-node';
 
 // Returns the "n Items" string for this node, generating and caching it if it hasn't been created yet.
-function renderItemString({
-  data,
-  getItemString,
-  itemString,
-  itemType
-}) {
-  if (!itemString) {
-    let count = 0;
-    if (Number.isSafeInteger(data.size)) {
-      count = data.size;
-    } else {
-      for (const entry of data) { // eslint-disable-line no-unused-vars
-        count += 1;
+function createItemString(data, limit) {
+  let count = 0;
+  let hasMore = false;
+  if (Number.isSafeInteger(data.size)) {
+    count = data.size;
+  } else {
+    for (const entry of data) { // eslint-disable-line no-unused-vars
+      if (limit && count + 1 > limit) {
+        hasMore = true;
+        break;
       }
-    }
-    itemString = count + ' entr' + (count !== 1 ? 'ies' : 'y');
-  }
-  return getItemString('Iterable', data, itemType, itemString);
-}
-
-// Returns the child nodes for each entry in iterable.
-// If we have generated them previously we return from cache; otherwise we create them.
-function getChildNodes({
-  data,
-  getItemString,
-  labelRenderer,
-  previousData,
-  styles,
-  theme,
-  valueRenderer,
-  allExpanded,
-  keyPath
-}) {
-  const childNodes = [];
-  for (const entry of data) {
-    let key = null;
-    let value = null;
-    if (Array.isArray(entry)) {
-      [key, value] = entry;
-    } else {
-      key = childNodes.length;
-      value = entry;
-    }
-
-    let previousDataValue;
-    if (typeof previousData !== 'undefined' && previousData !== null) {
-      previousDataValue = previousData[key];
-    }
-
-    const node = grabNode({
-      getItemString,
-      keyPath: [key, ...keyPath],
-      labelRenderer,
-      previousData: previousDataValue,
-      styles,
-      theme,
-      value,
-      valueRenderer,
-      allExpanded
-    });
-
-    if (node !== false) {
-      childNodes.push(node);
+      count += 1;
     }
   }
-
-  return childNodes;
+  return `${hasMore ? '>' : ''}${count} ${count !== 1 ? 'entries' : 'entry'}`;
 }
 
 // Configures <JSONNestedNode> to render an iterable
@@ -77,10 +24,9 @@ export default function({ ...props }) {
   return (
     <JSONNestedNode
       {...props}
-      getChildNodes={getChildNodes}
       nodeType='Iterable'
       nodeTypeIndicator='()'
-      renderItemString={renderItemString}
+      createItemString={createItemString}
     />
   );
 }
