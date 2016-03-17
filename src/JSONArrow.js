@@ -5,7 +5,6 @@ const styles = {
     display: 'inline-block',
     marginLeft: 0,
     marginTop: 8,
-    marginRight: 5,
     'float': 'left',
     transition: '150ms',
     WebkitTransition: '150ms',
@@ -15,8 +14,13 @@ const styles = {
     transform: 'rotateZ(-90deg)',
     position: 'relative'
   },
-  baseDouble: {
-    marginRight: 10
+  container: {
+    display: 'inline-block',
+    padding: '2 5',
+    cursor: 'pointer'
+  },
+  containerDouble: {
+    padding: '2 10'
   },
   arrow: {
     borderLeft: '5px solid transparent',
@@ -38,6 +42,9 @@ const styles = {
 
 export default class JSONArrow extends React.Component {
   render() {
+    let containerStyle = {
+      ...styles.container
+    };
     let style = {
       ...styles.base,
       ...styles.arrow
@@ -52,9 +59,9 @@ export default class JSONArrow extends React.Component {
       };
     }
     if (this.props.double) {
-      style = {
-        ...style,
-        ...styles.baseDouble
+      containerStyle = {
+        ...containerStyle,
+        ...styles.containerDouble
       };
     }
     style = {
@@ -62,10 +69,12 @@ export default class JSONArrow extends React.Component {
       ...this.props.style
     };
     return (
-      <div style={{ ...color, ...style }} onClick={this.props.onClick}>
-        {this.props.double &&
-          <div style={{ ...color, ...styles.inner, ...styles.arrow }} />
-        }
+      <div style={containerStyle} onClick={this.props.onClick}>
+        <div style={{ ...color, ...style }}>
+          {this.props.double &&
+            <div style={{ ...color, ...styles.inner, ...styles.arrow }} />
+          }
+        </div>
       </div>
     );
   }
