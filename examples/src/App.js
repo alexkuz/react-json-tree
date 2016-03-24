@@ -14,6 +14,7 @@ export default class App extends Component {
         baz: undefined,
         func: (function User() {})
       },
+      symbol: Symbol('value'),
       immutable: Map({ key: 'value' })
     };
 

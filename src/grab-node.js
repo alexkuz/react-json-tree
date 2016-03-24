@@ -61,6 +61,7 @@ export default function({
     case 'Undefined':
       return <JSONValueNode {...simpleNodeProps} valueColor={theme.base08} valueGetter={() => 'undefined'} />;
     case 'Function':
+    case 'Symbol':
       return <JSONValueNode {...simpleNodeProps} valueColor={theme.base08} valueGetter={raw => raw.toString()} />;
     case 'Custom':
       return <JSONValueNode {...simpleNodeProps} />;
