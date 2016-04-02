@@ -16,11 +16,17 @@ const styles = {
   },
   container: {
     display: 'inline-block',
-    padding: '2 5',
+    paddingTop: 2,
+    paddingBottom: 2,
+    paddingRight: 5,
+    paddingLeft: 5,
     cursor: 'pointer'
   },
   containerDouble: {
-    padding: '2 10'
+    paddingTop: 2,
+    paddingBottom: 2,
+    paddingRight: 10,
+    paddingLeft: 10
   },
   arrow: {
     borderLeft: '5px solid transparent',
