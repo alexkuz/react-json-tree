@@ -86,10 +86,8 @@ const getDefaultThemeStyling = theme => {
     },
 
     itemRange: {
-      margin: '8px 0 8px 14px',
+      marginBottom: 8,
       cursor: 'pointer',
-      display: 'inline-block',
-      marginRight: 5,
       color: colors.LABEL_COLOR
     },
 
@@ -116,8 +114,8 @@ const getDefaultThemeStyling = theme => {
         display: 'inline-block',
         paddingTop: 2,
         paddingBottom: 2,
-        paddingRight: double ? 10 : 5,
-        paddingLeft: double ? 10 : 5,
+        paddingRight: double ? 12 : 5,
+        paddingLeft: double ? 12 : 5,
         cursor: 'pointer'
       }
     }),
