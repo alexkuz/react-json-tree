@@ -16,7 +16,7 @@ export default class ItemRange extends Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
 
   render() {
-    const { styling, styles, from, to, getChildNodes } = this.props;
+    const { styling, from, to, getChildNodes } = this.props;
 
     return (this.state.expanded ?
       <div {...styling('itemRange', this.state.expanded)}>
@@ -28,7 +28,6 @@ export default class ItemRange extends Component {
           styling={styling}
           open={false}
           onClick={this.handleClick}
-          style={styles.getArrowStyle(false)}
           double />
         {`${from} ... ${to}`}
       </div>
