@@ -3,35 +3,24 @@
 // Dave Vedder <veddermatic@gmail.com> http://www.eskimospy.com/
 // port by Daniele Zannotti http://www.github.com/dzannotti <dzannotti@me.com>
 
-import React from 'react';
-import grabNode from './grab-node';
-import solarized from './themes/solarized';
+import React, { PropTypes } from 'react';
+import grabNode from './grabNode';
+import createStylingFromTheme from './createStylingFromTheme';
 
-const styles = {
-  tree: {
-    border: 0,
-    padding: 0,
-    marginTop: 8,
-    marginBottom: 8,
-    marginLeft: 2,
-    marginRight: 0,
-    fontSize: '0.90em',
-    listStyle: 'none',
-    MozUserSelect: 'none',
-    WebkitUserSelect: 'none'
-  }
-};
-
-const getEmptyStyle = () => ({});
 const identity = value => value;
 
 export default class JSONTree extends React.Component {
   static propTypes = {
-    data: React.PropTypes.oneOfType([
-      React.PropTypes.array,
-      React.PropTypes.object
+    data: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object
     ]).isRequired,
-    hideRoot: React.PropTypes.bool
+    hideRoot: PropTypes.bool,
+    theme: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.string
+    ]),
+    isLightTheme: PropTypes.bool
   };
 
   static defaultProps = {
@@ -40,18 +29,13 @@ export default class JSONTree extends React.Component {
     shouldExpandNode: (keyName, data, level) => level === 0, // expands root by default,
     hideRoot: false,
     keyPath: ['root'],
-    theme: solarized,
-    getArrowStyle: getEmptyStyle,
-    getListStyle: getEmptyStyle,
-    getItemStringStyle: getEmptyStyle,
-    getLabelStyle: getEmptyStyle,
-    getValueStyle: getEmptyStyle,
     getItemString: (type, data, itemType, itemString) => <span>{itemType} {itemString}</span>,
     labelRenderer: identity,
     valueRenderer: identity,
     postprocessValue: identity,
     isCustomNode: () => false,
-    collectionLimit: 50
+    collectionLimit: 50,
+    isLightTheme: true
   };
 
   constructor(props) {
@@ -67,13 +51,18 @@ export default class JSONTree extends React.Component {
       console.error('The expandAll property is deprecated, use "shouldExpandNode: () => true" instead');
     }
 
-    const getStyles = {
-      getArrowStyle: this.props.getArrowStyle,
-      getListStyle: this.props.getListStyle,
-      getItemStringStyle: this.props.getItemStringStyle,
-      getLabelStyle: this.props.getLabelStyle,
-      getValueStyle: this.props.getValueStyle
-    };
+    const deprecatedStylingMethods = [
+      'getArrowStyle',
+      'getListStyle',
+      'getItemStringStyle',
+      'getLabelStyle',
+      'getValueStyle'
+    ].filter(name => this.props[name]);
+
+    deprecatedStylingMethods
+      .forEach(name => console.error(`Styling method "${name}" is deprecated, use "theme" property instead`));
+
+    // TODO: theming fallback
 
     const {
       data: value,
@@ -83,8 +72,12 @@ export default class JSONTree extends React.Component {
       keyPath,
       postprocessValue,
       hideRoot,
+      theme,
+      isLightTheme,
       ...rest
     } = this.props;
+
+    const styling = createStylingFromTheme(theme, null, isLightTheme);
 
     let nodeToRender;
 
@@ -92,18 +85,15 @@ export default class JSONTree extends React.Component {
       initialExpanded,
       allExpanded,
       keyPath: hideRoot ? [] : keyPath,
-      styles: getStyles,
       value: postprocessValue(value),
       postprocessValue,
       hideRoot,
+      styling,
       ...rest
     });
 
     return (
-      <ul style={{
-        ...styles.tree,
-        ...style
-      }}>
+      <ul {...styling('tree')}>
         {nodeToRender}
       </ul>
     );

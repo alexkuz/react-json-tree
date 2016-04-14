@@ -39,31 +39,50 @@ export default class App extends Component {
       base0F: '#cc6633'
     };
 
-    const getStyle = (type, expanded) => (expanded ? { textTransform: 'uppercase' } : { textTransform: 'lowercase' });
-    const getItemString = (type, data, itemType, itemString) => (<span> // {type}</span>);
+    const getLabelStyle = ({ style }, expanded) => (console.log(style), {
+      style: {
+        ...style,
+        textTransform: expanded ? 'uppercase' : style.textTransform
+      }
+    });
+    const getBoolStyle = ({ style }, nodeType) => ({
+      style: {
+        ...style,
+        border: nodeType === 'Boolean' ? '1px solid #DD3333' : style.border,
+        borderRadius: nodeType === 'Boolean' ? 3 : style.borderRadius
+      }
+    });
+    const getItemString = (type) => (<span> // {type}</span>);
+    const getValueLabelStyle = ({ style }, nodeType, keyPath) => ({
+      style: {
+        ...style,
+        color: !isNaN(keyPath[0]) && !(parseInt(keyPath, 10) % 2) ?
+          '#33F' : style.color
+      }
+    });
 
     return (
       <div>
-        <JSONTree data={ data } />
+        <JSONTree data={ data } theme={ theme } isLightTheme={true} />
         <br />
         <h3>Dark Theme</h3>
-        <div style={{ backgroundColor: theme.base00 }}>
-          <JSONTree data={ data } theme={ theme } />
-        </div>
+        <JSONTree data={ data } theme={ theme } isLightTheme={false} />
         <br />
         <h3>Style Customization</h3>
         <ul>
-          <li>Text changes between uppercase/lowercase based on the expanded state.</li>
+          <li>Label changes between uppercase/lowercase based on the expanded state.</li>
+          <li>Array keys are styled based on their parity.</li>
           <li>The labels of objects, arrays, and iterables are customized as "// type".</li>
           <li>See code for details.</li>
         </ul>
         <div>
-          <JSONTree data={ data } theme={ theme }
-                    getArrowStyle={ getStyle }
-                    getItemStringStyle={ getStyle }
-                    getListStyle={ getStyle }
-                    getLabelStyle={ getStyle }
-                    getValueStyle={ getStyle }
+          <JSONTree data={ data }
+                    theme={{
+                      extend: theme,
+                      nestedNodeLabel: getLabelStyle,
+                      value: getBoolStyle,
+                      valueLabel: getValueLabelStyle
+                    }}
                     getItemString={ getItemString }/>
         </div>
         <h3>More Fine Grained Rendering</h3>

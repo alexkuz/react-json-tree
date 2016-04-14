@@ -1,5 +1,5 @@
 import React from 'react';
-import objType from './obj-type';
+import objType from './objType';
 import JSONObjectNode from './JSONObjectNode';
 import JSONArrayNode from './JSONArrayNode';
 import JSONIterableNode from './JSONIterableNode';
@@ -10,9 +10,7 @@ export default function({
   initialExpanded = false,
   keyPath,
   labelRenderer,
-  previousData,
-  styles,
-  theme,
+  styling,
   value,
   valueRenderer,
   isCustomNode,
@@ -27,9 +25,7 @@ export default function({
     keyPath,
     labelRenderer,
     nodeType,
-    previousData,
-    styles,
-    theme,
+    styling,
     value,
     valueRenderer
   };
@@ -49,20 +45,20 @@ export default function({
     case 'Iterable':
       return <JSONIterableNode {...nestedNodeProps} />;
     case 'String':
-      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base0B} valueGetter={raw => `"${raw}"`} />;
+      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => `"${raw}"`} />;
     case 'Number':
-      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base09} />;
+      return <JSONValueNode {...simpleNodeProps} />;
     case 'Boolean':
-      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base09} valueGetter={raw => raw ? 'true' : 'false'} />;
+      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw ? 'true' : 'false'} />;
     case 'Date':
-      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base0B} valueGetter={raw => raw.toISOString()} />;
+      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw.toISOString()} />;
     case 'Null':
-      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base08} valueGetter={() => 'null'} />;
+      return <JSONValueNode {...simpleNodeProps} valueGetter={() => 'null'} />;
     case 'Undefined':
-      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base08} valueGetter={() => 'undefined'} />;
+      return <JSONValueNode {...simpleNodeProps} valueGetter={() => 'undefined'} />;
     case 'Function':
     case 'Symbol':
-      return <JSONValueNode {...simpleNodeProps} valueColor={theme.base08} valueGetter={raw => raw.toString()} />;
+      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw.toString()} />;
     case 'Custom':
       return <JSONValueNode {...simpleNodeProps} />;
     default:

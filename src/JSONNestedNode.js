@@ -3,7 +3,7 @@ import reactMixin from 'react-mixin';
 import { ExpandedStateHandlerMixin } from './mixins';
 import JSONArrow from './JSONArrow';
 import getCollectionEntries from './getCollectionEntries';
-import grabNode from './grab-node';
+import grabNode from './grabNode';
 import ItemRange from './ItemRange';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
@@ -16,7 +16,6 @@ function getChildNodes(props, from, to) {
     nodeType,
     data,
     collectionLimit,
-    previousData,
     circularCache,
     keyPath,
     postprocessValue,
@@ -35,16 +34,11 @@ function getChildNodes(props, from, to) {
       );
     } else {
       const { key, value } = entry;
-      let previousDataValue;
-      if (typeof previousData !== 'undefined' && previousData !== null) {
-        previousDataValue = previousData[key];
-      }
       const isCircular = circularCache.indexOf(value) !== -1;
 
       const node = grabNode({
         ...props,
         keyPath: [key, ...keyPath],
-        previousData: previousDataValue,
         value: postprocessValue(value),
         postprocessValue,
         collectionLimit,
@@ -62,28 +56,6 @@ function getChildNodes(props, from, to) {
 
   return childNodes;
 }
-
-const STYLES = {
-  base: {
-    position: 'relative',
-    paddingTop: 3,
-    paddingBottom: 3,
-    marginLeft: 14
-  },
-  label: {
-    margin: 0,
-    padding: 0,
-    display: 'inline-block',
-    cursor: 'pointer'
-  },
-  span: {
-    cursor: 'default'
-  },
-  spanType: {
-    marginLeft: 5,
-    marginRight: 5
-  }
-};
 
 @reactMixin.decorate(ExpandedStateHandlerMixin)
 export default class JSONNestedNode extends React.Component {
@@ -116,38 +88,20 @@ export default class JSONNestedNode extends React.Component {
       nodeType,
       data,
       hideRoot,
-      styles,
       createItemString,
-      theme,
+      styling,
       collectionLimit,
       keyPath,
       labelRenderer
     } = this.props;
     const expanded = this.state.expanded;
-    const childListStyle = {
-      padding: 0,
-      margin: 0,
-      listStyle: 'none',
-      display: expanded ? 'block' : 'none'
-    };
-    let spanStyle = {
-      ...STYLES.span,
-      color: theme.base0B
-    };
-    const containerStyle = {
-      ...STYLES.base
-    };
-
-    if (expanded) {
-      spanStyle = {
-        ...spanStyle,
-        color: theme.base03
-      };
-    }
-
     const renderedChildren = expanded ? getChildNodes({...this.props, level: this.props.level + 1}) : null;
 
-    const itemType = <span style={STYLES.spanType}>{nodeTypeIndicator}</span>;
+    const itemType = (
+      <span {...styling('nestedNodeItemType', expanded)}>
+        {nodeTypeIndicator}
+      </span>
+    );
     const renderedItemString = getItemString(
       nodeType,
       data,
@@ -160,33 +114,20 @@ export default class JSONNestedNode extends React.Component {
         {renderedChildren}
       </div>
     ) : (
-      <li style={containerStyle}>
+      <li {...styling('nestedNode', expanded, keyPath)}>
         <JSONArrow
-          theme={theme}
+          styling={styling}
           open={expanded}
-          onClick={::this.handleClick}
-          style={styles.getArrowStyle(expanded)} />
-        <label
-          style={{
-            ...STYLES.label,
-            color: theme.base0D,
-            ...styles.getLabelStyle(nodeType, expanded)
-          }}
-          onClick={::this.handleClick}>
+          onClick={::this.handleClick} />
+        <label {...styling('nestedNodeLabel', expanded, keyPath)}
+               onClick={::this.handleClick}>
           {labelRenderer(...keyPath)}:
         </label>
-        <span
-          style={{
-            ...spanStyle,
-            ...styles.getItemStringStyle(nodeType, expanded)
-          }}
-          onClick={::this.handleClick}>
+        <span {...styling('nestedNodeItemString', expanded, keyPath)}
+              onClick={::this.handleClick}>
           {renderedItemString}
         </span>
-        <ul style={{
-              ...childListStyle,
-              ...styles.getListStyle(nodeType, expanded)
-            }}>
+        <ul {...styling('nestedNodeChildren', expanded, keyPath)}>
           {renderedChildren}
         </ul>
       </li>
