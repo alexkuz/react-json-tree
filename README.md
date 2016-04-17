@@ -132,7 +132,7 @@ For `labelRenderer`, you can provide a full path - [see this PR](https://github.
 #### More Options
 
 - `shouldExpandNode: function(keyName, data, level)` - determines if node should be expanded (root is expanded by default)
-- `hideRoot: Boolean` - if `true`, a root node is hidden.
+- `hideRoot: Boolean` - if `true`, the root node is hidden.
 
 ### Credits
 
