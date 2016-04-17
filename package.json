@@ -47,6 +47,7 @@
     "expect": "^1.6.0",
     "isparta": "^3.0.3",
     "mocha": "^2.2.5",
+    "react-addons-test-utils": "^15.0.1",
     "rimraf": "^2.3.4"
   },
   "peerDependencies": {
