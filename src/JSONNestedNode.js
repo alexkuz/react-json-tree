@@ -91,18 +91,13 @@ export default class JSONNestedNode extends React.Component {
     data: [],
     initialExpanded: false,
     allExpanded: false,
-    circularCache: [],
-    level: 0
+    circularCache: []
   };
 
   constructor(props) {
     super(props);
-
-    // calculate individual node expansion if necessary
-    const shouldExpandNode = this.props.shouldExpandNode ?
-        this.props.shouldExpandNode(this.props.keyName, this.props.data, this.props.level) : false;
     this.state = {
-      expanded: this.props.initialExpanded || this.props.allExpanded || shouldExpandNode,
+      expanded: this.props.initialExpanded || this.props.allExpanded,
       createdChildNodes: false
     };
   }
@@ -145,7 +140,7 @@ export default class JSONNestedNode extends React.Component {
       };
     }
 
-    const renderedChildren = expanded ? getChildNodes({...this.props, level: this.props.level + 1}) : null;
+    const renderedChildren = expanded ? getChildNodes(this.props) : null;
 
     const itemType = <span style={STYLES.spanType}>{nodeTypeIndicator}</span>;
     const renderedItemString = getItemString(
