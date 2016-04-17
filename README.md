@@ -6,7 +6,7 @@ React JSON Viewer Component, Extracted from [redux-devtools](https://github.com/
 
 ### Usage
 
-```js
+```jsx
 import JSONTree from 'react-json-tree'
 // If you're using Immutable.js: `npm i --save immutable`
 import { Map } from 'immutable'
@@ -32,11 +32,13 @@ Check out [examples](examples) directory for more details.
 
 ### Theming
 
-You can pass a `theme` prop containing [base16](http://chriskempson.github.io/base16) theme data to change the theme. [The example theme data can be found here](https://github.com/gaearon/redux-devtools/tree/75322b15ee7ba03fddf10ac3399881e302848874/src/react/themes).
+This component now uses [react-base16-styling](https://github.com/alexkuz/react-base16-styling) module, which allows to customize component via `theme` property, which can be the following:
+- [base16](http://chriskempson.github.io/base16) theme data. [The example theme data can be found here](https://github.com/gaearon/redux-devtools/tree/75322b15ee7ba03fddf10ac3399881e302848874/src/react/themes).
+- object that contains style objects, strings (that treated as classnames) or functions. A function is used to extend its first argument `{ style, className }` and should return an object with the same structure. Other arguments depend on particular context (and should be described here). See [createStylingFromTheme.js](https://github.com/alexkuz/react-json-tree/blob/feature-refactor-styling/src/createStylingFromTheme.js) for the list of styling object keys. Also, this object can extend `base16` theme via `extend` property.
 
-(The theme data is also used by [redux-devtools](https://github.com/gaearon/redux-devtools), and extracting it to a separate npm package is a TODO).
+Every theme has a light version, which is enabled with `isLightTheme` prop.
 
-```js
+```jsx
 const theme = {
   scheme: 'monokai',
   author: 'wimer hazenberg (http://www.monokai.nl)',
@@ -58,42 +60,37 @@ const theme = {
   base0F: '#cc6633'
 };
 
-<div style={{ backgroundColor: theme.base00 }}>
-  <JSONTree data={ data } theme={ theme } />
+<div>
+  <JSONTree data={data} theme={theme} isLightTheme={false} />
 </div>
+
 ```
 
 #### Result (Monokai theme, dark background):
 
 ![](http://cl.ly/image/330o2L1J3V0h/screenshot%202015-08-26%20at%2010.48.24%20AM.png)
 
-### Customization
+#### Advanced Customization
 
-#### Customize CSS
-
-You can pass the following properties to customize styling (all optional):
-
-```js
-<JSONTree getArrowStyle={(type, expanded) => ({})}
-    getItemStringStyle={(type, expanded) => ({})}
-    getListStyle={(type, expanded) => ({})}
-    getLabelStyle={(type, expanded) => ({})}
-    getValueStyle={(type, expanded) => ({})} />
+```jsx
+<div>
+  <JSONTree data={data} theme={{
+    extend: theme,
+    // underline keys for literal values
+    valueLabel: {
+      textDecoration: 'underline'
+    },
+    // switch key for objects to uppercase when object is expanded.
+    // `nestedNodeLabel` receives additional arguments `expanded` and `keyPath`
+    nestedNodeLabel: ({ style }, expanded) => ({
+      style: {
+        ...style,
+        textTransform: expanded ? 'uppercase' : style.textTransform
+      }
+    })
+  }} />
+</div>
 ```
-
-Here `type` is a string representing type of data, `expanded` is a current state for expandable items. Each function returns a style object, which extends corresponding default style.
-
-For example, if you pass the following function:
-
-```js
-const getStyle = (type, expanded) =>
-  (expanded ? { textTransform: 'uppercase' } :
-              { textTransform: 'lowercase' });
-```
-
-Then expanded nodes will all be in uppercase:
-
-![](http://cl.ly/image/460Y0P3C453Q/screenshot%202015-10-07%20at%203.38.33%20PM.png)
 
 #### Customize Labels for Arrays, Objects, and Iterables
 
@@ -101,14 +98,14 @@ You can pass `getItemString` to customize the way arrays, objects, and iterable 
 
 By default, it'll be:
 
-```js
+```jsx
 <JSONTree getArrowStyle={(type, data, itemType, itemString)
   => <span>{itemType} {itemString}</span>}
 ```
 
 But if you pass the following:
 
-```js
+```jsx
 const getItemString = (type, data, itemType, itemString)
   => (<span> // {type}</span>);
 ```
@@ -121,7 +118,7 @@ Then the preview of child elements now look like this:
 
 You can pass the following properties to customize rendered labels and values:
 
-```js
+```jsx
 <JSONTree
     labelRenderer={raw => <strong>{raw}</strong>}
     valueRenderer={raw => <em>{raw}</em>}
@@ -134,8 +131,9 @@ For `labelRenderer`, you can provide a full path - [see this PR](https://github.
 
 #### More Options
 
-- Add `expandAll` property to expand all nodes.
-- Add `hideRoot={true}` to hide a root node.
+- `shouldExpandNode: function(keyName, data, level)` - determines if node should be expanded (root is expanded by default)
+- `hideRoot: Boolean` - if `true`, a root node is hidden.
+
 ### Credits
 
 - All credits to [Dave Vedder](http://www.eskimospy.com/) ([veddermatic@gmail.com](mailto:veddermatic@gmail.com)), who wrote the original code as [JSONViewer](https://bitbucket.org/davevedder/react-json-viewer/).
