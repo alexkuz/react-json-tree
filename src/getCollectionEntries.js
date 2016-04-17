@@ -8,11 +8,15 @@ function getLength(type, collection) {
   return Infinity;
 }
 
+function isIterableMap(collection) {
+  return typeof collection.set === 'function';
+}
+
 function getEntries(type, collection, from=0, to=Infinity) {
   let res;
 
   if (type === 'Object') {
-    const keys = Object.keys(collection).slice(from, to + 1);
+    const keys = Object.getOwnPropertyNames(collection).slice(from, to + 1);
 
     res = {
       entries: keys.map(key => ({ key, value: collection[key] }))
@@ -25,12 +29,19 @@ function getEntries(type, collection, from=0, to=Infinity) {
     let idx = 0;
     let entries = [];
     let done = true;
+
+    let isMap = isIterableMap(collection);
+
     for (let item of collection) {
       if (idx > to) {
         done = false;
         break;
       } if (from <= idx) {
-        entries.push({ key: idx, value: item });
+        if (isMap && Array.isArray(item)) {
+          entries.push({ key: item[0], value: item[1] });
+        } else {
+          entries.push({ key: idx, value: item });
+        }
       }
       idx++;
     }
