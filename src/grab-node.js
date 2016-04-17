@@ -43,6 +43,7 @@ export default function({
 
   switch (nodeType) {
     case 'Object':
+    case 'Error':
       return <JSONObjectNode {...nestedNodeProps} />;
     case 'Array':
       return <JSONArrayNode {...nestedNodeProps} />;

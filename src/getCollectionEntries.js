@@ -16,7 +16,7 @@ function getEntries(type, collection, from=0, to=Infinity) {
   let res;
 
   if (type === 'Object') {
-    const keys = Object.keys(collection).slice(from, to + 1);
+    const keys = Object.getOwnPropertyNames(collection).slice(from, to + 1);
 
     res = {
       entries: keys.map(key => ({ key, value: collection[key] }))
