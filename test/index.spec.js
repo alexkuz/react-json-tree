@@ -3,7 +3,7 @@ import expect from 'expect';
 import { createRenderer } from 'react-addons-test-utils';
 
 import JSONTree from '../src/index';
-import JSONObjectNode from '../lib/JSONObjectNode';
+import JSONNode from '../lib/JSONNode';
 
 const BASIC_DATA = { a: 1, b: 'c' };
 
@@ -18,6 +18,6 @@ describe('JSONTree', () => {
     const result = render(<JSONTree data={BASIC_DATA} />);
 
     expect(result.type).toBe('ul');
-    expect(result.props.children.type.name).toBe(JSONObjectNode.name);
+    expect(result.props.children.type.name).toBe(JSONNode.name);
   });
 });
