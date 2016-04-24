@@ -18,6 +18,17 @@ const colorMap = theme => ({
   ITEM_STRING_EXPANDED_COLOR: theme.base03
 });
 
+const valueColorMap = colors => ({
+  String: colors.STRING_COLOR,
+  Date: colors.DATE_COLOR,
+  Number: colors.NUMBER_COLOR,
+  Boolean: colors.BOOLEAN_COLOR,
+  Null: colors.NULL_COLOR,
+  Undefined: colors.UNDEFINED_COLOR,
+  Function: colors.FUNCTION_COLOR,
+  Symbol: colors.SYMBOL_COLOR
+});
+
 const getDefaultThemeStyling = theme => {
   const colors = colorMap(theme);
 
@@ -45,45 +56,21 @@ const getDefaultThemeStyling = theme => {
       MozUserSelect: 'text'
     },
 
-    valueLabel: {
+    label: {
       display: 'inline-block',
-      marginRight: 5,
       color: colors.LABEL_COLOR
     },
 
-    valueText: {},
-
-    'valueText--String': {
-      color: colors.STRING_COLOR
+    valueLabel: {
+      marginRight: 5
     },
 
-    'valueText--Date': {
-      color: colors.DATE_COLOR
-    },
-
-    'valueText--Number': {
-      color: colors.NUMBER_COLOR
-    },
-
-    'valueText--Boolean': {
-      color: colors.BOOLEAN_COLOR
-    },
-
-    'valueText--Null': {
-      color: colors.NULL_COLOR
-    },
-
-    'valueText--Undefined': {
-      color: colors.UNDEFINED_COLOR
-    },
-
-    'valueText--Function': {
-      color: colors.FUNCTION_COLOR
-    },
-
-    'valueText--Symbol': {
-      color: colors.SYMBOL_COLOR
-    },
+    valueText: ({ style }, nodeType) => ({
+      style: {
+        ...style,
+        color: valueColorMap(colors)[nodeType]
+      }
+    }),
 
     itemRange: {
       marginBottom: 8,
@@ -91,31 +78,31 @@ const getDefaultThemeStyling = theme => {
       color: colors.LABEL_COLOR
     },
 
-    arrow: ({ style }, opened) => ({
+    arrow: ({ style }, type, expanded) => ({
       style: {
         ...style,
         display: 'inline-block',
         marginLeft: 0,
         marginTop: 8,
-        'float': 'left',
+        float: 'left',
         transition: '150ms',
         WebkitTransition: '150ms',
         MozTransition: '150ms',
-        WebkitTransform: opened ? 'rotateZ(0deg)' : 'rotateZ(-90deg)',
-        MozTransform: opened ? 'rotateZ(0deg)' : 'rotateZ(-90deg)',
-        transform: opened ? 'rotateZ(0deg)' : 'rotateZ(-90deg)',
+        WebkitTransform: expanded ? 'rotateZ(0deg)' : 'rotateZ(-90deg)',
+        MozTransform: expanded ? 'rotateZ(0deg)' : 'rotateZ(-90deg)',
+        transform: expanded ? 'rotateZ(0deg)' : 'rotateZ(-90deg)',
         position: 'relative'
       }
     }),
 
-    arrowContainer: ({ style }, double) => ({
+    arrowContainer: ({ style }, arrowStyle) => ({
       style: {
         ...style,
         display: 'inline-block',
         paddingTop: 2,
         paddingBottom: 2,
-        paddingRight: double ? 12 : 5,
-        paddingLeft: double ? 12 : 5,
+        paddingRight: arrowStyle === 'double' ? 12 : 5,
+        paddingLeft: arrowStyle === 'double' ? 12 : 5,
         cursor: 'pointer'
       }
     }),
@@ -140,12 +127,11 @@ const getDefaultThemeStyling = theme => {
       paddingBottom: 3,
       marginLeft: 14
     },
+
     nestedNodeLabel: {
       margin: 0,
       padding: 0,
-      display: 'inline-block',
-      cursor: 'pointer',
-      color: colors.LABEL_COLOR
+      cursor: 'pointer'
     },
 
     nestedNodeItemString: ({ style }, expanded) => ({

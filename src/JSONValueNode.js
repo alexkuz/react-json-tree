@@ -1,38 +1,44 @@
-import React from 'react';
-import reactMixin from 'react-mixin';
-import { SquashClickEventMixin } from './mixins';
+import React, { PropTypes } from 'react';
 
 /**
  * Renders simple values (eg. strings, numbers, booleans, etc)
  */
 
-@reactMixin.decorate(SquashClickEventMixin)
-export default class JSONValueNode extends React.Component {
-  static defaultProps = {
-    valueGetter: value => value
-  };
+const JSONValueNode = ({
+  nodeType,
+  styling,
+  labelRenderer,
+  keyPath,
+  valueRenderer,
+  value,
+  valueGetter
+}) => (
+  <li
+    {...styling(['value', `value--${nodeType}`], nodeType, keyPath)}
+  >
+    <label {...styling(['label', 'valueLabel'], nodeType, keyPath)}>
+      {labelRenderer(...keyPath)}:
+    </label>
+    <span {...styling('valueText', nodeType, keyPath)}>
+      {valueRenderer(valueGetter(value), value)}
+    </span>
+  </li>
+);
 
-  render() {
-    const {
-      nodeType,
-      styling,
-      labelRenderer,
-      keyPath,
-      valueRenderer,
-      value,
-      valueGetter
-    } = this.props;
+JSONValueNode.propTypes = {
+  nodeType: PropTypes.string.isRequired,
+  styling: PropTypes.func.isRequired,
+  labelRenderer: PropTypes.func.isRequired,
+  keyPath: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  ).isRequired,
+  valueRenderer: PropTypes.func.isRequired,
+  value: PropTypes.any,
+  valueGetter: PropTypes.func
+};
 
-    return (
-      <li {...styling(['value', `value--${nodeType}`], nodeType, keyPath)}
-          onClick={::this.handleClick}>
-        <label {...styling(['valueLabel', `valueLabel--${nodeType}`], nodeType, keyPath)}>
-          {labelRenderer(...keyPath)}:
-        </label>
-        <span {...styling(['valueText', `valueText--${nodeType}`], nodeType, keyPath)}>
-          {valueRenderer(valueGetter(value), value)}
-        </span>
-      </li>
-    );
-  }
-}
+JSONValueNode.defaultProps = {
+  valueGetter: value => value
+};
+
+export default JSONValueNode;

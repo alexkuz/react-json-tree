@@ -4,10 +4,48 @@
 // port by Daniele Zannotti http://www.github.com/dzannotti <dzannotti@me.com>
 
 import React, { PropTypes } from 'react';
-import grabNode from './grabNode';
+import JSONNode from './JSONNode';
 import createStylingFromTheme from './createStylingFromTheme';
 
 const identity = value => value;
+
+function checkLegacyTheming(theme, props) {
+  const deprecatedStylingMethodsMap = {
+    getArrowStyle: 'arrow',
+    getListStyle: 'nestedNodeChildren',
+    getItemStringStyle: 'nestedNodeItemString',
+    getLabelStyle: 'label',
+    getValueStyle: 'valueText'
+  };
+
+  const deprecatedStylingMethods = Object.keys(deprecatedStylingMethodsMap)
+    .filter(name => props[name]);
+
+  if (deprecatedStylingMethods.length > 0) {
+    if (typeof theme === 'string') {
+      theme = {
+        extend: theme
+      };
+    } else {
+      theme = { ...theme };
+    }
+
+    deprecatedStylingMethods.forEach(name => {
+      console.error( // eslint-disable-line no-console
+        `Styling method "${name}" is deprecated, use "theme" property instead`
+      );
+
+      theme[deprecatedStylingMethodsMap[name]] = ({ style }, ...args) => ({
+        style: {
+          ...style,
+          ...props[name](...args)
+        }
+      });
+    });
+  }
+
+  return theme;
+}
 
 export default class JSONTree extends React.Component {
   static propTypes = {
@@ -20,12 +58,14 @@ export default class JSONTree extends React.Component {
       PropTypes.object,
       PropTypes.string
     ]),
-    isLightTheme: PropTypes.bool
+    isLightTheme: PropTypes.bool,
+    expandRoot: PropTypes.bool,
+    expandAll: PropTypes.bool,
+    keyPath: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    postprocessValue: PropTypes.func
   };
 
   static defaultProps = {
-    expandRoot: true,
-    expandAll: false,
     shouldExpandNode: (keyName, data, level) => level === 0, // expands root by default,
     hideRoot: false,
     keyPath: ['root'],
@@ -38,37 +78,11 @@ export default class JSONTree extends React.Component {
     isLightTheme: true
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    if (!this.props.expandRoot) {
-      console.error('The expandRoot property is deprecated, use "shouldExpandNode: () => false" instead');
-    }
-
-    if (this.props.expandAll) {
-      console.error('The expandAll property is deprecated, use "shouldExpandNode: () => true" instead');
-    }
-
-    const deprecatedStylingMethods = [
-      'getArrowStyle',
-      'getListStyle',
-      'getItemStringStyle',
-      'getLabelStyle',
-      'getValueStyle'
-    ].filter(name => this.props[name]);
-
-    deprecatedStylingMethods
-      .forEach(name => console.error(`Styling method "${name}" is deprecated, use "theme" property instead`));
-
-    // TODO: theming fallback
-
     const {
       data: value,
-      expandRoot: initialExpanded,
-      expandAll: allExpanded,
-      style,
+      expandRoot,
+      expandAll,
       keyPath,
       postprocessValue,
       hideRoot,
@@ -77,24 +91,29 @@ export default class JSONTree extends React.Component {
       ...rest
     } = this.props;
 
-    const styling = createStylingFromTheme(theme, null, isLightTheme);
+    if (typeof expandRoot !== 'undefined') {
+      console.error( // eslint-disable-line no-console
+        'The expandRoot property is deprecated, use "shouldExpandNode: () => false" instead'
+      );
+    }
 
-    let nodeToRender;
+    if (typeof expandAll !== 'undefined') {
+      console.error( // eslint-disable-line no-console
+        'The expandAll property is deprecated, use "shouldExpandNode: () => true" instead'
+      );
+    }
 
-    nodeToRender = grabNode({
-      initialExpanded,
-      allExpanded,
-      keyPath: hideRoot ? [] : keyPath,
-      value: postprocessValue(value),
-      postprocessValue,
-      hideRoot,
-      styling,
-      ...rest
-    });
+    const styling = createStylingFromTheme(checkLegacyTheming(theme, rest), null, isLightTheme);
 
     return (
       <ul {...styling('tree')}>
-        {nodeToRender}
+        <JSONNode
+          {...{ postprocessValue, hideRoot, styling, ...rest }}
+          initialExpanded={typeof expandRoot === 'undefined' ? true : expandRoot}
+          allExpanded={typeof expandAll === 'undefined' ? false : expandAll}
+          keyPath={hideRoot ? [] : keyPath}
+          value={postprocessValue(value)}
+        />
       </ul>
     );
   }

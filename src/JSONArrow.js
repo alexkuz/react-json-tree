@@ -1,18 +1,34 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-export default class JSONArrow extends React.Component {
-  render() {
-    const { styling, double, open } = this.props;
+const JSONArrow = ({
+  styling,
+  arrowStyle,
+  expanded,
+  nodeType,
+  onClick
+}) => (
+  <div
+    {...styling('arrowContainer', arrowStyle)}
+    onClick={onClick}
+  >
+    <div {...styling(['arrow', 'arrowSign'], nodeType, expanded)}>
+      {arrowStyle === 'double' &&
+        <div {...styling(['arrowSign', 'arrowSignInner'])} />
+      }
+    </div>
+  </div>
+);
 
-    return (
-      <div {...styling('arrowContainer', double)}
-           onClick={this.props.onClick}>
-        <div {...styling(['arrow', 'arrowSign'], open)}>
-          {this.props.double &&
-            <div {...styling(['arrowSign', 'arrowSignInner'])} />
-          }
-        </div>
-      </div>
-    );
-  }
-}
+JSONArrow.propTypes = {
+  styling: PropTypes.func.isRequired,
+  arrowStyle: PropTypes.oneOf(['single', 'double']),
+  expanded: PropTypes.bool.isRequired,
+  nodeType: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
+};
+
+JSONArrow.defaultProps = {
+  arrowStyle: 'single'
+};
+
+export default JSONArrow;

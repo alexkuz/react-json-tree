@@ -1,7 +1,8 @@
 import React from 'react';
 import JSONNestedNode from './JSONNestedNode';
 
-// Returns the "n Items" string for this node, generating and caching it if it hasn't been created yet.
+// Returns the "n Items" string for this node,
+// generating and caching it if it hasn't been created yet.
 function createItemString(data, limit) {
   let count = 0;
   let hasMore = false;
@@ -20,7 +21,7 @@ function createItemString(data, limit) {
 }
 
 // Configures <JSONNestedNode> to render an iterable
-export default function({ ...props }) {
+export default function JSONIterableNode({ ...props }) {
   return (
     <JSONNestedNode
       {...props}

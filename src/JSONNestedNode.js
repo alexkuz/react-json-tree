@@ -1,9 +1,7 @@
-import React from 'react';
-import reactMixin from 'react-mixin';
-import { ExpandedStateHandlerMixin } from './mixins';
+import React, { PropTypes } from 'react';
 import JSONArrow from './JSONArrow';
 import getCollectionEntries from './getCollectionEntries';
-import grabNode from './grabNode';
+import JSONNode from './JSONNode';
 import ItemRange from './ItemRange';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
@@ -11,7 +9,7 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
  * Renders nested values (eg. objects, arrays, lists, etc.)
  */
 
-function getChildNodes(props, from, to) {
+function renderChildNodes(props, from, to) {
   const {
     nodeType,
     data,
@@ -26,27 +24,31 @@ function getChildNodes(props, from, to) {
   getCollectionEntries(nodeType, data, collectionLimit, from, to).forEach(entry => {
     if (entry.to) {
       childNodes.push(
-        <ItemRange {...props}
-                   key={`ItemRange${entry.from}-${entry.to}`}
-                   from={entry.from}
-                   to={entry.to}
-                   getChildNodes={getChildNodes} />
+        <ItemRange
+          {...props}
+          key={`ItemRange--${entry.from}-${entry.to}`}
+          from={entry.from}
+          to={entry.to}
+          renderChildNodes={renderChildNodes}
+        />
       );
     } else {
       const { key, value } = entry;
       const isCircular = circularCache.indexOf(value) !== -1;
 
-      const node = grabNode({
-        ...props,
-        keyPath: [key, ...keyPath],
-        value: postprocessValue(value),
-        postprocessValue,
-        collectionLimit,
-        circularCache: [...circularCache, value],
-        initialExpanded: false,
-        allExpanded: isCircular ? false : allExpanded,
-        hideRoot: false
-      });
+      const node = (
+        <JSONNode
+          {...props}
+          {...{ postprocessValue, collectionLimit }}
+          key={`Node--${key}`}
+          keyPath={[key, ...keyPath]}
+          value={postprocessValue(value)}
+          circularCache={[...circularCache, value]}
+          initialExpanded={false}
+          allExpanded={isCircular ? false : allExpanded}
+          hideRoot={false}
+        />
+      );
 
       if (node !== false) {
         childNodes.push(node);
@@ -57,8 +59,26 @@ function getChildNodes(props, from, to) {
   return childNodes;
 }
 
-@reactMixin.decorate(ExpandedStateHandlerMixin)
 export default class JSONNestedNode extends React.Component {
+  static propTypes = {
+    getItemString: PropTypes.func.isRequired,
+    nodeTypeIndicator: PropTypes.any,
+    nodeType: PropTypes.string.isRequired,
+    data: PropTypes.any,
+    hideRoot: PropTypes.bool.isRequired,
+    createItemString: PropTypes.func.isRequired,
+    styling: PropTypes.func.isRequired,
+    collectionLimit: PropTypes.number,
+    keyPath: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    ).isRequired,
+    labelRenderer: PropTypes.func.isRequired,
+    shouldExpandNode: PropTypes.func,
+    level: PropTypes.number.isRequired,
+    initialExpanded: PropTypes.bool,
+    allExpanded: PropTypes.bool
+  };
+
   static defaultProps = {
     data: [],
     initialExpanded: false,
@@ -71,10 +91,10 @@ export default class JSONNestedNode extends React.Component {
     super(props);
 
     // calculate individual node expansion if necessary
-    const shouldExpandNode = this.props.shouldExpandNode ?
-        this.props.shouldExpandNode(this.props.keyName, this.props.data, this.props.level) : false;
+    const shouldExpandNode = props.shouldExpandNode ?
+        props.shouldExpandNode(props.keyPath, props.data, props.level) : false;
     this.state = {
-      expanded: this.props.initialExpanded || this.props.allExpanded || shouldExpandNode,
+      expanded: props.initialExpanded || props.allExpanded || shouldExpandNode,
       createdChildNodes: false
     };
   }
@@ -95,7 +115,8 @@ export default class JSONNestedNode extends React.Component {
       labelRenderer
     } = this.props;
     const expanded = this.state.expanded;
-    const renderedChildren = expanded ? getChildNodes({...this.props, level: this.props.level + 1}) : null;
+    const renderedChildren = expanded ?
+      renderChildNodes({ ...this.props, level: this.props.level + 1 }) : null;
 
     const itemType = (
       <span {...styling('nestedNodeItemType', expanded)}>
@@ -108,29 +129,38 @@ export default class JSONNestedNode extends React.Component {
       itemType,
       createItemString(data, collectionLimit)
     );
+    const stylingArgs = [nodeType, expanded, keyPath];
 
     return hideRoot ? (
-      <div>
+      <ul>
         {renderedChildren}
-      </div>
+      </ul>
     ) : (
-      <li {...styling('nestedNode', expanded, keyPath)}>
+      <li {...styling('nestedNode', ...stylingArgs)}>
         <JSONArrow
           styling={styling}
-          open={expanded}
-          onClick={::this.handleClick} />
-        <label {...styling('nestedNodeLabel', expanded, keyPath)}
-               onClick={::this.handleClick}>
+          nodeType={nodeType}
+          expanded={expanded}
+          onClick={this.handleClick}
+        />
+        <label
+          {...styling(['label', 'nestedNodeLabel'], ...stylingArgs)}
+          onClick={::this.handleClick}
+        >
           {labelRenderer(...keyPath)}:
         </label>
-        <span {...styling('nestedNodeItemString', expanded, keyPath)}
-              onClick={::this.handleClick}>
+        <span
+          {...styling('nestedNodeItemString', ...stylingArgs)}
+          onClick={this.handleClick}
+        >
           {renderedItemString}
         </span>
-        <ul {...styling('nestedNodeChildren', expanded, keyPath)}>
+        <ul {...styling('nestedNodeChildren', ...stylingArgs)}>
           {renderedChildren}
         </ul>
       </li>
     );
   }
+
+  handleClick = () => this.setState({ expanded: !this.state.expanded });
 }

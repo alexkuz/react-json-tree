@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import objType from './objType';
 import JSONObjectNode from './JSONObjectNode';
 import JSONArrayNode from './JSONArrayNode';
 import JSONIterableNode from './JSONIterableNode';
 import JSONValueNode from './JSONValueNode';
 
-export default function({
+const JSONNode = ({
   getItemString,
   initialExpanded = false,
   keyPath,
@@ -15,7 +15,7 @@ export default function({
   valueRenderer,
   isCustomNode,
   ...rest
-}) {
+}) => {
   const nodeType = isCustomNode(value) ? 'Custom' : objType(value);
 
   const simpleNodeProps = {
@@ -50,7 +50,7 @@ export default function({
     case 'Number':
       return <JSONValueNode {...simpleNodeProps} />;
     case 'Boolean':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw ? 'true' : 'false'} />;
+      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => (raw ? 'true' : 'false')} />;
     case 'Date':
       return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw.toISOString()} />;
     case 'Null':
@@ -63,6 +63,20 @@ export default function({
     case 'Custom':
       return <JSONValueNode {...simpleNodeProps} />;
     default:
-      return false;
+      return null;
   }
-}
+};
+
+JSONNode.propTypes = {
+  getItemString: PropTypes.func.isRequired,
+  initialExpanded: PropTypes.bool.isRequired,
+  keyPath: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+  labelRenderer: PropTypes.func.isRequired,
+  styling: PropTypes.func.isRequired,
+  value: PropTypes.any,
+  valueRenderer: PropTypes.func.isRequired,
+  isCustomNode: PropTypes.func.isRequired
+};
+
+export default JSONNode;
+
