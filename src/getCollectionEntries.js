@@ -27,12 +27,12 @@ function getEntries(type, collection, from=0, to=Infinity) {
     };
   } else {
     let idx = 0;
-    let entries = [];
+    const entries = [];
     let done = true;
 
-    let isMap = isIterableMap(collection);
+    const isMap = isIterableMap(collection);
 
-    for (let item of collection) {
+    for (const item of collection) {
       if (idx > to) {
         done = false;
         break;

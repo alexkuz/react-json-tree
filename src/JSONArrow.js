@@ -1,87 +1,34 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-const styles = {
-  base: {
-    display: 'inline-block',
-    marginLeft: 0,
-    marginTop: 8,
-    'float': 'left',
-    transition: '150ms',
-    WebkitTransition: '150ms',
-    MozTransition: '150ms',
-    WebkitTransform: 'rotateZ(-90deg)',
-    MozTransform: 'rotateZ(-90deg)',
-    transform: 'rotateZ(-90deg)',
-    position: 'relative'
-  },
-  container: {
-    display: 'inline-block',
-    paddingTop: 2,
-    paddingBottom: 2,
-    paddingRight: 5,
-    paddingLeft: 5,
-    cursor: 'pointer'
-  },
-  containerDouble: {
-    paddingTop: 2,
-    paddingBottom: 2,
-    paddingRight: 10,
-    paddingLeft: 10
-  },
-  arrow: {
-    borderLeft: '5px solid transparent',
-    borderRight: '5px solid transparent',
-    borderTopWidth: 5,
-    borderTopStyle: 'solid'
-  },
-  open: {
-    WebkitTransform: 'rotateZ(0deg)',
-    MozTransform: 'rotateZ(0deg)',
-    transform: 'rotateZ(0deg)'
-  },
-  inner: {
-    position: 'absolute',
-    top: 0,
-    left: -5
-  }
+const JSONArrow = ({
+  styling,
+  arrowStyle,
+  expanded,
+  nodeType,
+  onClick
+}) => (
+  <div
+    {...styling('arrowContainer', arrowStyle)}
+    onClick={onClick}
+  >
+    <div {...styling(['arrow', 'arrowSign'], nodeType, expanded)}>
+      {arrowStyle === 'double' &&
+        <div {...styling(['arrowSign', 'arrowSignInner'])} />
+      }
+    </div>
+  </div>
+);
+
+JSONArrow.propTypes = {
+  styling: PropTypes.func.isRequired,
+  arrowStyle: PropTypes.oneOf(['single', 'double']),
+  expanded: PropTypes.bool.isRequired,
+  nodeType: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
-export default class JSONArrow extends React.Component {
-  render() {
-    let containerStyle = {
-      ...styles.container
-    };
-    let style = {
-      ...styles.base,
-      ...styles.arrow
-    };
-    const color = {
-      borderTopColor: this.props.theme.base0D
-    };
-    if (this.props.open) {
-      style = {
-        ...style,
-        ...styles.open
-      };
-    }
-    if (this.props.double) {
-      containerStyle = {
-        ...containerStyle,
-        ...styles.containerDouble
-      };
-    }
-    style = {
-      ...style,
-      ...this.props.style
-    };
-    return (
-      <div style={containerStyle} onClick={this.props.onClick}>
-        <div style={{ ...color, ...style }}>
-          {this.props.double &&
-            <div style={{ ...color, ...styles.inner, ...styles.arrow }} />
-          }
-        </div>
-      </div>
-    );
-  }
-}
+JSONArrow.defaultProps = {
+  arrowStyle: 'single'
+};
+
+export default JSONArrow;

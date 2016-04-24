@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "extends": "eslint-config-airbnb",
   "env": {
     "browser": true,
@@ -6,17 +7,46 @@
     "node": true
   },
   "rules": {
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
-    "react/react-in-jsx-scope": 2,
-    "no-console": 0,
-    // Temporarily disabled due to babel-eslint issues:
-    "block-scoped-var": 0,
-    "no-dupe-keys": 0,
-    "padded-blocks": 0,
+    "comma-dangle": 0,
+    "jsx-quotes": [1, "prefer-single"],
+    // "react/jsx-uses-react": 2,
+    // "react/jsx-uses-vars": 2,
+    // "react/react-in-jsx-scope": 2,
+    // "no-console": 1,
+    // "no-dupe-keys": 0,
     "no-param-reassign": 0,
+    // Disables warning for default arguments (to be removed)
+    "space-infix-ops": 0,
+    "react/sort-comp": [
+      1, {
+        "order": [
+          "static-methods",
+          "constructor",
+          "lifecycle",
+          "everything-else",
+          "render",
+          "/^handle.+$/"
+        ],
+        "groups": {
+          "lifecycle": [
+            "childContextTypes",
+            "getInitialState",
+            "state",
+            "getChildContext",
+            "componentWillMount",
+            "componentDidMount",
+            "componentWillReceiveProps",
+            "shouldComponentUpdate",
+            "componentWillUpdate",
+            "componentDidUpdate",
+            "componentWillUnmount"
+          ]
+        }
+      }
+    ]
   },
   "plugins": [
-    "react"
+    "react",
+    "babel"
   ]
 }
