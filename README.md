@@ -102,7 +102,7 @@ You can pass `getItemString` to customize the way arrays, objects, and iterable 
 By default, it'll be:
 
 ```js
-<JSONTree getArrowStyle={(type, data, itemType, itemString)
+<JSONTree getItemString={(type, data, itemType, itemString)
   => <span>{itemType} {itemString}</span>}
 ```
 
