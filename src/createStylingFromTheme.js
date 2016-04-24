@@ -78,7 +78,7 @@ const getDefaultThemeStyling = theme => {
       color: colors.LABEL_COLOR
     },
 
-    arrow: ({ style }, type, expanded) => ({
+    arrow: ({ style }, nodeType, expanded) => ({
       style: {
         ...style,
         display: 'inline-block',
@@ -134,7 +134,7 @@ const getDefaultThemeStyling = theme => {
       cursor: 'pointer'
     },
 
-    nestedNodeItemString: ({ style }, expanded) => ({
+    nestedNodeItemString: ({ style }, nodeType, expanded) => ({
       style: {
         ...style,
         cursor: 'default',
@@ -147,7 +147,7 @@ const getDefaultThemeStyling = theme => {
       marginRight: 5
     },
 
-    nestedNodeChildren: ({ style }, expanded) => ({
+    nestedNodeChildren: ({ style }, nodeType, expanded) => ({
       style: {
         ...style,
         padding: 0,

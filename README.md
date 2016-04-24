@@ -21,7 +21,7 @@ const json = {
   immutable: Map({ key: 'value' })
 }
 
-<JSONTree data={ json } />
+<JSONTree data={json} />
 ```
 
 #### Result:
@@ -82,7 +82,7 @@ const theme = {
     },
     // switch key for objects to uppercase when object is expanded.
     // `nestedNodeLabel` receives additional arguments `expanded` and `keyPath`
-    nestedNodeLabel: ({ style }, expanded) => ({
+    nestedNodeLabel: ({ style }, nodeType, expanded) => ({
       style: {
         ...style,
         textTransform: expanded ? 'uppercase' : style.textTransform

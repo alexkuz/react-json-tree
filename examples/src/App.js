@@ -2,7 +2,7 @@ import React from 'react';
 import JSONTree from '../../src';
 import { Map } from 'immutable';
 
-const getLabelStyle = ({ style }, expanded) => ({
+const getLabelStyle = ({ style }, nodeType, expanded) => ({
   style: {
     ...style,
     textTransform: expanded ? 'uppercase' : style.textTransform
