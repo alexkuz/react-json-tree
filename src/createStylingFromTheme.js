@@ -128,6 +128,11 @@ const getDefaultThemeStyling = theme => {
       marginLeft: 14
     },
 
+    rootNode: {
+      padding: 0,
+      margin: 0
+    },
+
     nestedNodeLabel: {
       margin: 0,
       padding: 0,
@@ -155,7 +160,13 @@ const getDefaultThemeStyling = theme => {
         listStyle: 'none',
         display: expanded ? 'block' : 'none'
       }
-    })
+    }),
+
+    rootNodeChildren: {
+      padding: 0,
+      margin: 0,
+      listStyle: 'none'
+    }
   };
 };
 

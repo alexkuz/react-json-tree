@@ -132,9 +132,11 @@ export default class JSONNestedNode extends React.Component {
     const stylingArgs = [nodeType, expanded, keyPath];
 
     return hideRoot ? (
-      <ul>
-        {renderedChildren}
-      </ul>
+      <li {...styling('rootNode', ...stylingArgs)}>
+        <ul {...styling('rootNodeChildren', ...stylingArgs)}>
+          {renderedChildren}
+        </ul>
+      </li>
     ) : (
       <li {...styling('nestedNode', ...stylingArgs)}>
         <JSONArrow
