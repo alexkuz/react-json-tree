@@ -40,7 +40,8 @@ const data = {
   },
   symbol: Symbol('value'),
   immutable: Map({ key: 'value' }), // eslint-disable-line new-cap
-  hugeArray: Array.from({ length: 10000 }).map((_, i) => `item #${i}`)
+  hugeArray: Array.from({ length: 10000 }).map((_, i) => `item #${i}`),
+  longString: 'Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.' // eslint-disable-line max-len
 };
 
 const theme = {
