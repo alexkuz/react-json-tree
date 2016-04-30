@@ -55,8 +55,8 @@ const getDefaultThemeStyling = theme => {
       WebkitUserSelect: 'text',
       MozUserSelect: 'text',
       wordWrap: 'break-word',
-      textIndent: -16,
-      paddingLeft: 20,
+      paddingLeft: 34,
+      textIndent: -7,
       wordBreak: 'break-all'
     },
 
