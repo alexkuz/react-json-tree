@@ -53,7 +53,11 @@ const getDefaultThemeStyling = theme => {
       paddingRight: 0,
       marginLeft: 14,
       WebkitUserSelect: 'text',
-      MozUserSelect: 'text'
+      MozUserSelect: 'text',
+      wordWrap: 'break-word',
+      textIndent: -16,
+      paddingLeft: 20,
+      wordBreak: 'break-all'
     },
 
     label: {
