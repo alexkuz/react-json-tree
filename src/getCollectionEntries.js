@@ -12,11 +12,17 @@ function isIterableMap(collection) {
   return typeof collection.set === 'function';
 }
 
-function getEntries(type, collection, from=0, to=Infinity) {
+function getEntries(type, collection, sortObjectKeys, from=0, to=Infinity) {
   let res;
 
   if (type === 'Object') {
-    const keys = Object.getOwnPropertyNames(collection).slice(from, to + 1);
+    let keys = Object.getOwnPropertyNames(collection);
+
+    if (typeof sortObjectKeys !== 'undefined') {
+      keys.sort(sortObjectKeys);
+    }
+
+    keys = keys.slice(from, to + 1);
 
     res = {
       entries: keys.map(key => ({ key, value: collection[key] }))
@@ -67,26 +73,31 @@ function getRanges(from, to, limit) {
   return ranges;
 }
 
-export default function getCollectionEntries(type, collection, limit, from=0, to=Infinity) {
+export default function getCollectionEntries(
+  type, collection, sortObjectKeys, limit, from=0, to=Infinity
+) {
+  const getEntriesBound = getEntries.bind(null, type, collection, sortObjectKeys);
+
   if (!limit) {
-    return getEntries(type, collection).entries;
+    return getEntriesBound().entries;
   }
+
   const isSubset = to < Infinity;
   const length = Math.min(to - from, getLength(type, collection));
 
   if (type !== 'Iterable') {
     if (length <= limit || limit < 7) {
-      return getEntries(type, collection, from, to).entries;
+      return getEntriesBound(from, to).entries;
     }
   } else {
     if (length <= limit && !isSubset) {
-      return getEntries(type, collection, from, to).entries;
+      return getEntriesBound(from, to).entries;
     }
   }
 
   let limitedEntries;
   if (type === 'Iterable') {
-    const { hasMore, entries } = getEntries(type, collection, from, from + limit - 1);
+    const { hasMore, entries } = getEntriesBound(from, from + limit - 1);
 
     limitedEntries = hasMore ? [
       ...entries,
@@ -96,9 +107,9 @@ export default function getCollectionEntries(type, collection, limit, from=0, to
     limitedEntries = isSubset ?
       getRanges(from, to, limit) :
       [
-        ...getEntries(type, collection, 0, limit - 5).entries,
+        ...getEntriesBound(0, limit - 5).entries,
         ...getRanges(limit - 4, length - 5, limit),
-        ...getEntries(type, collection, length - 4, length - 1).entries
+        ...getEntriesBound(length - 4, length - 1).entries
       ];
   }
 

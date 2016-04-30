@@ -99,8 +99,17 @@ const App = () => (
     <div>
       <JSONTree
         data={data}
-        labelRenderer={raw => <strong>{raw}</strong>}
-        valueRenderer={raw => <em>{raw}</em>}
+        theme={theme}
+        labelRenderer={raw => <span>(({raw}))</span>}
+        valueRenderer={raw => <em>😐 {raw} 😐</em>}
+      />
+    </div>
+    <p>Sort object keys with <code>sortObjectKeys</code> prop.</p>
+    <div>
+      <JSONTree
+        data={data}
+        theme={theme}
+        sortObjectKeys
       />
     </div>
   </div>

@@ -17,11 +17,12 @@ function renderChildNodes(props, from, to) {
     circularCache,
     keyPath,
     postprocessValue,
-    allExpanded
+    allExpanded,
+    sortObjectKeys
   } = props;
   const childNodes = [];
 
-  getCollectionEntries(nodeType, data, collectionLimit, from, to).forEach(entry => {
+  getCollectionEntries(nodeType, data, sortObjectKeys, collectionLimit, from, to).forEach(entry => {
     if (entry.to) {
       childNodes.push(
         <ItemRange
@@ -76,7 +77,8 @@ export default class JSONNestedNode extends React.Component {
     shouldExpandNode: PropTypes.func,
     level: PropTypes.number.isRequired,
     initialExpanded: PropTypes.bool,
-    allExpanded: PropTypes.bool
+    allExpanded: PropTypes.bool,
+    sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool])
   };
 
   static defaultProps = {
