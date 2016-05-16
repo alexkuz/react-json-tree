@@ -20,7 +20,7 @@ const JSONValueNode = ({
       {labelRenderer(...keyPath)}:
     </label>
     <span {...styling('valueText', nodeType, keyPath)}>
-      {valueRenderer(valueGetter(value), value)}
+      {valueRenderer(valueGetter(value), value, ...keyPath)}
     </span>
   </li>
 );
