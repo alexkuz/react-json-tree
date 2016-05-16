@@ -174,7 +174,6 @@ const getDefaultThemeStyling = theme => {
   };
 };
 
-export default createStyling({
-  getStylingFromBase16: getDefaultThemeStyling,
+export default createStyling(getDefaultThemeStyling, {
   defaultBase16: solarized
 });
