@@ -17,7 +17,6 @@ function renderChildNodes(props, from, to) {
     circularCache,
     keyPath,
     postprocessValue,
-    allExpanded,
     sortObjectKeys
   } = props;
   const childNodes = [];
@@ -45,8 +44,7 @@ function renderChildNodes(props, from, to) {
           keyPath={[key, ...keyPath]}
           value={postprocessValue(value)}
           circularCache={[...circularCache, value]}
-          initialExpanded={false}
-          allExpanded={isCircular ? false : allExpanded}
+          isCircular={isCircular}
           hideRoot={false}
         />
       );
@@ -76,15 +74,12 @@ export default class JSONNestedNode extends React.Component {
     labelRenderer: PropTypes.func.isRequired,
     shouldExpandNode: PropTypes.func,
     level: PropTypes.number.isRequired,
-    initialExpanded: PropTypes.bool,
-    allExpanded: PropTypes.bool,
-    sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool])
+    sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+    isCircular: PropTypes.bool
   };
 
   static defaultProps = {
     data: [],
-    initialExpanded: false,
-    allExpanded: false,
     circularCache: [],
     level: 0
   };
@@ -93,10 +88,10 @@ export default class JSONNestedNode extends React.Component {
     super(props);
 
     // calculate individual node expansion if necessary
-    const shouldExpandNode = props.shouldExpandNode ?
+    const expanded = props.shouldExpandNode && !props.isCircular ?
         props.shouldExpandNode(props.keyPath, props.data, props.level) : false;
     this.state = {
-      expanded: props.initialExpanded || props.allExpanded || shouldExpandNode,
+      expanded,
       createdChildNodes: false
     };
   }

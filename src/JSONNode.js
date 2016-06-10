@@ -7,7 +7,6 @@ import JSONValueNode from './JSONValueNode';
 
 const JSONNode = ({
   getItemString,
-  initialExpanded = false,
   keyPath,
   labelRenderer,
   styling,
@@ -20,7 +19,6 @@ const JSONNode = ({
 
   const simpleNodeProps = {
     getItemString,
-    initialExpanded,
     key: keyPath[0],
     keyPath,
     labelRenderer,
@@ -69,7 +67,6 @@ const JSONNode = ({
 
 JSONNode.propTypes = {
   getItemString: PropTypes.func.isRequired,
-  initialExpanded: PropTypes.bool.isRequired,
   keyPath: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
   labelRenderer: PropTypes.func.isRequired,
   styling: PropTypes.func.isRequired,

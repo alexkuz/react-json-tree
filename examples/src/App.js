@@ -67,13 +67,25 @@ const theme = {
 
 const App = () => (
   <div>
-    <JSONTree data={data} theme={theme} isLightTheme />
+    <JSONTree
+      data={data}
+      theme={theme}
+      isLightTheme
+    />
     <br />
     <h3>Dark Theme</h3>
-    <JSONTree data={data} theme={theme} isLightTheme={false} />
+    <JSONTree
+      data={data}
+      theme={theme}
+      isLightTheme={false}
+    />
     <br />
     <h3>Base16 Greenscreen Theme</h3>
-    <JSONTree data={data} theme='greenscreen' isLightTheme={false} />
+    <JSONTree
+      data={data}
+      theme='greenscreen'
+      isLightTheme={false}
+    />
     <br />
     <h3>Style Customization</h3>
     <ul>
@@ -110,6 +122,14 @@ const App = () => (
         data={data}
         theme={theme}
         sortObjectKeys
+      />
+    </div>
+    <p>Collapsed root node</p>
+    <div>
+      <JSONTree
+        data={data}
+        theme={theme}
+        shouldExpandNode={() => false}
       />
     </div>
   </div>

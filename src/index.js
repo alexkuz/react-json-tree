@@ -59,8 +59,6 @@ export default class JSONTree extends React.Component {
       PropTypes.string
     ]),
     isLightTheme: PropTypes.bool,
-    expandRoot: PropTypes.bool,
-    expandAll: PropTypes.bool,
     keyPath: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
     postprocessValue: PropTypes.func,
     sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool])
@@ -82,8 +80,6 @@ export default class JSONTree extends React.Component {
   render() {
     const {
       data: value,
-      expandRoot,
-      expandAll,
       keyPath,
       postprocessValue,
       hideRoot,
@@ -92,26 +88,12 @@ export default class JSONTree extends React.Component {
       ...rest
     } = this.props;
 
-    if (typeof expandRoot !== 'undefined') {
-      console.error( // eslint-disable-line no-console
-        'The expandRoot property is deprecated, use "shouldExpandNode: () => false" instead'
-      );
-    }
-
-    if (typeof expandAll !== 'undefined') {
-      console.error( // eslint-disable-line no-console
-        'The expandAll property is deprecated, use "shouldExpandNode: () => true" instead'
-      );
-    }
-
     const styling = createStylingFromTheme(checkLegacyTheming(theme, rest), null, isLightTheme);
 
     return (
       <ul {...styling('tree')}>
         <JSONNode
           {...{ postprocessValue, hideRoot, styling, ...rest }}
-          initialExpanded={typeof expandRoot === 'undefined' ? true : expandRoot}
-          allExpanded={typeof expandAll === 'undefined' ? false : expandAll}
           keyPath={hideRoot ? [] : keyPath}
           value={postprocessValue(value)}
         />
