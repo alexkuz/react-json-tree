@@ -80,6 +80,13 @@ const App = () => (
       isLightTheme={false}
     />
     <br />
+    <h3>Hidden Root</h3>
+    <JSONTree
+      data={data}
+      theme={theme}
+      hideRoot
+    />
+    <br />
     <h3>Base16 Greenscreen Theme</h3>
     <JSONTree
       data={data}

@@ -125,12 +125,15 @@ const getDefaultThemeStyling = theme => {
       left: -5
     },
 
-    nestedNode: {
-      position: 'relative',
-      paddingTop: 3,
-      paddingBottom: 3,
-      marginLeft: 14
-    },
+    nestedNode: ({ style }, nodeType, expanded, keyPath) => ({
+      style: {
+        ...style,
+        position: 'relative',
+        paddingTop: 3,
+        paddingBottom: 3,
+        marginLeft: keyPath.length > 1 ? 14 : 0
+      }
+    }),
 
     rootNode: {
       padding: 0,
