@@ -47,18 +47,21 @@ const getDefaultThemeStyling = theme => {
       backgroundColor: colors.BACKGROUND_COLOR
     },
 
-    value: {
-      paddingTop: 3,
-      paddingBottom: 3,
-      paddingRight: 0,
-      marginLeft: 14,
-      WebkitUserSelect: 'text',
-      MozUserSelect: 'text',
-      wordWrap: 'break-word',
-      paddingLeft: 34,
-      textIndent: -7,
-      wordBreak: 'break-all'
-    },
+    value: ({ style }, nodeType, keyPath) => ({
+      style: {
+        ...style,
+        paddingTop: 3,
+        paddingBottom: 3,
+        paddingRight: 0,
+        marginLeft: 14,
+        WebkitUserSelect: 'text',
+        MozUserSelect: 'text',
+        wordWrap: 'break-word',
+        paddingLeft: keyPath.length > 1 ? 34 : 20,
+        textIndent: -7,
+        wordBreak: 'break-all'
+      }
+    }),
 
     label: {
       display: 'inline-block',
