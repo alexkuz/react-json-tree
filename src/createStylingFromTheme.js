@@ -40,7 +40,6 @@ const getDefaultThemeStyling = theme => {
       marginBottom: 8,
       marginLeft: 2,
       marginRight: 0,
-      fontSize: '0.90em',
       listStyle: 'none',
       MozUserSelect: 'none',
       WebkitUserSelect: 'none',
