@@ -36,9 +36,9 @@ const getDefaultThemeStyling = theme => {
     tree: {
       border: 0,
       padding: 0,
-      marginTop: 8,
-      marginBottom: 8,
-      marginLeft: 2,
+      marginTop: '0.5em',
+      marginBottom: '0.5em',
+      marginLeft: '0.125em',
       marginRight: 0,
       listStyle: 'none',
       MozUserSelect: 'none',
@@ -49,15 +49,14 @@ const getDefaultThemeStyling = theme => {
     value: ({ style }, nodeType, keyPath) => ({
       style: {
         ...style,
-        paddingTop: 3,
-        paddingBottom: 3,
+        paddingTop: '0.25em',
         paddingRight: 0,
-        marginLeft: 14,
+        marginLeft: '0.875em',
         WebkitUserSelect: 'text',
         MozUserSelect: 'text',
         wordWrap: 'break-word',
-        paddingLeft: keyPath.length > 1 ? 34 : 20,
-        textIndent: -7,
+        paddingLeft: keyPath.length > 1 ? '2.125em' : '1.25em',
+        textIndent: '-0.5em',
         wordBreak: 'break-all'
       }
     }),
@@ -68,7 +67,7 @@ const getDefaultThemeStyling = theme => {
     },
 
     valueLabel: {
-      marginRight: 5
+      margin: '0 0.5em 0 0'
     },
 
     valueText: ({ style }, nodeType) => ({
@@ -78,26 +77,30 @@ const getDefaultThemeStyling = theme => {
       }
     }),
 
-    itemRange: {
-      marginBottom: 8,
-      cursor: 'pointer',
-      color: colors.LABEL_COLOR
-    },
+    itemRange: ({ style }, expanded) => ({
+      style: {
+        paddingTop: expanded ? 0 : '0.25em',
+        cursor: 'pointer',
+        color: colors.LABEL_COLOR
+      }
+    }),
 
     arrow: ({ style }, nodeType, expanded) => ({
       style: {
         ...style,
-        display: 'inline-block',
         marginLeft: 0,
-        marginTop: 8,
-        float: 'left',
         transition: '150ms',
         WebkitTransition: '150ms',
         MozTransition: '150ms',
-        WebkitTransform: expanded ? 'rotateZ(0deg)' : 'rotateZ(-90deg)',
-        MozTransform: expanded ? 'rotateZ(0deg)' : 'rotateZ(-90deg)',
-        transform: expanded ? 'rotateZ(0deg)' : 'rotateZ(-90deg)',
-        position: 'relative'
+        WebkitTransform: expanded ? 'rotateZ(90deg)' : 'rotateZ(0deg)',
+        MozTransform: expanded ? 'rotateZ(90deg)' : 'rotateZ(0deg)',
+        transform: expanded ? 'rotateZ(90deg)' : 'rotateZ(0deg)',
+        transformOrigin: '45% 50%',
+        WebkitTransformOrigin: '45% 50%',
+        MozTransformOrigin: '45% 50%',
+        position: 'relative',
+        lineHeight: '1.1em',
+        fontSize: '0.75em'
       }
     }),
 
@@ -105,35 +108,29 @@ const getDefaultThemeStyling = theme => {
       style: {
         ...style,
         display: 'inline-block',
-        paddingTop: 2,
-        paddingBottom: 2,
-        paddingRight: arrowStyle === 'double' ? 12 : 5,
-        paddingLeft: arrowStyle === 'double' ? 12 : 5,
+        paddingRight: '0.5em',
+        paddingLeft: arrowStyle === 'double' ? '1em' : 0,
         cursor: 'pointer'
       }
     }),
 
     arrowSign: {
-      borderLeft: '5px solid transparent',
-      borderRight: '5px solid transparent',
-      borderTopWidth: 5,
-      borderTopStyle: 'solid',
-      borderTopColor: colors.ARROW_COLOR
+      color: colors.ARROW_COLOR
     },
 
     arrowSignInner: {
       position: 'absolute',
       top: 0,
-      left: -5
+      left: '-0.4em'
     },
 
-    nestedNode: ({ style }, nodeType, expanded, keyPath) => ({
+    nestedNode: ({ style }, keyPath, nodeType, expanded, expandable) => ({
       style: {
         ...style,
         position: 'relative',
-        paddingTop: 3,
-        paddingBottom: 3,
-        marginLeft: keyPath.length > 1 ? 14 : 0
+        paddingTop: '0.25em',
+        marginLeft: keyPath.length > 1 ? '0.875em' : 0,
+        paddingLeft: !expandable ? '1.125em' : 0
       }
     }),
 
@@ -142,23 +139,29 @@ const getDefaultThemeStyling = theme => {
       margin: 0
     },
 
-    nestedNodeLabel: {
-      margin: 0,
-      padding: 0,
-      cursor: 'pointer'
-    },
-
-    nestedNodeItemString: ({ style }, nodeType, expanded) => ({
+    nestedNodeLabel: ({ style }, keyPath, nodeType, expanded, expandable) => ({
       style: {
         ...style,
+        margin: 0,
+        padding: 0,
+        WebkitUserSelect: expandable ? 'inherit' : 'text',
+        MozUserSelect: expandable ? 'inherit' : 'text',
+        cursor: expandable ? 'pointer' : 'default'
+      }
+    }),
+
+    nestedNodeItemString: ({ style }, keyPath, nodeType, expanded) => ({
+      style: {
+        ...style,
+        paddingLeft: '0.5em',
         cursor: 'default',
         color: expanded ? colors.ITEM_STRING_EXPANDED_COLOR : colors.ITEM_STRING_COLOR
       }
     }),
 
     nestedNodeItemType: {
-      marginLeft: 5,
-      marginRight: 5
+      marginLeft: '0.3em',
+      marginRight: '0.3em'
     },
 
     nestedNodeChildren: ({ style }, nodeType, expanded) => ({

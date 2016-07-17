@@ -17,7 +17,7 @@ const JSONValueNode = ({
     {...styling('value', nodeType, keyPath)}
   >
     <label {...styling(['label', 'valueLabel'], nodeType, keyPath)}>
-      {labelRenderer(...keyPath)}:
+      {labelRenderer(keyPath, nodeType, false, false)}
     </label>
     <span {...styling('valueText', nodeType, keyPath)}>
       {valueRenderer(valueGetter(value), value, ...keyPath)}

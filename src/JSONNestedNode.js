@@ -75,13 +75,15 @@ export default class JSONNestedNode extends React.Component {
     shouldExpandNode: PropTypes.func,
     level: PropTypes.number.isRequired,
     sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
-    isCircular: PropTypes.bool
+    isCircular: PropTypes.bool,
+    expandable: PropTypes.bool
   };
 
   static defaultProps = {
     data: [],
     circularCache: [],
-    level: 0
+    level: 0,
+    expandable: true
   };
 
   constructor(props) {
@@ -109,7 +111,8 @@ export default class JSONNestedNode extends React.Component {
       styling,
       collectionLimit,
       keyPath,
-      labelRenderer
+      labelRenderer,
+      expandable
     } = this.props;
     const expanded = this.state.expanded;
     const renderedChildren = expanded ?
@@ -126,7 +129,7 @@ export default class JSONNestedNode extends React.Component {
       itemType,
       createItemString(data, collectionLimit)
     );
-    const stylingArgs = [nodeType, expanded, keyPath];
+    const stylingArgs = [keyPath, nodeType, expanded, expandable];
 
     return hideRoot ? (
       <li {...styling('rootNode', ...stylingArgs)}>
@@ -136,21 +139,23 @@ export default class JSONNestedNode extends React.Component {
       </li>
     ) : (
       <li {...styling('nestedNode', ...stylingArgs)}>
-        <JSONArrow
-          styling={styling}
-          nodeType={nodeType}
-          expanded={expanded}
-          onClick={this.handleClick}
-        />
+        {expandable &&
+          <JSONArrow
+            styling={styling}
+            nodeType={nodeType}
+            expanded={expanded}
+            onClick={this.handleClick}
+          />
+        }
         <label
           {...styling(['label', 'nestedNodeLabel'], ...stylingArgs)}
-          onClick={::this.handleClick}
+          onClick={expandable && this.handleClick}
         >
-          {labelRenderer(...keyPath)}:
+          {labelRenderer(...stylingArgs)}
         </label>
         <span
           {...styling('nestedNodeItemString', ...stylingArgs)}
-          onClick={this.handleClick}
+          onClick={expandable && this.handleClick}
         >
           {renderedItemString}
         </span>

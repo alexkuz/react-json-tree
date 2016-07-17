@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import JSONNestedNode from './JSONNestedNode';
 
 // Returns the "n Items" string for this node,
@@ -9,13 +9,19 @@ function createItemString(data) {
 }
 
 // Configures <JSONNestedNode> to render an Object
-export default function JSONObjectNode({ ...props }) {
-  return (
-    <JSONNestedNode
-      {...props}
-      nodeType='Object'
-      nodeTypeIndicator='{}'
-      createItemString={createItemString}
-    />
-  );
-}
+const JSONObjectNode = ({ data, ...props }) => (
+  <JSONNestedNode
+    {...props}
+    data={data}
+    nodeType='Object'
+    nodeTypeIndicator='{}'
+    createItemString={createItemString}
+    expandable={Object.getOwnPropertyNames(data).length > 0}
+  />
+);
+
+JSONObjectNode.propTypes = {
+  data: PropTypes.object
+};
+
+export default JSONObjectNode;

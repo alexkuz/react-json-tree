@@ -29,15 +29,28 @@ const getValueLabelStyle = ({ style }, nodeType, keyPath) => ({
 
 const data = {
   array: [1, 2, 3],
+  emptyArray: [],
   bool: true,
   date: new Date(),
   object: {
     foo: {
-      bar: 'baz'
+      bar: 'baz',
+      nested: {
+        moreNested: {
+          evenMoreNested: {
+            veryNested: {
+              insanelyNested: {
+                ridiculouslyDeepValue: 'Hello'
+              }
+            }
+          }
+        }
+      }
     },
     baz: undefined,
     func: function User() {}
   },
+  emptyObject: {},
   symbol: Symbol('value'),
   immutable: Map({ key: 'value' }), // eslint-disable-line new-cap
   hugeArray: Array.from({ length: 10000 }).map((_, i) => `item #${i}`),
@@ -119,7 +132,7 @@ const App = () => (
       <JSONTree
         data={data}
         theme={theme}
-        labelRenderer={raw => <span>(({raw}))</span>}
+        labelRenderer={([raw]) => <span>(({raw})):</span>}
         valueRenderer={raw => <em>😐 {raw} 😐</em>}
       />
     </div>

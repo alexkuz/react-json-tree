@@ -1,4 +1,4 @@
-export default function (obj) {
+export default function objType(obj) {
   if (obj !== null && typeof obj === 'object' && !Array.isArray(obj) &&
     typeof obj[Symbol.iterator] === 'function'
   ) {

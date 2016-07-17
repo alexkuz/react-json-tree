@@ -69,7 +69,7 @@ export default class JSONTree extends React.Component {
     hideRoot: false,
     keyPath: ['root'],
     getItemString: (type, data, itemType, itemString) => <span>{itemType} {itemString}</span>,
-    labelRenderer: identity,
+    labelRenderer: ([label]) => <span>{label}:</span>,
     valueRenderer: identity,
     postprocessValue: identity,
     isCustomNode: () => false,

@@ -11,9 +11,10 @@ const JSONArrow = ({
     {...styling('arrowContainer', arrowStyle)}
     onClick={onClick}
   >
-    <div {...styling(['arrow', 'arrowSign'], nodeType, expanded)}>
+    <div {...styling(['arrow', 'arrowSign'], nodeType, expanded, arrowStyle)}>
+      {'\u25B6'}
       {arrowStyle === 'double' &&
-        <div {...styling(['arrowSign', 'arrowSignInner'])} />
+        <div {...styling(['arrowSign', 'arrowSignInner'])}>{'\u25B6'}</div>
       }
     </div>
   </div>
