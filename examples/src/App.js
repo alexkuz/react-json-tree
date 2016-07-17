@@ -83,14 +83,14 @@ const App = () => (
     <JSONTree
       data={data}
       theme={theme}
-      isLightTheme
+      invertTheme
     />
     <br />
     <h3>Dark Theme</h3>
     <JSONTree
       data={data}
       theme={theme}
-      isLightTheme={false}
+      invertTheme={false}
     />
     <br />
     <h3>Hidden Root</h3>
@@ -104,7 +104,13 @@ const App = () => (
     <JSONTree
       data={data}
       theme='greenscreen'
-      isLightTheme={false}
+      invertTheme={false}
+    />
+    <h4>Inverted Theme</h4>
+    <JSONTree
+      data={data}
+      theme='greenscreen'
+      invertTheme
     />
     <br />
     <h3>Style Customization</h3>

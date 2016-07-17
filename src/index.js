@@ -58,7 +58,7 @@ export default class JSONTree extends React.Component {
       PropTypes.object,
       PropTypes.string
     ]),
-    isLightTheme: PropTypes.bool,
+    invertTheme: PropTypes.bool,
     keyPath: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
     postprocessValue: PropTypes.func,
     sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool])
@@ -74,7 +74,7 @@ export default class JSONTree extends React.Component {
     postprocessValue: identity,
     isCustomNode: () => false,
     collectionLimit: 50,
-    isLightTheme: true
+    invertTheme: true
   };
 
   render() {
@@ -84,11 +84,11 @@ export default class JSONTree extends React.Component {
       postprocessValue,
       hideRoot,
       theme,
-      isLightTheme,
+      invertTheme,
       ...rest
     } = this.props;
 
-    const styling = createStylingFromTheme(checkLegacyTheming(theme, rest), null, isLightTheme);
+    const styling = createStylingFromTheme(checkLegacyTheming(theme, rest), invertTheme);
 
     return (
       <ul {...styling('tree')}>
