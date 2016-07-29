@@ -21,10 +21,7 @@ export default class JSONValueNode extends React.Component {
     valueGetter: value => value
   };
 
-  constructor() {
-    super();
-    this.state = { hover: false };
-  }
+  state = { hover: false };
 
   render() {
     const { hover } = this.state;
