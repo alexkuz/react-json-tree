@@ -24,8 +24,6 @@ export default class JSONValueNode extends React.Component {
   constructor() {
     super();
     this.state = { hover: false };
-    this.handleMouseOver = this.handleMouseOver.bind(this);
-    this.handleMouseOut = this.handleMouseOut.bind(this);
   }
 
   render() {
@@ -49,12 +47,10 @@ export default class JSONValueNode extends React.Component {
     );
   }
 
-  handleMouseOver(e) {
+  handleMouseOver = (e) => {
     e.stopPropagation();
     this.setState({ hover: true });
-  }
+  };
 
-  handleMouseOut() {
-    this.setState({ hover: false });
-  }
+  handleMouseOut = () => this.setState({ hover: false });
 }
