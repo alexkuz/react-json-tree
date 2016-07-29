@@ -88,8 +88,7 @@ export default class JSONTree extends React.Component {
       ...rest
     } = this.props;
 
-    const styling = rest.styling ||
-      createStylingFromTheme(checkLegacyTheming(theme, rest), invertTheme);
+    const styling = createStylingFromTheme(checkLegacyTheming(theme, rest), invertTheme);
 
     return (
       <ul {...styling('tree')}>
