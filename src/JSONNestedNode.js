@@ -92,9 +92,14 @@ export default class JSONNestedNode extends React.Component {
     // calculate individual node expansion if necessary
     const expanded = props.shouldExpandNode && !props.isCircular ?
         props.shouldExpandNode(props.keyPath, props.data, props.level) : false;
+
+    this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.handleMouseOut = this.handleMouseOut.bind(this);
+
     this.state = {
       expanded,
-      createdChildNodes: false
+      createdChildNodes: false,
+      hover: false
     };
   }
 
@@ -114,7 +119,7 @@ export default class JSONNestedNode extends React.Component {
       labelRenderer,
       expandable
     } = this.props;
-    const expanded = this.state.expanded;
+    const { expanded, hover } = this.state;
     const renderedChildren = expanded ?
       renderChildNodes({ ...this.props, level: this.props.level + 1 }) : null;
 
@@ -129,7 +134,7 @@ export default class JSONNestedNode extends React.Component {
       itemType,
       createItemString(data, collectionLimit)
     );
-    const stylingArgs = [keyPath, nodeType, expanded, expandable];
+    const stylingArgs = [keyPath, nodeType, expanded, expandable, hover];
 
     return hideRoot ? (
       <li {...styling('rootNode', ...stylingArgs)}>
@@ -138,7 +143,11 @@ export default class JSONNestedNode extends React.Component {
         </ul>
       </li>
     ) : (
-      <li {...styling('nestedNode', ...stylingArgs)}>
+      <li
+        {...styling('nestedNode', ...stylingArgs)}
+        onMouseOver={this.handleMouseOver}
+        onMouseOut={this.handleMouseOut}
+      >
         {expandable &&
           <JSONArrow
             styling={styling}
@@ -167,4 +176,13 @@ export default class JSONNestedNode extends React.Component {
   }
 
   handleClick = () => this.setState({ expanded: !this.state.expanded });
+
+  handleMouseOver(e) {
+    e.stopPropagation();
+    this.setState({ hover: true });
+  }
+
+  handleMouseOut() {
+    this.setState({ hover: false });
+  }
 }
