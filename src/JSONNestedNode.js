@@ -115,7 +115,7 @@ export default class JSONNestedNode extends React.Component {
       expandable
     } = this.props;
     const expanded = this.state.expanded;
-    const renderedChildren = expanded ?
+    const renderedChildren = expanded || (hideRoot && this.props.level === 0) ?
       renderChildNodes({ ...this.props, level: this.props.level + 1 }) : null;
 
     const itemType = (
