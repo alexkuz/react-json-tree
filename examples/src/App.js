@@ -158,6 +158,24 @@ const App = () => (
         shouldExpandNode={() => false}
       />
     </div>
+    <p>Expansion Notifications</p>
+    <div>
+      <JSONTree
+        data={data}
+        theme={theme}
+        shouldExpandNode={() => false}
+        onNodeExpansionChanging={
+          (keyPath, data, level, expanded) => {
+            console.log(`Node ${expanded ? 'expanding' : 'collapsing'}: ${keyPath}`);
+          }
+        }
+        onNodeExpansionChanged={
+          (keyPath, data, level, expanded) => {
+            console.log(`Node ${expanded ? 'expanded' : 'collapsed'}: ${keyPath}`);
+          }
+        }
+      />
+    </div>
   </div>
 );
 

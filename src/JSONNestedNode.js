@@ -76,7 +76,10 @@ export default class JSONNestedNode extends React.Component {
     level: PropTypes.number.isRequired,
     sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
     isCircular: PropTypes.bool,
-    expandable: PropTypes.bool
+    expandable: PropTypes.bool,
+    onNodeExpansionChanging: PropTypes.func,
+    onNodeExpansionChanged: PropTypes.func,
+    isNodeExpansionDynamic: PropTypes.bool
   };
 
   static defaultProps = {
@@ -98,7 +101,7 @@ export default class JSONNestedNode extends React.Component {
     };
   }
 
-  shouldComponentUpdate = shouldPureComponentUpdate;
+  shouldComponentUpdate = this.props.isNodeExpansionDynamic ? undefined : shouldPureComponentUpdate;
 
   render() {
     const {
@@ -114,7 +117,13 @@ export default class JSONNestedNode extends React.Component {
       labelRenderer,
       expandable
     } = this.props;
-    const expanded = this.state.expanded;
+    const expanded =
+      this.props.isNodeExpansionDynamic
+      && this.props.shouldExpandNode
+      && !this.props.isCircular
+        ? this.props.shouldExpandNode(this.props.keyPath, this.props.data, this.props.level)
+        : this.state.expanded;
+
     const renderedChildren = expanded || (hideRoot && this.props.level === 0) ?
       renderChildNodes({ ...this.props, level: this.props.level + 1 }) : null;
 
@@ -131,6 +140,30 @@ export default class JSONNestedNode extends React.Component {
     );
     const stylingArgs = [keyPath, nodeType, expanded, expandable];
 
+    const handleClick = () => {
+      const newState = !expanded;
+
+      if (this.props.onNodeExpansionChanging) {
+        this.props.onNodeExpansionChanging(
+          this.props.keyPath,
+          this.props.data,
+          this.props.level,
+          newState);
+      }
+
+      this.setState(
+        { expanded: newState },
+        () => {
+          if (this.props.onNodeExpansionChanged) {
+            this.props.onNodeExpansionChanged(
+              this.props.keyPath,
+              this.props.data,
+              this.props.level,
+              this.state.expanded);
+          }
+        });
+    };
+
     return hideRoot ? (
       <li {...styling('rootNode', ...stylingArgs)}>
         <ul {...styling('rootNodeChildren', ...stylingArgs)}>
@@ -144,18 +177,18 @@ export default class JSONNestedNode extends React.Component {
             styling={styling}
             nodeType={nodeType}
             expanded={expanded}
-            onClick={this.handleClick}
+            onClick={handleClick}
           />
         }
         <label
           {...styling(['label', 'nestedNodeLabel'], ...stylingArgs)}
-          onClick={expandable && this.handleClick}
+          onClick={expandable && handleClick}
         >
           {labelRenderer(...stylingArgs)}
         </label>
         <span
           {...styling('nestedNodeItemString', ...stylingArgs)}
-          onClick={expandable && this.handleClick}
+          onClick={expandable && handleClick}
         >
           {renderedItemString}
         </span>
@@ -165,6 +198,4 @@ export default class JSONNestedNode extends React.Component {
       </li>
     );
   }
-
-  handleClick = () => this.setState({ expanded: !this.state.expanded });
 }
