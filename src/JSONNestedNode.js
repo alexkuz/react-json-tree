@@ -58,6 +58,17 @@ function renderChildNodes(props, from, to) {
   return childNodes;
 }
 
+function getStateFromProps(props) {
+  // calculate individual node expansion if necessary
+  const expanded = props.shouldExpandNode && !props.isCircular ?
+    props.shouldExpandNode(props.keyPath, props.data, props.level) :
+    false;
+  return {
+    expanded,
+    createdChildNodes: false
+  };
+}
+
 export default class JSONNestedNode extends React.Component {
   static propTypes = {
     getItemString: PropTypes.func.isRequired,
@@ -88,14 +99,15 @@ export default class JSONNestedNode extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = getStateFromProps(props);
+  }
 
-    // calculate individual node expansion if necessary
-    const expanded = props.shouldExpandNode && !props.isCircular ?
-        props.shouldExpandNode(props.keyPath, props.data, props.level) : false;
-    this.state = {
-      expanded,
-      createdChildNodes: false
-    };
+  componentWillReceiveProps(nextProps) {
+    if (['shouldExpandNode', 'isCircular', 'keyPath', 'data', 'level'].find(k =>
+      nextProps[k] !== this.props[k])
+    ) {
+      this.setState(getStateFromProps(nextProps));
+    }
   }
 
   shouldComponentUpdate = shouldPureComponentUpdate;
@@ -114,7 +126,7 @@ export default class JSONNestedNode extends React.Component {
       labelRenderer,
       expandable
     } = this.props;
-    const expanded = this.state.expanded;
+    const { expanded } = this.state;
     const renderedChildren = expanded || (hideRoot && this.props.level === 0) ?
       renderChildNodes({ ...this.props, level: this.props.level + 1 }) : null;
 
