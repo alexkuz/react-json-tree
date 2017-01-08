@@ -17,7 +17,7 @@ const json = {
   bool: true,
   object: {
     foo: 'bar'
-  }
+  },
   immutable: Map({ key: 'value' })
 }
 
