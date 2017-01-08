@@ -64,8 +64,7 @@ function getStateFromProps(props) {
     props.shouldExpandNode(props.keyPath, props.data, props.level) :
     false;
   return {
-    expanded,
-    createdChildNodes: false
+    expanded
   };
 }
 
