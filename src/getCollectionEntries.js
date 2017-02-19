@@ -44,7 +44,7 @@ function getEntries(type, collection, sortObjectKeys, from=0, to=Infinity) {
         break;
       } if (from <= idx) {
         if (isMap && Array.isArray(item)) {
-          entries.push({ key: item[0], value: item[1] });
+          entries.push({ key: idx, value: { key: item[0], value: item[1] } });
         } else {
           entries.push({ key: idx, value: item });
         }
