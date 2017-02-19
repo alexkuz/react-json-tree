@@ -68,6 +68,14 @@ function getStateFromProps(props) {
   };
 }
 
+function propsAreNotEqual(props, nextProps, keys) {
+  return keys.find(k => nextProps[k] !== props[k]);
+}
+
+function keyPathIsNotEqual(keyPath, nextKeyPath) {
+  return keyPath.join('/') !== nextKeyPath.join('/');
+}
+
 export default class JSONNestedNode extends React.Component {
   static propTypes = {
     getItemString: PropTypes.func.isRequired,
@@ -102,8 +110,11 @@ export default class JSONNestedNode extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (['shouldExpandNode', 'isCircular', 'keyPath', 'data', 'level'].find(k =>
-      nextProps[k] !== this.props[k])
+    if (
+      propsAreNotEqual(
+        this.props, nextProps, ['shouldExpandNode', 'isCircular', 'level']
+      ) ||
+      keyPathIsNotEqual(this.props.keyPath, nextProps.keyPath)
     ) {
       this.setState(getStateFromProps(nextProps));
     }

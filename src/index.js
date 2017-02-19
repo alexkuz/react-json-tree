@@ -8,6 +8,11 @@ import JSONNode from './JSONNode';
 import createStylingFromTheme from './createStylingFromTheme';
 
 const identity = value => value;
+const expandRootNode = (keyName, data, level) => level === 0;
+const defaultItemString = (type, data, itemType, itemString) =>
+  <span>{itemType} {itemString}</span>;
+const defaultLabelRenderer = ([label]) => <span>{label}:</span>;
+const noCustomNode = () => false;
 
 function checkLegacyTheming(theme, props) {
   const deprecatedStylingMethodsMap = {
@@ -65,14 +70,14 @@ export default class JSONTree extends React.Component {
   };
 
   static defaultProps = {
-    shouldExpandNode: (keyName, data, level) => level === 0, // expands root by default,
+    shouldExpandNode: expandRootNode,
     hideRoot: false,
     keyPath: ['root'],
-    getItemString: (type, data, itemType, itemString) => <span>{itemType} {itemString}</span>,
-    labelRenderer: ([label]) => <span>{label}:</span>,
+    getItemString: defaultItemString,
+    labelRenderer: defaultLabelRenderer,
     valueRenderer: identity,
     postprocessValue: identity,
-    isCustomNode: () => false,
+    isCustomNode: noCustomNode,
     collectionLimit: 50,
     invertTheme: true
   };
