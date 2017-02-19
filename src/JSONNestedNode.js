@@ -3,7 +3,6 @@ import JSONArrow from './JSONArrow';
 import getCollectionEntries from './getCollectionEntries';
 import JSONNode from './JSONNode';
 import ItemRange from './ItemRange';
-import shouldPureComponentUpdate from 'react-pure-render/function';
 
 /**
  * Renders nested values (eg. objects, arrays, lists, etc.)
@@ -68,14 +67,6 @@ function getStateFromProps(props) {
   };
 }
 
-function propsAreNotEqual(props, nextProps, keys) {
-  return keys.find(k => nextProps[k] !== props[k]);
-}
-
-function keyPathIsNotEqual(keyPath, nextKeyPath) {
-  return keyPath.join('/') !== nextKeyPath.join('/');
-}
-
 export default class JSONNestedNode extends React.Component {
   static propTypes = {
     getItemString: PropTypes.func.isRequired,
@@ -110,17 +101,22 @@ export default class JSONNestedNode extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const nextState = getStateFromProps(nextProps);
     if (
-      propsAreNotEqual(
-        this.props, nextProps, ['shouldExpandNode', 'isCircular', 'level']
-      ) ||
-      keyPathIsNotEqual(this.props.keyPath, nextProps.keyPath)
+      getStateFromProps(this.props).expanded !== nextState.expanded
     ) {
-      this.setState(getStateFromProps(nextProps));
+      this.setState(nextState);
     }
   }
 
-  shouldComponentUpdate = shouldPureComponentUpdate;
+  shouldComponentUpdate(nextProps, nextState) {
+    return !!Object.keys(nextProps).find(key =>
+      key !== 'circularCache' &&
+      (key === 'keyPath' ?
+        nextProps[key].join('/') !== this.props[key].join('/') :
+        nextProps[key] !== this.props[key])
+    ) || nextState.expanded !== this.state.expanded;
+  }
 
   render() {
     const {

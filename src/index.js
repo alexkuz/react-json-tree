@@ -52,6 +52,13 @@ function checkLegacyTheming(theme, props) {
   return theme;
 }
 
+function getStateFromProps(props) {
+  return {
+    styling: createStylingFromTheme(
+      checkLegacyTheming(props.theme, props), props.invertTheme)
+  };
+}
+
 export default class JSONTree extends React.Component {
   static propTypes = {
     data: PropTypes.oneOfType([
@@ -82,18 +89,37 @@ export default class JSONTree extends React.Component {
     invertTheme: true
   };
 
+  constructor(props) {
+    super(props);
+    this.state = getStateFromProps(props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (['theme', 'invertTheme'].find(k => nextProps[k] !== this.props[k])) {
+      this.setState(getStateFromProps(nextProps));
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return !!Object.keys(nextProps).find(k => (
+      k === 'keyPath' ?
+        nextProps[k].join('/') !== this.props[k].join('/') :
+        nextProps[k] !== this.props[k]
+    ));
+  }
+
   render() {
     const {
       data: value,
       keyPath,
       postprocessValue,
       hideRoot,
-      theme,
-      invertTheme,
+      theme, // eslint-disable-line no-unused-vars
+      invertTheme, // eslint-disable-line no-unused-vars
       ...rest
     } = this.props;
 
-    const styling = createStylingFromTheme(checkLegacyTheming(theme, rest), invertTheme);
+    const { styling } = this.state;
 
     return (
       <ul {...styling('tree')}>
