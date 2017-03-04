@@ -27,11 +27,15 @@ const getValueLabelStyle = ({ style }, nodeType, keyPath) => ({
   }
 });
 
+// eslint-disable-next-line max-len
+const longString = 'Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.';
+
 const data = {
   array: [1, 2, 3],
   emptyArray: [],
   bool: true,
   date: new Date(),
+  error: new Error(longString),
   object: {
     foo: {
       bar: 'baz',
@@ -61,8 +65,7 @@ const data = {
   ]),
   set: new window.Set(['value', 0, { objectKey: 'value' }]),
   hugeArray: Array.from({ length: 10000 }).map((_, i) => `item #${i}`),
-  // eslint-disable-next-line max-len
-  longString: 'Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.'
+  longString
 };
 
 const theme = {

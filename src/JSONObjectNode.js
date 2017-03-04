@@ -14,14 +14,15 @@ const JSONObjectNode = ({ data, ...props }) => (
     {...props}
     data={data}
     nodeType='Object'
-    nodeTypeIndicator='{}'
+    nodeTypeIndicator={props.nodeType === 'Error' ? 'Error()' : '{}'}
     createItemString={createItemString}
     expandable={Object.getOwnPropertyNames(data).length > 0}
   />
 );
 
 JSONObjectNode.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
+  nodeType: PropTypes.string
 };
 
 export default JSONObjectNode;
