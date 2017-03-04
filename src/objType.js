@@ -1,8 +1,8 @@
 export default function objType(obj) {
-  if (obj !== null && typeof obj === 'object' && !Array.isArray(obj) &&
-    typeof obj[Symbol.iterator] === 'function'
-  ) {
+  const type = Object.prototype.toString.call(obj).slice(8, -1);
+  if (type === 'Object' && typeof obj[Symbol.iterator] === 'function') {
     return 'Iterable';
   }
-  return Object.prototype.toString.call(obj).slice(8, -1);
+
+  return type;
 }

@@ -52,9 +52,17 @@ const data = {
   },
   emptyObject: {},
   symbol: Symbol('value'),
-  immutable: Map({ key: 'value' }), // eslint-disable-line new-cap
+  // eslint-disable-next-line new-cap
+  immutable: Map([['key', 'value'], [{ objectKey: 'value' }, { objectKey: 'value' }]]),
+  map: new window.Map([
+    ['key', 'value'],
+    [0, 'value'],
+    [{ objectKey: 'value' }, { objectKey: 'value' }]
+  ]),
+  set: new window.Set(['value', 0, { objectKey: 'value' }]),
   hugeArray: Array.from({ length: 10000 }).map((_, i) => `item #${i}`),
-  longString: 'Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.' // eslint-disable-line max-len
+  // eslint-disable-next-line max-len
+  longString: 'Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.'
 };
 
 const theme = {

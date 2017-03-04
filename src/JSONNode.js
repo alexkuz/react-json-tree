@@ -42,6 +42,10 @@ const JSONNode = ({
     case 'Array':
       return <JSONArrayNode {...nestedNodeProps} />;
     case 'Iterable':
+    case 'Map':
+    case 'WeakMap':
+    case 'Set':
+    case 'WeakSet':
       return <JSONIterableNode {...nestedNodeProps} />;
     case 'String':
       return <JSONValueNode {...simpleNodeProps} valueGetter={raw => `"${raw}"`} />;
