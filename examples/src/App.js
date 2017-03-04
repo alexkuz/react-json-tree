@@ -63,7 +63,14 @@ const data = {
     [0, 'value'],
     [{ objectKey: 'value' }, { objectKey: 'value' }]
   ]),
+  weakMap: new window.WeakMap([
+    [{ objectKey: 'value' }, { objectKey: 'value' }]
+  ]),
   set: new window.Set(['value', 0, { objectKey: 'value' }]),
+  weakSet: new window.WeakSet([
+    { objectKey: 'value1' },
+    { objectKey: 'value2' }
+  ]),
   hugeArray: Array.from({ length: 10000 }).map((_, i) => `item #${i}`),
   longString
 };
