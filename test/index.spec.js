@@ -3,7 +3,7 @@ import expect from 'expect';
 import { createRenderer } from 'react-addons-test-utils';
 
 import JSONTree from '../src/index';
-import JSONNode from '../lib/JSONNode';
+import JSONNode from '../src/JSONNode';
 
 const BASIC_DATA = { a: 1, b: 'c' };
 
