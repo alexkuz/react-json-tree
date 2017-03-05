@@ -1,8 +1,7 @@
-import React, { Component, PropTypes } from 'react';
-import shouldPureComponentUpdate from 'react-pure-render/function';
+import React, { PropTypes } from 'react';
 import JSONArrow from './JSONArrow';
 
-export default class ItemRange extends Component {
+export default class ItemRange extends React.PureComponent {
   static propTypes = {
     styling: PropTypes.func.isRequired,
     from: PropTypes.number.isRequired,
@@ -17,8 +16,6 @@ export default class ItemRange extends Component {
 
     this.handleClick = this.handleClick.bind(this);
   }
-
-  shouldComponentUpdate = shouldPureComponentUpdate;
 
   render() {
     const { styling, from, to, renderChildNodes, nodeType } = this.props;

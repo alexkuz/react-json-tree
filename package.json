@@ -66,8 +66,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.6.1",
-    "react-base16-styling": "^0.4.1",
-    "react-pure-render": "^1.0.2"
+    "react-base16-styling": "^0.4.1"
   },
   "pre-commit": "lint"
 }
