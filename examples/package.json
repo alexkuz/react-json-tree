@@ -1,33 +1,13 @@
 {
-  "name": "react-hot-boilerplate",
+  "name": "react-json-tree-demo-app",
   "version": "1.0.0",
-  "description": "Boilerplate for ReactJS project with hot code reloading",
+  "description": "React JSON Tree Demo App",
   "scripts": {
     "start": "node server.js",
-    "lint": "eslint src",
+    "lint": "xo src/**",
     "stats": "NODE_ENV=production webpack --json > dist/stats.json"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gaearon/react-hot-boilerplate.git"
-  },
-  "keywords": [
-    "react",
-    "reactjs",
-    "boilerplate",
-    "hot",
-    "reload",
-    "hmr",
-    "live",
-    "edit",
-    "webpack"
-  ],
-  "author": "Dan Abramov <dan.abramov@me.com> (http://github.com/gaearon)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/gaearon/react-hot-boilerplate/issues"
-  },
-  "homepage": "https://github.com/gaearon/react-hot-boilerplate",
   "devDependencies": {
     "babel-core": "^6.7.7",
     "babel-eslint": "^7.1.1",
@@ -46,5 +26,10 @@
     "react": "^15.0.1",
     "react-base16-styling": "^0.4.7",
     "react-dom": "^15.0.1"
+  },
+  "xo": {
+    "extends": "xo-react",
+    "parser": "babel-eslint",
+    "space": true
   }
 }

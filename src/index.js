@@ -35,7 +35,7 @@ function checkLegacyTheming(theme, props) {
       theme = { ...theme };
     }
 
-    deprecatedStylingMethods.forEach(name => {
+    deprecatedStylingMethods.forEach((name) => {
       console.error( // eslint-disable-line no-console
         `Styling method "${name}" is deprecated, use "theme" property instead`
       );

@@ -20,7 +20,11 @@ function renderChildNodes(props, from, to) {
   } = props;
   const childNodes = [];
 
-  getCollectionEntries(nodeType, data, sortObjectKeys, collectionLimit, from, to).forEach(entry => {
+  const collectionEntries = getCollectionEntries(
+    nodeType, data, sortObjectKeys, collectionLimit, from, to
+  );
+
+  collectionEntries.forEach((entry) => {
     if (entry.to) {
       childNodes.push(
         <ItemRange
@@ -70,9 +74,9 @@ function getStateFromProps(props) {
 export default class JSONNestedNode extends React.Component {
   static propTypes = {
     getItemString: PropTypes.func.isRequired,
-    nodeTypeIndicator: PropTypes.any,
+    nodeTypeIndicator: PropTypes.string.isRequired,
     nodeType: PropTypes.string.isRequired,
-    data: PropTypes.any,
+    data: PropTypes.any, // eslint-disable-line react/forbid-prop-types
     hideRoot: PropTypes.bool.isRequired,
     createItemString: PropTypes.func.isRequired,
     styling: PropTypes.func.isRequired,
@@ -92,7 +96,8 @@ export default class JSONNestedNode extends React.Component {
     data: [],
     circularCache: [],
     level: 0,
-    expandable: true
+    expandable: true,
+    collectionLimit: 0
   };
 
   constructor(props) {

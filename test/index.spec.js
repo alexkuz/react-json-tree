@@ -1,11 +1,11 @@
 import React from 'react';
-import expect from 'expect';
-import { createRenderer } from 'react-addons-test-utils';
+import {createRenderer} from 'react-addons-test-utils';
+import test from 'ava';
 
 import JSONTree from '../src/index';
 import JSONNode from '../src/JSONNode';
 
-const BASIC_DATA = { a: 1, b: 'c' };
+const BASIC_DATA = {a: 1, b: 'c'};
 
 function render(component) {
   const renderer = createRenderer();
@@ -13,11 +13,9 @@ function render(component) {
   return renderer.getRenderOutput();
 }
 
-describe('JSONTree', () => {
-  it('should render basic tree', () => {
-    const result = render(<JSONTree data={BASIC_DATA} />);
+test('should render basic tree', t => {
+  const result = render(<JSONTree data={BASIC_DATA}/>);
 
-    expect(result.type).toBe('ul');
-    expect(result.props.children.type.name).toBe(JSONNode.name);
-  });
+  t.is(result.type, 'ul');
+  t.is(result.props.children.type.name, JSONNode.name);
 });

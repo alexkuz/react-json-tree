@@ -1,5 +1,5 @@
-import solarized from './themes/solarized';
 import { createStyling } from 'react-base16-styling';
+import solarized from './themes/solarized';
 
 const colorMap = theme => ({
   BACKGROUND_COLOR: theme.base00,
@@ -29,7 +29,7 @@ const valueColorMap = colors => ({
   Symbol: colors.SYMBOL_COLOR
 });
 
-const getDefaultThemeStyling = theme => {
+const getDefaultThemeStyling = (theme) => {
   const colors = colorMap(theme);
 
   return {

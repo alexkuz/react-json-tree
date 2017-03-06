@@ -7,7 +7,7 @@ const JSONArrow = ({
   nodeType,
   onClick
 }) => (
-  <div
+  <button
     {...styling('arrowContainer', arrowStyle)}
     onClick={onClick}
   >
@@ -17,7 +17,7 @@ const JSONArrow = ({
         <div {...styling(['arrowSign', 'arrowSignInner'])}>{'\u25B6'}</div>
       }
     </div>
-  </div>
+  </button>
 );
 
 JSONArrow.propTypes = {

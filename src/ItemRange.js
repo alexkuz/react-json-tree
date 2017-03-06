@@ -21,10 +21,10 @@ export default class ItemRange extends React.PureComponent {
     const { styling, from, to, renderChildNodes, nodeType } = this.props;
 
     return (this.state.expanded ?
-      <div {...styling('itemRange', this.state.expanded)}>
+      <button {...styling('itemRange', this.state.expanded)}>
         {renderChildNodes(this.props, from, to)}
-      </div> :
-      <div
+      </button> :
+      <button
         {...styling('itemRange', this.state.expanded)}
         onClick={this.handleClick}
       >
@@ -36,7 +36,7 @@ export default class ItemRange extends React.PureComponent {
           arrowStyle='double'
         />
         {`${from} ... ${to}`}
-      </div>
+      </button>
     );
   }
 

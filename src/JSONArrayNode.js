@@ -19,7 +19,7 @@ const JSONArrayNode = ({ data, ...props }) =>
   />;
 
 JSONArrayNode.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.arrayOf(PropTypes.any).isRequired
 };
 
 export default JSONArrayNode;
