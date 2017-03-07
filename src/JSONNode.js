@@ -46,11 +46,11 @@ const JSONNode = ({
     case 'Iterable':
     case 'Map':
     case 'Set':
-      return <JSONIterableNode {...nestedNodeProps} valueGetter={raw => `"${raw}"`}/>;
+      return <JSONIterableNode {...nestedNodeProps} valueGetter={raw => `"${raw}"`} />;
     case 'String':
       return <JSONValueNode {...simpleNodeProps} valueGetter={raw => `"${raw}"`} />;
     case 'Number':
-      return <JSONValueNode {...simpleNodeProps} />;
+      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => `"${raw}"`} />;
     case 'Boolean':
       return <JSONValueNode {...simpleNodeProps} valueGetter={raw => (raw ? 'true' : 'false')} />;
     case 'Date':
