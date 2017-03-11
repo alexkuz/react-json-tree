@@ -6,6 +6,7 @@
 import React, { PropTypes } from 'react';
 import JSONNode from './JSONNode';
 import createStylingFromTheme from './createStylingFromTheme';
+import { invertTheme } from 'react-base16-styling';
 
 const identity = value => value;
 const expandRootNode = (keyName, data, level) => level === 0;
@@ -53,9 +54,22 @@ function checkLegacyTheming(theme, props) {
 }
 
 function getStateFromProps(props) {
+  let theme = checkLegacyTheming(props.theme, props);
+  if (props.invertTheme) {
+    if (typeof theme === 'string') {
+      theme = `${theme}:inverted`;
+    } else if (theme && theme.extend) {
+      if (typeof theme === 'string') {
+        theme = { ...theme, extend: `${theme.extend}:inverted` };
+      } else {
+        theme = { ...theme, extend: invertTheme(theme.extend) };
+      }
+    } else if (theme) {
+      theme = invertTheme(theme);
+    }
+  }
   return {
-    styling: createStylingFromTheme(
-      checkLegacyTheming(props.theme, props), props.invertTheme)
+    styling: createStylingFromTheme(theme)
   };
 }
 
@@ -115,7 +129,7 @@ export default class JSONTree extends React.Component {
       postprocessValue,
       hideRoot,
       theme, // eslint-disable-line no-unused-vars
-      invertTheme, // eslint-disable-line no-unused-vars
+      invertTheme: _, // eslint-disable-line no-unused-vars
       ...rest
     } = this.props;
 
