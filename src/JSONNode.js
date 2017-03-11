@@ -1,9 +1,9 @@
-import React, { PropTypes } from "react";
-import objType from "./objType";
-import JSONObjectNode from "./JSONObjectNode";
-import JSONArrayNode from "./JSONArrayNode";
-import JSONIterableNode from "./JSONIterableNode";
-import JSONValueNode from "./JSONValueNode";
+import React, { PropTypes } from 'react';
+import objType from './objType';
+import JSONObjectNode from './JSONObjectNode';
+import JSONArrayNode from './JSONArrayNode';
+import JSONIterableNode from './JSONIterableNode';
+import JSONValueNode from './JSONValueNode';
 
 const JSONNode = (
   {
@@ -17,7 +17,7 @@ const JSONNode = (
     ...rest
   }
 ) => {
-  const nodeType = isCustomNode(value) ? "Custom" : objType(value);
+  const nodeType = isCustomNode(value) ? 'Custom' : objType(value);
 
   const simpleNodeProps = {
     getItemString,
@@ -38,52 +38,52 @@ const JSONNode = (
   };
 
   switch (nodeType) {
-    case "Object":
-    case "Error":
-    case "WeakMap":
-    case "WeakSet":
+    case 'Object':
+    case 'Error':
+    case 'WeakMap':
+    case 'WeakSet':
       return <JSONObjectNode {...nestedNodeProps} />;
-    case "Array":
+    case 'Array':
       return <JSONArrayNode {...nestedNodeProps} />;
-    case "Iterable":
-    case "Map":
-    case "Set":
+    case 'Iterable':
+    case 'Map':
+    case 'Set':
       return <JSONIterableNode {...nestedNodeProps} />;
-    case "String":
+    case 'String':
       return (
         <JSONValueNode {...simpleNodeProps} valueGetter={raw => `"${raw}"`} />
       );
-    case "Number":
+    case 'Number':
       return <JSONValueNode {...simpleNodeProps} />;
-    case "Boolean":
+    case 'Boolean':
       return (
         <JSONValueNode
           {...simpleNodeProps}
-          valueGetter={raw => raw ? "true" : "false"}
+          valueGetter={raw => raw ? 'true' : 'false'}
         />
       );
-    case "Date":
+    case 'Date':
       return (
         <JSONValueNode
           {...simpleNodeProps}
           valueGetter={raw => raw.toISOString()}
         />
       );
-    case "Null":
-      return <JSONValueNode {...simpleNodeProps} valueGetter={() => "null"} />;
-    case "Undefined":
+    case 'Null':
+      return <JSONValueNode {...simpleNodeProps} valueGetter={() => 'null'} />;
+    case 'Undefined':
       return (
-        <JSONValueNode {...simpleNodeProps} valueGetter={() => "undefined"} />
+        <JSONValueNode {...simpleNodeProps} valueGetter={() => 'undefined'} />
       );
-    case "Function":
-    case "Symbol":
+    case 'Function':
+    case 'Symbol':
       return (
         <JSONValueNode
           {...simpleNodeProps}
           valueGetter={raw => raw.toString()}
         />
       );
-    case "Custom":
+    case 'Custom':
       return <JSONValueNode {...simpleNodeProps} />;
     default:
       return null;

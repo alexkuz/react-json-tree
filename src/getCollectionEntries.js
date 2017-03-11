@@ -1,7 +1,7 @@
 function getLength(type, collection) {
-  if (type === "Object") {
+  if (type === 'Object') {
     return Object.keys(collection).length;
-  } else if (type === "Array") {
+  } else if (type === 'Array') {
     return collection.length;
   }
 
@@ -9,16 +9,16 @@ function getLength(type, collection) {
 }
 
 function isIterableMap(collection) {
-  return typeof collection.set === "function";
+  return typeof collection.set === 'function';
 }
 
 function getEntries(type, collection, sortObjectKeys, from = 0, to = Infinity) {
   let res;
 
-  if (type === "Object") {
+  if (type === 'Object') {
     let keys = Object.getOwnPropertyNames(collection);
 
-    if (typeof sortObjectKeys !== "undefined") {
+    if (typeof sortObjectKeys !== 'undefined') {
       keys.sort(sortObjectKeys);
     }
 
@@ -27,7 +27,7 @@ function getEntries(type, collection, sortObjectKeys, from = 0, to = Infinity) {
     res = {
       entries: keys.map(key => ({ key, value: collection[key] }))
     };
-  } else if (type === "Array") {
+  } else if (type === 'Array') {
     res = {
       entries: collection
         .slice(from, to + 1)
@@ -47,14 +47,14 @@ function getEntries(type, collection, sortObjectKeys, from = 0, to = Infinity) {
       }
       if (from <= idx) {
         if (isMap && Array.isArray(item)) {
-          if (typeof item[0] === "string" || typeof item[0] === "number") {
+          if (typeof item[0] === 'string' || typeof item[0] === 'number') {
             entries.push({ key: item[0], value: item[1] });
           } else {
             entries.push({
               key: `[entry ${idx}]`,
               value: {
-                "[key]": item[0],
-                "[value]": item[1]
+                '[key]': item[0],
+                '[value]': item[1]
               }
             });
           }
@@ -108,7 +108,7 @@ export default function getCollectionEntries(
   const isSubset = to < Infinity;
   const length = Math.min(to - from, getLength(type, collection));
 
-  if (type !== "Iterable") {
+  if (type !== 'Iterable') {
     if (length <= limit || limit < 7) {
       return getEntriesBound(from, to).entries;
     }
@@ -117,7 +117,7 @@ export default function getCollectionEntries(
   }
 
   let limitedEntries;
-  if (type === "Iterable") {
+  if (type === 'Iterable') {
     const { hasMore, entries } = getEntriesBound(from, from + (limit - 1));
 
     limitedEntries = hasMore

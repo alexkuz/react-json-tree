@@ -1,11 +1,15 @@
 {
   "parser": "babel-eslint",
   "extends": [
+    "eslint:recommended",
     "standard",
     "prettier",
     "plugin:react/recommended",
     "plugin:flowtype/recommended"
   ],
+  "rules": {
+    "no-console": ["warn", { "allow": ["warn", "error"] }]
+  },
   "plugins": [
       "prettier",
       "standard",

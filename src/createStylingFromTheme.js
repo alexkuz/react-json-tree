@@ -1,5 +1,5 @@
-import { createStyling } from "react-base16-styling";
-import solarized from "./themes/solarized";
+import { createStyling } from 'react-base16-styling';
+import solarized from './themes/solarized';
 
 const colorMap = theme => ({
   BACKGROUND_COLOR: theme.base00,
@@ -36,38 +36,38 @@ const getDefaultThemeStyling = theme => {
     tree: {
       border: 0,
       padding: 0,
-      marginTop: "0.5em",
-      marginBottom: "0.5em",
-      marginLeft: "0.125em",
+      marginTop: '0.5em',
+      marginBottom: '0.5em',
+      marginLeft: '0.125em',
       marginRight: 0,
-      listStyle: "none",
-      MozUserSelect: "none",
-      WebkitUserSelect: "none",
+      listStyle: 'none',
+      MozUserSelect: 'none',
+      WebkitUserSelect: 'none',
       backgroundColor: colors.BACKGROUND_COLOR
     },
 
     value: ({ style }, nodeType, keyPath) => ({
       style: {
         ...style,
-        paddingTop: "0.25em",
+        paddingTop: '0.25em',
         paddingRight: 0,
-        marginLeft: "0.875em",
-        WebkitUserSelect: "text",
-        MozUserSelect: "text",
-        wordWrap: "break-word",
-        paddingLeft: keyPath.length > 1 ? "2.125em" : "1.25em",
-        textIndent: "-0.5em",
-        wordBreak: "break-all"
+        marginLeft: '0.875em',
+        WebkitUserSelect: 'text',
+        MozUserSelect: 'text',
+        wordWrap: 'break-word',
+        paddingLeft: keyPath.length > 1 ? '2.125em' : '1.25em',
+        textIndent: '-0.5em',
+        wordBreak: 'break-all'
       }
     }),
 
     label: {
-      display: "inline-block",
+      display: 'inline-block',
       color: colors.LABEL_COLOR
     },
 
     valueLabel: {
-      margin: "0 0.5em 0 0"
+      margin: '0 0.5em 0 0'
     },
 
     valueText: ({ style }, nodeType) => ({
@@ -79,8 +79,8 @@ const getDefaultThemeStyling = theme => {
 
     itemRange: ({ style }, expanded) => ({
       style: {
-        paddingTop: expanded ? 0 : "0.25em",
-        cursor: "pointer",
+        paddingTop: expanded ? 0 : '0.25em',
+        cursor: 'pointer',
         color: colors.LABEL_COLOR
       }
     }),
@@ -89,28 +89,28 @@ const getDefaultThemeStyling = theme => {
       style: {
         ...style,
         marginLeft: 0,
-        transition: "150ms",
-        WebkitTransition: "150ms",
-        MozTransition: "150ms",
-        WebkitTransform: expanded ? "rotateZ(90deg)" : "rotateZ(0deg)",
-        MozTransform: expanded ? "rotateZ(90deg)" : "rotateZ(0deg)",
-        transform: expanded ? "rotateZ(90deg)" : "rotateZ(0deg)",
-        transformOrigin: "45% 50%",
-        WebkitTransformOrigin: "45% 50%",
-        MozTransformOrigin: "45% 50%",
-        position: "relative",
-        lineHeight: "1.1em",
-        fontSize: "0.75em"
+        transition: '150ms',
+        WebkitTransition: '150ms',
+        MozTransition: '150ms',
+        WebkitTransform: expanded ? 'rotateZ(90deg)' : 'rotateZ(0deg)',
+        MozTransform: expanded ? 'rotateZ(90deg)' : 'rotateZ(0deg)',
+        transform: expanded ? 'rotateZ(90deg)' : 'rotateZ(0deg)',
+        transformOrigin: '45% 50%',
+        WebkitTransformOrigin: '45% 50%',
+        MozTransformOrigin: '45% 50%',
+        position: 'relative',
+        lineHeight: '1.1em',
+        fontSize: '0.75em'
       }
     }),
 
     arrowContainer: ({ style }, arrowStyle) => ({
       style: {
         ...style,
-        display: "inline-block",
-        paddingRight: "0.5em",
-        paddingLeft: arrowStyle === "double" ? "1em" : 0,
-        cursor: "pointer"
+        display: 'inline-block',
+        paddingRight: '0.5em',
+        paddingLeft: arrowStyle === 'double' ? '1em' : 0,
+        cursor: 'pointer'
       }
     }),
 
@@ -119,18 +119,18 @@ const getDefaultThemeStyling = theme => {
     },
 
     arrowSignInner: {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
-      left: "-0.4em"
+      left: '-0.4em'
     },
 
     nestedNode: ({ style }, keyPath, nodeType, expanded, expandable) => ({
       style: {
         ...style,
-        position: "relative",
-        paddingTop: "0.25em",
-        marginLeft: keyPath.length > 1 ? "0.875em" : 0,
-        paddingLeft: !expandable ? "1.125em" : 0
+        position: 'relative',
+        paddingTop: '0.25em',
+        marginLeft: keyPath.length > 1 ? '0.875em' : 0,
+        paddingLeft: !expandable ? '1.125em' : 0
       }
     }),
 
@@ -144,17 +144,17 @@ const getDefaultThemeStyling = theme => {
         ...style,
         margin: 0,
         padding: 0,
-        WebkitUserSelect: expandable ? "inherit" : "text",
-        MozUserSelect: expandable ? "inherit" : "text",
-        cursor: expandable ? "pointer" : "default"
+        WebkitUserSelect: expandable ? 'inherit' : 'text',
+        MozUserSelect: expandable ? 'inherit' : 'text',
+        cursor: expandable ? 'pointer' : 'default'
       }
     }),
 
     nestedNodeItemString: ({ style }, keyPath, nodeType, expanded) => ({
       style: {
         ...style,
-        paddingLeft: "0.5em",
-        cursor: "default",
+        paddingLeft: '0.5em',
+        cursor: 'default',
         color: expanded
           ? colors.ITEM_STRING_EXPANDED_COLOR
           : colors.ITEM_STRING_COLOR
@@ -162,8 +162,8 @@ const getDefaultThemeStyling = theme => {
     }),
 
     nestedNodeItemType: {
-      marginLeft: "0.3em",
-      marginRight: "0.3em"
+      marginLeft: '0.3em',
+      marginRight: '0.3em'
     },
 
     nestedNodeChildren: ({ style }, nodeType, expanded) => ({
@@ -171,15 +171,15 @@ const getDefaultThemeStyling = theme => {
         ...style,
         padding: 0,
         margin: 0,
-        listStyle: "none",
-        display: expanded ? "block" : "none"
+        listStyle: 'none',
+        display: expanded ? 'block' : 'none'
       }
     }),
 
     rootNodeChildren: {
       padding: 0,
       margin: 0,
-      listStyle: "none"
+      listStyle: 'none'
     }
   };
 };

@@ -1,8 +1,8 @@
-import React, { PropTypes } from "react";
-import JSONArrow from "./JSONArrow";
-import getCollectionEntries from "./getCollectionEntries";
-import JSONNode from "./JSONNode";
-import ItemRange from "./ItemRange";
+import React, { PropTypes } from 'react';
+import JSONArrow from './JSONArrow';
+import getCollectionEntries from './getCollectionEntries';
+import JSONNode from './JSONNode';
+import ItemRange from './ItemRange';
 
 /**
  * Renders nested values (eg. objects, arrays, lists, etc.)
@@ -120,9 +120,9 @@ export default class JSONNestedNode extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return !!Object.keys(nextProps).find(
       key =>
-        key !== "circularCache" &&
-        (key === "keyPath"
-          ? nextProps[key].join("/") !== this.props[key].join("/")
+        key !== 'circularCache' &&
+        (key === 'keyPath'
+          ? nextProps[key].join('/') !== this.props[key].join('/')
           : nextProps[key] !== this.props[key])
     ) || nextState.expanded !== this.state.expanded;
   }
@@ -147,7 +147,7 @@ export default class JSONNestedNode extends React.Component {
       : null;
 
     const itemType = (
-      <span {...styling("nestedNodeItemType", expanded)}>
+      <span {...styling('nestedNodeItemType', expanded)}>
         {nodeTypeIndicator}
       </span>
     );
@@ -160,12 +160,12 @@ export default class JSONNestedNode extends React.Component {
     const stylingArgs = [keyPath, nodeType, expanded, expandable];
 
     return hideRoot
-      ? <li {...styling("rootNode", ...stylingArgs)}>
-          <ul {...styling("rootNodeChildren", ...stylingArgs)}>
+      ? <li {...styling('rootNode', ...stylingArgs)}>
+          <ul {...styling('rootNodeChildren', ...stylingArgs)}>
             {renderedChildren}
           </ul>
         </li>
-      : <li {...styling("nestedNode", ...stylingArgs)}>
+      : <li {...styling('nestedNode', ...stylingArgs)}>
           {expandable &&
             <JSONArrow
               styling={styling}
@@ -174,18 +174,18 @@ export default class JSONNestedNode extends React.Component {
               onClick={this.handleClick}
             />}
           <label
-            {...styling(["label", "nestedNodeLabel"], ...stylingArgs)}
+            {...styling(['label', 'nestedNodeLabel'], ...stylingArgs)}
             onClick={expandable && this.handleClick}
           >
             {labelRenderer(...stylingArgs)}
           </label>
           <span
-            {...styling("nestedNodeItemString", ...stylingArgs)}
+            {...styling('nestedNodeItemString', ...stylingArgs)}
             onClick={expandable && this.handleClick}
           >
             {renderedItemString}
           </span>
-          <ul {...styling("nestedNodeChildren", ...stylingArgs)}>
+          <ul {...styling('nestedNodeChildren', ...stylingArgs)}>
             {renderedChildren}
           </ul>
         </li>;

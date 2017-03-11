@@ -7,7 +7,7 @@
     "precommit": "lint-staged",
     "clean": "rimraf lib",
     "build": "babel src --out-dir lib",
-    "lint": "xo src/** test/** examples/src/**",
+    "lint": "eslint src test examples/src",
     "test": "npm -s run lint && NODE_ENV=test ava",
     "test:watch": "NODE_ENV=test mocha --compilers js:babel-core/register --recursive --watch",
     "test:cov": "babel-node ./node_modules/.bin/isparta cover ./node_modules/.bin/_mocha -- --recursive",
@@ -73,7 +73,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier --write",
+      "prettier --single-quote --write",
       "git add"
     ]
   }

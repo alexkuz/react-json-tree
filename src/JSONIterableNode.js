@@ -1,5 +1,5 @@
-import React from "react";
-import JSONNestedNode from "./JSONNestedNode";
+import React from 'react';
+import JSONNestedNode from './JSONNestedNode';
 
 // Returns the "n Items" string for this node,
 // generating and caching it if it hasn't been created yet.
@@ -18,7 +18,7 @@ function createItemString(data, limit) {
       count += 1;
     }
   }
-  return `${hasMore ? ">" : ""}${count} ${count !== 1 ? "entries" : "entry"}`;
+  return `${hasMore ? '>' : ''}${count} ${count !== 1 ? 'entries' : 'entry'}`;
 }
 
 // Configures <JSONNestedNode> to render an iterable

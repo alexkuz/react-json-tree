@@ -1,10 +1,10 @@
-import React, { PropTypes } from "react";
-import JSONNestedNode from "./JSONNestedNode";
+import React, { PropTypes } from 'react';
+import JSONNestedNode from './JSONNestedNode';
 
 // Returns the "n Items" string for this node,
 // generating and caching it if it hasn't been created yet.
 function createItemString(data) {
-  return `${data.length} ${data.length !== 1 ? "items" : "item"}`;
+  return `${data.length} ${data.length !== 1 ? 'items' : 'item'}`;
 }
 
 // Configures <JSONNestedNode> to render an Array

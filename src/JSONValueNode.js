@@ -1,4 +1,4 @@
-import React, { PropTypes } from "react";
+import React, { PropTypes } from 'react';
 
 /**
  * Renders simple values (eg. strings, numbers, booleans, etc)
@@ -15,11 +15,11 @@ const JSONValueNode = (
     valueGetter
   }
 ) => (
-  <li {...styling("value", nodeType, keyPath)}>
-    <label {...styling(["label", "valueLabel"], nodeType, keyPath)}>
+  <li {...styling('value', nodeType, keyPath)}>
+    <label {...styling(['label', 'valueLabel'], nodeType, keyPath)}>
       {labelRenderer(keyPath, nodeType, false, false)}
     </label>
-    <span {...styling("valueText", nodeType, keyPath)}>
+    <span {...styling('valueText', nodeType, keyPath)}>
       {valueRenderer(valueGetter(value), value, ...keyPath)}
     </span>
   </li>
