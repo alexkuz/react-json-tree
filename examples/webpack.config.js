@@ -1,51 +1,59 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require("path");
+var webpack = require("webpack");
 
-var isProduction = process.env.NODE_ENV === 'production';
+var isProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: "source-map",
   entry: [
-    !isProduction && 'webpack-dev-server/client?http://localhost:3000',
-    !isProduction && 'webpack/hot/only-dev-server',
-    './src/index'
+    !isProduction && "webpack-dev-server/client?http://localhost:3000",
+    !isProduction && "webpack/hot/only-dev-server",
+    "./src/index"
   ].filter(Boolean),
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    path: path.join(__dirname, "dist"),
+    filename: "bundle.js",
+    publicPath: "/static/"
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
+      "process.env": {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    isProduction && new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false },
-      output: { comments: false },
-      sourceMap: true
-    })
+    isProduction &&
+      new webpack.optimize.UglifyJsPlugin({
+        compress: { warnings: false },
+        output: { comments: false },
+        sourceMap: true
+      })
   ].filter(Boolean),
   resolve: {
     alias: {
-      'react-json-tree/lib': path.join(__dirname, '..', 'src'),
-      'react-json-tree': path.join(__dirname, '..', 'src'),
-      'react': path.join(__dirname, 'node_modules', 'react')
+      "react-json-tree/lib": path.join(__dirname, "..", "src"),
+      "react-json-tree": path.join(__dirname, "..", "src"),
+      react: path.join(__dirname, "node_modules", "react")
     },
-    extensions: ['.js']
+    extensions: [".js"]
   },
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: [!isProduction && 'react-hot-loader', 'babel-loader'].filter(Boolean),
-      include: path.join(__dirname, 'src')
-    }, {
-      test: /\.js$/,
-      loaders: [!isProduction && 'react-hot-loader', 'babel-loader'].filter(Boolean),
-      include: path.join(__dirname, '..', 'src')
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: [!isProduction && "react-hot-loader", "babel-loader"].filter(
+          Boolean
+        ),
+        include: path.join(__dirname, "src")
+      },
+      {
+        test: /\.js$/,
+        loaders: [!isProduction && "react-hot-loader", "babel-loader"].filter(
+          Boolean
+        ),
+        include: path.join(__dirname, "..", "src")
+      }
+    ]
   }
 };

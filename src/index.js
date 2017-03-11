@@ -3,32 +3,34 @@
 // Dave Vedder <veddermatic@gmail.com> http://www.eskimospy.com/
 // port by Daniele Zannotti http://www.github.com/dzannotti <dzannotti@me.com>
 
-import React, { PropTypes } from 'react';
-import JSONNode from './JSONNode';
-import createStylingFromTheme from './createStylingFromTheme';
-import { invertTheme } from 'react-base16-styling';
+import React, { PropTypes } from "react";
+import JSONNode from "./JSONNode";
+import createStylingFromTheme from "./createStylingFromTheme";
+import { invertTheme } from "react-base16-styling";
 
 const identity = value => value;
 const expandRootNode = (keyName, data, level) => level === 0;
-const defaultItemString = (type, data, itemType, itemString) =>
-  <span>{itemType} {itemString}</span>;
+const defaultItemString = (type, data, itemType, itemString) => (
+  <span>{itemType} {itemString}</span>
+);
 const defaultLabelRenderer = ([label]) => <span>{label}:</span>;
 const noCustomNode = () => false;
 
 function checkLegacyTheming(theme, props) {
   const deprecatedStylingMethodsMap = {
-    getArrowStyle: 'arrow',
-    getListStyle: 'nestedNodeChildren',
-    getItemStringStyle: 'nestedNodeItemString',
-    getLabelStyle: 'label',
-    getValueStyle: 'valueText'
+    getArrowStyle: "arrow",
+    getListStyle: "nestedNodeChildren",
+    getItemStringStyle: "nestedNodeItemString",
+    getLabelStyle: "label",
+    getValueStyle: "valueText"
   };
 
-  const deprecatedStylingMethods = Object.keys(deprecatedStylingMethodsMap)
-    .filter(name => props[name]);
+  const deprecatedStylingMethods = Object.keys(
+    deprecatedStylingMethodsMap
+  ).filter(name => props[name]);
 
   if (deprecatedStylingMethods.length > 0) {
-    if (typeof theme === 'string') {
+    if (typeof theme === "string") {
       theme = {
         extend: theme
       };
@@ -36,8 +38,9 @@ function checkLegacyTheming(theme, props) {
       theme = { ...theme };
     }
 
-    deprecatedStylingMethods.forEach((name) => {
-      console.error( // eslint-disable-line no-console
+    deprecatedStylingMethods.forEach(name => {
+      console.error(
+        // eslint-disable-line no-console
         `Styling method "${name}" is deprecated, use "theme" property instead`
       );
 
@@ -56,10 +59,10 @@ function checkLegacyTheming(theme, props) {
 function getStateFromProps(props) {
   let theme = checkLegacyTheming(props.theme, props);
   if (props.invertTheme) {
-    if (typeof theme === 'string') {
+    if (typeof theme === "string") {
       theme = `${theme}:inverted`;
     } else if (theme && theme.extend) {
-      if (typeof theme === 'string') {
+      if (typeof theme === "string") {
         theme = { ...theme, extend: `${theme.extend}:inverted` };
       } else {
         theme = { ...theme, extend: invertTheme(theme.extend) };
@@ -75,17 +78,13 @@ function getStateFromProps(props) {
 
 export default class JSONTree extends React.Component {
   static propTypes = {
-    data: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object
-    ]).isRequired,
+    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
     hideRoot: PropTypes.bool,
-    theme: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.string
-    ]),
+    theme: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     invertTheme: PropTypes.bool,
-    keyPath: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    keyPath: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    ),
     postprocessValue: PropTypes.func,
     sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool])
   };
@@ -93,7 +92,7 @@ export default class JSONTree extends React.Component {
   static defaultProps = {
     shouldExpandNode: expandRootNode,
     hideRoot: false,
-    keyPath: ['root'],
+    keyPath: ["root"],
     getItemString: defaultItemString,
     labelRenderer: defaultLabelRenderer,
     valueRenderer: identity,
@@ -109,17 +108,18 @@ export default class JSONTree extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (['theme', 'invertTheme'].find(k => nextProps[k] !== this.props[k])) {
+    if (["theme", "invertTheme"].find(k => nextProps[k] !== this.props[k])) {
       this.setState(getStateFromProps(nextProps));
     }
   }
 
   shouldComponentUpdate(nextProps) {
-    return !!Object.keys(nextProps).find(k => (
-      k === 'keyPath' ?
-        nextProps[k].join('/') !== this.props[k].join('/') :
-        nextProps[k] !== this.props[k]
-    ));
+    return !!Object.keys(nextProps).find(
+      k =>
+        k === "keyPath"
+          ? nextProps[k].join("/") !== this.props[k].join("/")
+          : nextProps[k] !== this.props[k]
+    );
   }
 
   render() {
@@ -136,7 +136,7 @@ export default class JSONTree extends React.Component {
     const { styling } = this.state;
 
     return (
-      <ul {...styling('tree')}>
+      <ul {...styling("tree")}>
         <JSONNode
           {...{ postprocessValue, hideRoot, styling, ...rest }}
           keyPath={hideRoot ? [] : keyPath}

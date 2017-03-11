@@ -1,0 +1,22 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "standard",
+    "prettier",
+    "plugin:react/recommended",
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": [
+      "prettier",
+      "standard",
+      "promise",
+      "babel",
+      "flowtype",
+      "react"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  }
+}

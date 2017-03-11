@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import JSONArrow from './JSONArrow';
+import React, { PropTypes } from "react";
+import JSONArrow from "./JSONArrow";
 
 export default class ItemRange extends React.PureComponent {
   static propTypes = {
@@ -20,24 +20,23 @@ export default class ItemRange extends React.PureComponent {
   render() {
     const { styling, from, to, renderChildNodes, nodeType } = this.props;
 
-    return (this.state.expanded ?
-      <button {...styling('itemRange', this.state.expanded)}>
-        {renderChildNodes(this.props, from, to)}
-      </button> :
-      <button
-        {...styling('itemRange', this.state.expanded)}
-        onClick={this.handleClick}
-      >
-        <JSONArrow
-          nodeType={nodeType}
-          styling={styling}
-          expanded={false}
+    return this.state.expanded
+      ? <button {...styling("itemRange", this.state.expanded)}>
+          {renderChildNodes(this.props, from, to)}
+        </button>
+      : <button
+          {...styling("itemRange", this.state.expanded)}
           onClick={this.handleClick}
-          arrowStyle='double'
-        />
-        {`${from} ... ${to}`}
-      </button>
-    );
+        >
+          <JSONArrow
+            nodeType={nodeType}
+            styling={styling}
+            expanded={false}
+            onClick={this.handleClick}
+            arrowStyle="double"
+          />
+          {`${from} ... ${to}`}
+        </button>;
   }
 
   handleClick() {

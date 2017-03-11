@@ -1,5 +1,5 @@
-import React from 'react';
-import JSONNestedNode from './JSONNestedNode';
+import React from "react";
+import JSONNestedNode from "./JSONNestedNode";
 
 // Returns the "n Items" string for this node,
 // generating and caching it if it hasn't been created yet.
@@ -9,7 +9,8 @@ function createItemString(data, limit) {
   if (Number.isSafeInteger(data.size)) {
     count = data.size;
   } else {
-    for (const entry of data) { // eslint-disable-line no-unused-vars
+    // eslint-disable-next-line no-unused-vars
+    for (const entry of data) {
       if (limit && count + 1 > limit) {
         hasMore = true;
         break;
@@ -17,7 +18,7 @@ function createItemString(data, limit) {
       count += 1;
     }
   }
-  return `${hasMore ? '>' : ''}${count} ${count !== 1 ? 'entries' : 'entry'}`;
+  return `${hasMore ? ">" : ""}${count} ${count !== 1 ? "entries" : "entry"}`;
 }
 
 // Configures <JSONNestedNode> to render an iterable
@@ -25,8 +26,8 @@ export default function JSONIterableNode({ ...props }) {
   return (
     <JSONNestedNode
       {...props}
-      nodeType='Iterable'
-      nodeTypeIndicator='()'
+      nodeType="Iterable"
+      nodeTypeIndicator="()"
       createItemString={createItemString}
     />
   );
