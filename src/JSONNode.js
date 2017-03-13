@@ -4,7 +4,7 @@ import objType from './utils/objType';
 import JSONValueNode from './JSONValueNode';
 import JSONNestedNode from './JSONNestedNode';
 
-import {
+import type {
   RenderItemPreview,
   KeyPath,
   RenderLabel,
@@ -13,7 +13,7 @@ import {
   ShouldExpandNode,
   Sorter
 } from './types';
-import { StylingFunction } from 'react-base16-styling';
+import type { StylingFunction } from 'react-base16-styling';
 
 type Props = {
   renderItemPreview: RenderItemPreview,

@@ -9,8 +9,8 @@ import React from 'react';
 import JSONNode from './JSONNode';
 import createStylingFromTheme from './utils/createStylingFromTheme';
 
-import { StylingFunction, Theme } from 'react-base16-styling';
-import {
+import type { StylingFunction, Theme } from 'react-base16-styling';
+import type {
   ShouldExpandNode,
   KeyPath,
   PostprocessValue,
@@ -38,9 +38,9 @@ type DefaultProps = {
 type Props = DefaultProps & {
   data: Object | Array<any>,
   theme?: Theme,
-  keyPath: KeyPath,
-  postprocessValue: PostprocessValue,
-  sortObjectKeys: Sorter | boolean
+  keyPath?: KeyPath,
+  postprocessValue?: PostprocessValue,
+  sortObjectKeys?: Sorter | boolean
 };
 
 type State = {

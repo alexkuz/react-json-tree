@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
 
-import { ValueType, RenderLabel, KeyPath, RenderValue } from './types';
-import { StylingFunction } from 'react-base16-styling';
+import type { ValueType, RenderLabel, KeyPath, RenderValue } from './types';
+import type { StylingFunction } from 'react-base16-styling';
 
 type Props = {
   nodeType: ValueType,

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import JSONTree from '../../src';
 import { Map } from 'immutable';

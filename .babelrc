@@ -1,4 +1,4 @@
 {
-  "plugins": ["transform-runtime"],
+  "plugins": ["transform-runtime", "transform-flow-strip-types"],
   "presets": ["es2015", "stage-0", "react"]
 }

@@ -1,6 +1,7 @@
+// @flow
 import test from 'ava';
 
-import objType from '../src/objType';
+import objType from '../../src/utils/objType';
 
 test('should determine the correct type', t => {
   t.is(objType({}), 'Object');

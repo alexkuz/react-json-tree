@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { createRenderer } from 'react-addons-test-utils';
 import test from 'ava';
