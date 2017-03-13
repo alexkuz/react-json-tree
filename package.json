@@ -1,6 +1,6 @@
 {
   "name": "react-json-tree",
-  "version": "0.10.6",
+  "version": "0.10.7",
   "description": "React JSON Viewer Component, Extracted from redux-devtools",
   "main": "lib/index.js",
   "scripts": {
