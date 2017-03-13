@@ -1,3 +1,12 @@
+// @flow
+import type { NestedType, Sorter } from '../types';
+
+type GeneralType = 'Object' | 'Array' | 'Iterable';
+
+type Entry =
+  | { isRange: false, key: string | number, value: any }
+  | { isRange: true, from: number, to: number };
+
 function getLength(type, collection) {
   if (type === 'Object') {
     return Object.keys(collection).length;
@@ -25,10 +34,16 @@ function getEntries(type, collection, sortObjectKeys, from = 0, to = Infinity) {
     keys = keys.slice(from, to + 1);
 
     res = {
-      entries: keys.map(key => ({ key, value: collection[key] }))
+      hasMore: false,
+      entries: keys.map(key => ({
+        isRange: false,
+        key,
+        value: collection[key]
+      }))
     };
   } else if (type === 'Array') {
     res = {
+      hasMore: false,
       entries: collection
         .slice(from, to + 1)
         .map((val, idx) => ({ key: idx + from, value: val }))
@@ -48,9 +63,10 @@ function getEntries(type, collection, sortObjectKeys, from = 0, to = Infinity) {
       if (from <= idx) {
         if (isMap && Array.isArray(item)) {
           if (typeof item[0] === 'string' || typeof item[0] === 'number') {
-            entries.push({ key: item[0], value: item[1] });
+            entries.push({ isRange: false, key: item[0], value: item[1] });
           } else {
             entries.push({
+              isRange: false,
               key: `[entry ${idx}]`,
               value: {
                 '[key]': item[0],
@@ -59,7 +75,7 @@ function getEntries(type, collection, sortObjectKeys, from = 0, to = Infinity) {
             });
           }
         } else {
-          entries.push({ key: idx, value: item });
+          entries.push({ isRange: false, key: idx, value: item });
         }
       }
       idx++;
@@ -80,20 +96,34 @@ function getRanges(from, to, limit) {
     limit *= limit;
   }
   for (let i = from; i <= to; i += limit) {
-    ranges.push({ from: i, to: Math.min(to, i + (limit - 1)) });
+    ranges.push({ isRange: true, from: i, to: Math.min(to, i + (limit - 1)) });
   }
 
   return ranges;
 }
 
+function getGeneralType(nodeType): GeneralType {
+  switch (nodeType) {
+    case 'Array':
+      return 'Array';
+    case 'Iterable':
+    case 'Map':
+    case 'Set':
+      return 'Iterable';
+    default:
+      return 'Object';
+  }
+}
+
 export default function getCollectionEntries(
-  type,
-  collection,
-  sortObjectKeys,
-  limit,
-  from = 0,
-  to = Infinity
-) {
+  nodeType: NestedType,
+  collection: any,
+  sortObjectKeys: Sorter<*>,
+  limit: number,
+  from: number = 0,
+  to: number = Infinity
+): Entry[] {
+  const type = getGeneralType(nodeType);
   const getEntriesBound = getEntries.bind(
     null,
     type,

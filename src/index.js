@@ -1,118 +1,92 @@
+// @flow
+
 // ES6 + inline style port of JSONViewer https://bitbucket.org/davevedder/react-json-viewer/
 // all credits and original code to the author
 // Dave Vedder <veddermatic@gmail.com> http://www.eskimospy.com/
 // port by Daniele Zannotti http://www.github.com/dzannotti <dzannotti@me.com>
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import JSONNode from './JSONNode';
-import createStylingFromTheme from './createStylingFromTheme';
-import { invertTheme } from 'react-base16-styling';
+import createStylingFromTheme from './utils/createStylingFromTheme';
+
+import { StylingFunction, Theme } from 'react-base16-styling';
+import {
+  ShouldExpandNode,
+  KeyPath,
+  PostprocessValue,
+  IsCustomNode,
+  RenderItemPreview,
+  RenderLabel,
+  RenderValue,
+  Sorter
+} from './types';
+
+type DefaultProps = {
+  shouldExpandNode: ShouldExpandNode,
+  hideRoot: boolean,
+  keyPath: KeyPath,
+  postprocessValue: PostprocessValue,
+  isCustomNode: IsCustomNode,
+  collectionLimit: number,
+  children?: {
+    renderItemPreview?: RenderItemPreview,
+    renderLabel?: RenderLabel,
+    renderValue?: RenderValue
+  }
+};
+
+type Props = DefaultProps & {
+  data: Object | Array<any>,
+  theme?: Theme,
+  keyPath: KeyPath,
+  postprocessValue: PostprocessValue,
+  sortObjectKeys: Sorter | boolean
+};
+
+type State = {
+  styling: StylingFunction
+};
 
 const identity = value => value;
 const expandRootNode = (keyName, data, level) => level === 0;
-const defaultItemString = (type, data, itemType, itemString) => (
-  <span>{itemType} {itemString}</span>
+const defaultRenderItemPreview = (type, data, itemType, itemString) => (
+  <span>{itemType}{itemString ? ' · ' + itemString : ''}</span>
 );
-const defaultLabelRenderer = ([label]) => <span>{label}:</span>;
+const defaultRenderLabel = ([label]) => <span>{label}:</span>;
 const noCustomNode = () => false;
 
-function checkLegacyTheming(theme, props) {
-  const deprecatedStylingMethodsMap = {
-    getArrowStyle: 'arrow',
-    getListStyle: 'nestedNodeChildren',
-    getItemStringStyle: 'nestedNodeItemString',
-    getLabelStyle: 'label',
-    getValueStyle: 'valueText'
-  };
-
-  const deprecatedStylingMethods = Object.keys(
-    deprecatedStylingMethodsMap
-  ).filter(name => props[name]);
-
-  if (deprecatedStylingMethods.length > 0) {
-    if (typeof theme === 'string') {
-      theme = {
-        extend: theme
-      };
-    } else {
-      theme = { ...theme };
-    }
-
-    deprecatedStylingMethods.forEach(name => {
-      console.error(
-        `Styling method "${name}" is deprecated, use "theme" property instead`
-      );
-
-      theme[deprecatedStylingMethodsMap[name]] = ({ style }, ...args) => ({
-        style: {
-          ...style,
-          ...props[name](...args)
-        }
-      });
-    });
-  }
-
-  return theme;
-}
-
 function getStateFromProps(props) {
-  let theme = checkLegacyTheming(props.theme, props);
-  if (props.invertTheme) {
-    if (typeof theme === 'string') {
-      theme = `${theme}:inverted`;
-    } else if (theme && theme.extend) {
-      if (typeof theme === 'string') {
-        theme = { ...theme, extend: `${theme.extend}:inverted` };
-      } else {
-        theme = { ...theme, extend: invertTheme(theme.extend) };
-      }
-    } else if (theme) {
-      theme = invertTheme(theme);
-    }
-  }
   return {
-    styling: createStylingFromTheme(theme)
+    styling: createStylingFromTheme(props.theme)
   };
 }
 
-export default class JSONTree extends React.Component {
-  static propTypes = {
-    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
-    hideRoot: PropTypes.bool,
-    theme: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    invertTheme: PropTypes.bool,
-    keyPath: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    ),
-    postprocessValue: PropTypes.func,
-    sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool])
-  };
+export default class JSONTree
+  extends React.Component<DefaultProps, Props, State> {
+  state: State;
 
   static defaultProps = {
     shouldExpandNode: expandRootNode,
     hideRoot: false,
     keyPath: ['root'],
-    getItemString: defaultItemString,
-    labelRenderer: defaultLabelRenderer,
-    valueRenderer: identity,
     postprocessValue: identity,
     isCustomNode: noCustomNode,
     collectionLimit: 50,
-    invertTheme: true
+    children: {}
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.state = getStateFromProps(props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (['theme', 'invertTheme'].find(k => nextProps[k] !== this.props[k])) {
+  componentWillReceiveProps(nextProps: Props) {
+    if (['theme'].find(k => nextProps[k] !== this.props[k])) {
       this.setState(getStateFromProps(nextProps));
     }
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: Props) {
     return !!Object.keys(nextProps).find(
       k =>
         k === 'keyPath'
@@ -127,17 +101,30 @@ export default class JSONTree extends React.Component {
       keyPath,
       postprocessValue,
       hideRoot,
-      theme, // eslint-disable-line no-unused-vars
-      invertTheme: _, // eslint-disable-line no-unused-vars
-      ...rest
+      children,
+      isCustomNode,
+      shouldExpandNode,
+      sortObjectKeys
     } = this.props;
 
     const { styling } = this.state;
 
     return (
-      <ul {...styling('tree')}>
+      <ul {...styling(['tree', 'treeColor'])}>
         <JSONNode
-          {...{ postprocessValue, hideRoot, styling, ...rest }}
+          {...{
+            postprocessValue,
+            hideRoot,
+            styling,
+            isCustomNode,
+            shouldExpandNode,
+            sortObjectKeys
+          }}
+          renderItemPreview={
+            children.renderItemPreview || defaultRenderItemPreview
+          }
+          renderLabel={children.renderLabel || defaultRenderLabel}
+          renderValue={children.renderValue || identity}
           keyPath={hideRoot ? [] : keyPath}
           value={postprocessValue(value)}
         />

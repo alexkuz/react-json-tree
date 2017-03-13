@@ -1,0 +1,66 @@
+import { StylingFunction } from 'react-base16-styling';
+
+export type ObjectType = 'Object' | 'Error';
+
+export type WeakType = 'WeakMap' | 'WeakSet';
+
+export type ArrayType = 'Array';
+
+export type IterableType = 'Iterable' | 'Map' | 'Set';
+
+export type NestedType = ObjectType | WeakType | ArrayType | IterableType;
+
+export type ValueType = 'Boolean' | 'Number' | 'String';
+
+export type NullType = 'Null' | 'Undefined';
+
+export type AnyType = NestedType | ValueType | NullType;
+
+export type Sorter<T> = (a: T, b: T) => number;
+
+export type KeyPath = Array<string | number>;
+
+export type RenderItemPreview = (
+  nodeType: NestedType,
+  data: any,
+  itemTypeText: string,
+  itemPreviewText: string
+) => ?React$Element<*>;
+
+export type RenderLabel = (
+  keyPath: KeyPath,
+  nodeType: AnyType,
+  expanded: boolean,
+  expandable: boolean
+) => ?React$Element<*>;
+
+export type ShouldExpandNode = (
+  keyPath: KeyPath,
+  data: any,
+  level: number
+) => boolean;
+
+export type PostprocessValue = (value: any) => any;
+
+export type RenderChildNodes = (
+  props: {
+    nodeType: NestedType,
+    data: any,
+    collectionLimit: number,
+    circularCache: mixed[],
+    keyPath: KeyPath,
+    postprocessValue: PostprocessValue,
+    sortObjectKeys: Sorter | boolean,
+    styling: StylingFunction
+  },
+  from?: number,
+  to?: number
+) => React$Element<*>[];
+
+export type RenderValue = (
+  renderedValue: string,
+  value: any,
+  ...keyPath: KeyPath
+) => ?React$Element<*>;
+
+export type IsCustomNode = (value: any) => boolean;

@@ -1,4 +1,16 @@
-import React, { PropTypes } from 'react';
+// @flow
+import React from 'react';
+
+import type { StylingFunction } from 'react-base16-styling';
+import type { NestedType } from './types';
+
+type Props = {
+  styling: StylingFunction,
+  arrowStyle: 'single' | 'double',
+  expanded: boolean,
+  nodeType: NestedType,
+  onClick: (e: SyntheticMouseEvent) => void
+};
 
 const JSONArrow = (
   {
@@ -7,27 +19,34 @@ const JSONArrow = (
     expanded,
     nodeType,
     onClick
-  }
+  }: Props
 ) => (
-  <button {...styling('arrowContainer', arrowStyle)} onClick={onClick}>
-    <div {...styling(['arrow', 'arrowSign'], nodeType, expanded, arrowStyle)}>
+  <div
+    {...styling(['arrowContainer', 'arrowContainerColor'], arrowStyle)}
+    onClick={onClick}
+  >
+    <div
+      {...styling(
+        ['arrow', 'arrowColor', 'arrowSign', 'arrowSignColor'],
+        nodeType,
+        expanded,
+        arrowStyle
+      )}
+    >
       {'\u25B6'}
       {arrowStyle === 'double' &&
-        <div {...styling(['arrowSign', 'arrowSignInner'])}>{'\u25B6'}</div>}
+        <div
+          {...styling([
+            'arrowInner',
+            'arrowInnerColor',
+            'arrowSign',
+            'arrowSignColor'
+          ])}
+        >
+          {'\u25B6'}
+        </div>}
     </div>
-  </button>
+  </div>
 );
-
-JSONArrow.propTypes = {
-  styling: PropTypes.func.isRequired,
-  arrowStyle: PropTypes.oneOf(['single', 'double']),
-  expanded: PropTypes.bool.isRequired,
-  nodeType: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
-};
-
-JSONArrow.defaultProps = {
-  arrowStyle: 'single'
-};
 
 export default JSONArrow;

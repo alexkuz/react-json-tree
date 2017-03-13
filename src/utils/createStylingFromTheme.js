@@ -1,5 +1,6 @@
+// @flow
 import { createStyling } from 'react-base16-styling';
-import solarized from './themes/solarized';
+import solarized from '../themes/solarized';
 
 const colorMap = theme => ({
   BACKGROUND_COLOR: theme.base00,
@@ -42,7 +43,10 @@ const getDefaultThemeStyling = theme => {
       marginRight: 0,
       listStyle: 'none',
       MozUserSelect: 'none',
-      WebkitUserSelect: 'none',
+      WebkitUserSelect: 'none'
+    },
+
+    treeColor: {
       backgroundColor: colors.BACKGROUND_COLOR
     },
 
@@ -57,12 +61,16 @@ const getDefaultThemeStyling = theme => {
         wordWrap: 'break-word',
         paddingLeft: keyPath.length > 1 ? '2.125em' : '1.25em',
         textIndent: '-0.5em',
-        wordBreak: 'break-all'
+        wordBreak: 'break-all',
+        whiteSpace: 'pre-wrap'
       }
     }),
 
     label: {
-      display: 'inline-block',
+      display: 'inline-block'
+    },
+
+    labelColor: {
       color: colors.LABEL_COLOR
     },
 
@@ -70,7 +78,7 @@ const getDefaultThemeStyling = theme => {
       margin: '0 0.5em 0 0'
     },
 
-    valueText: ({ style }, nodeType) => ({
+    valueTextColor: ({ style }, nodeType) => ({
       style: {
         ...style,
         color: valueColorMap(colors)[nodeType]
@@ -79,11 +87,15 @@ const getDefaultThemeStyling = theme => {
 
     itemRange: ({ style }, expanded) => ({
       style: {
+        ...style,
         paddingTop: expanded ? 0 : '0.25em',
-        cursor: 'pointer',
-        color: colors.LABEL_COLOR
+        cursor: 'pointer'
       }
     }),
+
+    itemRangeColor: {
+      color: colors.LABEL_COLOR
+    },
 
     arrow: ({ style }, nodeType, expanded) => ({
       style: {
@@ -104,6 +116,12 @@ const getDefaultThemeStyling = theme => {
       }
     }),
 
+    arrowInner: {
+      position: 'absolute',
+      top: 0,
+      left: '-0.4em'
+    },
+
     arrowContainer: ({ style }, arrowStyle) => ({
       style: {
         ...style,
@@ -114,14 +132,8 @@ const getDefaultThemeStyling = theme => {
       }
     }),
 
-    arrowSign: {
+    arrowSignColor: {
       color: colors.ARROW_COLOR
-    },
-
-    arrowSignInner: {
-      position: 'absolute',
-      top: 0,
-      left: '-0.4em'
     },
 
     nestedNode: ({ style }, keyPath, nodeType, expanded, expandable) => ({
@@ -150,21 +162,19 @@ const getDefaultThemeStyling = theme => {
       }
     }),
 
-    nestedNodeItemString: ({ style }, keyPath, nodeType, expanded) => ({
+    nestedNodeItemPreview: {
+      paddingLeft: '0.5em',
+      cursor: 'default'
+    },
+
+    nestedNodeItemPreviewColor: ({ style }, keyPath, nodeType, expanded) => ({
       style: {
         ...style,
-        paddingLeft: '0.5em',
-        cursor: 'default',
         color: expanded
           ? colors.ITEM_STRING_EXPANDED_COLOR
           : colors.ITEM_STRING_COLOR
       }
     }),
-
-    nestedNodeItemType: {
-      marginLeft: '0.3em',
-      marginRight: '0.3em'
-    },
 
     nestedNodeChildren: ({ style }, nodeType, expanded) => ({
       style: {

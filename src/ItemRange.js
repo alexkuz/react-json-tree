@@ -1,31 +1,34 @@
-import React, { PropTypes } from 'react';
+// @flow
+import React from 'react';
 import JSONArrow from './JSONArrow';
 
-export default class ItemRange extends React.PureComponent {
-  static propTypes = {
-    styling: PropTypes.func.isRequired,
-    from: PropTypes.number.isRequired,
-    to: PropTypes.number.isRequired,
-    renderChildNodes: PropTypes.func.isRequired,
-    nodeType: PropTypes.string.isRequired
-  };
+import type { NestedType, RenderChildNodes } from './types';
+import type { StylingFunction } from 'react-base16-styling';
 
-  constructor(props) {
-    super(props);
-    this.state = { expanded: false };
+type Props = {
+  styling: StylingFunction,
+  from: number,
+  to: number,
+  renderChildNodes: RenderChildNodes,
+  nodeType: NestedType
+};
 
-    this.handleClick = this.handleClick.bind(this);
-  }
+type State = {
+  expanded: boolean
+};
+
+export default class ItemRange extends React.PureComponent<void, Props, State> {
+  state = { expanded: false };
 
   render() {
     const { styling, from, to, renderChildNodes, nodeType } = this.props;
 
     return this.state.expanded
-      ? <button {...styling('itemRange', this.state.expanded)}>
+      ? <div {...styling(['itemRange', 'itemRangeColor'], this.state.expanded)}>
           {renderChildNodes(this.props, from, to)}
-        </button>
-      : <button
-          {...styling('itemRange', this.state.expanded)}
+        </div>
+      : <div
+          {...styling(['itemRange', 'itemRangeColor'], this.state.expanded)}
           onClick={this.handleClick}
         >
           <JSONArrow
@@ -36,10 +39,10 @@ export default class ItemRange extends React.PureComponent {
             arrowStyle="double"
           />
           {`${from} ... ${to}`}
-        </button>;
+        </div>;
   }
 
-  handleClick() {
+  handleClick = () => {
     this.setState({ expanded: !this.state.expanded });
-  }
+  };
 }

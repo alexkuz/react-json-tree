@@ -1,4 +1,27 @@
-import React, { PropTypes } from 'react';
+// @flow
+import React from 'react';
+
+import { ValueType, RenderLabel, KeyPath, RenderValue } from './types';
+import { StylingFunction } from 'react-base16-styling';
+
+type Props = {
+  nodeType: ValueType,
+  styling: StylingFunction,
+  renderLabel: RenderLabel,
+  keyPath: KeyPath,
+  renderValue: RenderValue,
+  value: any
+};
+
+const VALUE_RENDERERS = {
+  String: raw => `"${raw}"`,
+  Boolean: raw => raw ? 'true' : 'false',
+  Date: raw => raw.toISOString(),
+  Null: () => 'null',
+  Undefined: () => 'undefined',
+  Function: raw => raw.toString(),
+  Symbol: raw => raw.toString()
+};
 
 /**
  * Renders simple values (eg. strings, numbers, booleans, etc)
@@ -8,37 +31,32 @@ const JSONValueNode = (
   {
     nodeType,
     styling,
-    labelRenderer,
+    renderLabel,
     keyPath,
-    valueRenderer,
-    value,
-    valueGetter
-  }
-) => (
-  <li {...styling('value', nodeType, keyPath)}>
-    <label {...styling(['label', 'valueLabel'], nodeType, keyPath)}>
-      {labelRenderer(keyPath, nodeType, false, false)}
-    </label>
-    <span {...styling('valueText', nodeType, keyPath)}>
-      {valueRenderer(valueGetter(value), value, ...keyPath)}
-    </span>
-  </li>
-);
+    renderValue,
+    value
+  }: Props
+) => {
+  const renderedValue = VALUE_RENDERERS.hasOwnProperty(nodeType)
+    ? VALUE_RENDERERS[nodeType](value)
+    : value;
 
-JSONValueNode.propTypes = {
-  nodeType: PropTypes.string.isRequired,
-  styling: PropTypes.func.isRequired,
-  labelRenderer: PropTypes.func.isRequired,
-  keyPath: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  ).isRequired,
-  valueRenderer: PropTypes.func.isRequired,
-  value: PropTypes.any,
-  valueGetter: PropTypes.func
-};
-
-JSONValueNode.defaultProps = {
-  valueGetter: value => value
+  return (
+    <li {...styling(['value', 'valueColor'], nodeType, keyPath)}>
+      <label
+        {...styling(
+          ['label', 'labelColor', 'valueLabel', 'valueLabelColor'],
+          nodeType,
+          keyPath
+        )}
+      >
+        {renderLabel(keyPath, nodeType, false, false)}
+      </label>
+      <span {...styling(['valueText', 'valueTextColor'], nodeType, keyPath)}>
+        {renderValue(renderedValue, value, ...keyPath)}
+      </span>
+    </li>
+  );
 };
 
 export default JSONValueNode;

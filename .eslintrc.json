@@ -8,7 +8,8 @@
     "plugin:flowtype/recommended"
   ],
   "rules": {
-    "no-console": ["warn", { "allow": ["warn", "error"] }]
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "react/prop-types": "off"
   },
   "plugins": [
       "prettier",

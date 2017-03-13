@@ -1,40 +1,70 @@
-import React, { PropTypes } from 'react';
-import objType from './objType';
-import JSONObjectNode from './JSONObjectNode';
-import JSONArrayNode from './JSONArrayNode';
-import JSONIterableNode from './JSONIterableNode';
+// @flow
+import React from 'react';
+import objType from './utils/objType';
 import JSONValueNode from './JSONValueNode';
+import JSONNestedNode from './JSONNestedNode';
+
+import {
+  RenderItemPreview,
+  KeyPath,
+  RenderLabel,
+  RenderValue,
+  IsCustomNode,
+  ShouldExpandNode,
+  Sorter
+} from './types';
+import { StylingFunction } from 'react-base16-styling';
+
+type Props = {
+  renderItemPreview: RenderItemPreview,
+  keyPath: KeyPath,
+  renderLabel: RenderLabel,
+  styling: StylingFunction,
+  value: any,
+  renderValue: RenderValue,
+  isCustomNode: IsCustomNode,
+  hideRoot: boolean,
+  isCircular?: boolean,
+  shouldExpandNode: ShouldExpandNode,
+  sortObjectKeys: boolean | Sorter
+};
 
 const JSONNode = (
   {
-    getItemString,
+    renderItemPreview,
     keyPath,
-    labelRenderer,
+    renderLabel,
     styling,
     value,
-    valueRenderer,
+    renderValue,
     isCustomNode,
-    ...rest
-  }
+    hideRoot,
+    isCircular,
+    shouldExpandNode,
+    sortObjectKeys
+  }: Props
 ) => {
   const nodeType = isCustomNode(value) ? 'Custom' : objType(value);
 
-  const simpleNodeProps = {
-    getItemString,
+  const valueNodeProps = {
+    renderItemPreview,
     key: keyPath[0],
     keyPath,
-    labelRenderer,
+    renderLabel,
     nodeType,
     styling,
     value,
-    valueRenderer
+    renderValue
   };
 
   const nestedNodeProps = {
-    ...rest,
-    ...simpleNodeProps,
+    ...valueNodeProps,
     data: value,
-    isCustomNode
+    isCustomNode,
+    hideRoot,
+    isCircular,
+    shouldExpandNode,
+    sortObjectKeys
   };
 
   switch (nodeType) {
@@ -42,64 +72,14 @@ const JSONNode = (
     case 'Error':
     case 'WeakMap':
     case 'WeakSet':
-      return <JSONObjectNode {...nestedNodeProps} />;
     case 'Array':
-      return <JSONArrayNode {...nestedNodeProps} />;
     case 'Iterable':
     case 'Map':
     case 'Set':
-      return <JSONIterableNode {...nestedNodeProps} />;
-    case 'String':
-      return (
-        <JSONValueNode {...simpleNodeProps} valueGetter={raw => `"${raw}"`} />
-      );
-    case 'Number':
-      return <JSONValueNode {...simpleNodeProps} />;
-    case 'Boolean':
-      return (
-        <JSONValueNode
-          {...simpleNodeProps}
-          valueGetter={raw => raw ? 'true' : 'false'}
-        />
-      );
-    case 'Date':
-      return (
-        <JSONValueNode
-          {...simpleNodeProps}
-          valueGetter={raw => raw.toISOString()}
-        />
-      );
-    case 'Null':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={() => 'null'} />;
-    case 'Undefined':
-      return (
-        <JSONValueNode {...simpleNodeProps} valueGetter={() => 'undefined'} />
-      );
-    case 'Function':
-    case 'Symbol':
-      return (
-        <JSONValueNode
-          {...simpleNodeProps}
-          valueGetter={raw => raw.toString()}
-        />
-      );
-    case 'Custom':
-      return <JSONValueNode {...simpleNodeProps} />;
+      return <JSONNestedNode {...nestedNodeProps} />;
     default:
-      return null;
+      return <JSONValueNode {...valueNodeProps} />;
   }
-};
-
-JSONNode.propTypes = {
-  getItemString: PropTypes.func.isRequired,
-  keyPath: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  ).isRequired,
-  labelRenderer: PropTypes.func.isRequired,
-  styling: PropTypes.func.isRequired,
-  value: PropTypes.any,
-  valueRenderer: PropTypes.func.isRequired,
-  isCustomNode: PropTypes.func.isRequired
 };
 
 export default JSONNode;
