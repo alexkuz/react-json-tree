@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import JSONArrow from './JSONArrow';
 
-export default class ItemRange extends React.PureComponent {
+export default class ItemRange extends React.Component {
   static propTypes = {
     styling: PropTypes.func.isRequired,
     from: PropTypes.number.isRequired,

@@ -40,11 +40,11 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loaders: [!isProduction && 'react-hot-loader', 'babel-loader'].filter(Boolean),
+      loaders: ['babel-loader'].filter(Boolean),
       include: path.join(__dirname, 'src')
     }, {
       test: /\.js$/,
-      loaders: [!isProduction && 'react-hot-loader', 'babel-loader'].filter(Boolean),
+      loaders: ['babel-loader'].filter(Boolean),
       include: path.join(__dirname, '..', 'src')
     }]
   }
