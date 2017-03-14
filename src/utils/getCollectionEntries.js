@@ -46,7 +46,7 @@ function getEntries(type, collection, sortObjectKeys, from = 0, to = Infinity) {
       hasMore: false,
       entries: collection
         .slice(from, to + 1)
-        .map((val, idx) => ({ key: idx + from, value: val }))
+        .map((val, idx) => ({ isRange: false, key: idx + from, value: val }))
     };
   } else {
     let idx = 0;

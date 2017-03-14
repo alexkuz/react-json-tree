@@ -3,6 +3,13 @@ import test from 'ava';
 
 import objType from '../../src/utils/objType';
 
+var iterable = {
+  [Symbol.iterator]: function*() {
+    for (;;)
+      yield 0;
+  }
+};
+
 test('should determine the correct type', t => {
   t.is(objType({}), 'Object');
   t.is(objType([]), 'Array');
@@ -19,4 +26,5 @@ test('should determine the correct type', t => {
   t.is(objType(undefined), 'Undefined');
   t.is(objType(10), 'Number');
   t.is(objType(Symbol.iterator), 'Symbol');
+  t.is(objType(iterable), 'Iterable');
 });

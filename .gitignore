@@ -2,5 +2,5 @@ node_modules
 *.log
 .DS_Store
 lib
-coverage
+coverage*
 .nyc_output
