@@ -1,8 +1,7 @@
-# react-json-tree
+# react-json-tree [![Latest Stable Version](https://img.shields.io/npm/v/react-json-tree.svg)](https://www.npmjs.com/package/alexkuz/react-json-tree) [![Build Status](https://img.shields.io/travis/alexkuz/react-json-tree/next.svg)](https://travis-ci.org/alexkuz/react-json-tree) [![Test Coverage](https://img.shields.io/codecov/c/github/alexkuz/react-json-tree/next.svg)](https://codecov.io/github/alexkuz/react-json-tree?branch=next)
+
 
 React JSON Viewer Component, Extracted from [redux-devtools](https://github.com/gaearon/redux-devtools). Supports [iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable) objects, such as [Immutable.js](https://facebook.github.io/immutable-js/).
-
-![](https://img.shields.io/npm/v/react-json-tree.svg)
 
 ### Usage
 
