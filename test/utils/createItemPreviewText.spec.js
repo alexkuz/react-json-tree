@@ -5,8 +5,9 @@ import createItemPreviewText from '../../src/utils/createItemPreviewText';
 
 var iterable = {
   [Symbol.iterator]: function*() {
-    for (;;)
+    for (;;) {
       yield 0;
+    }
   }
 };
 

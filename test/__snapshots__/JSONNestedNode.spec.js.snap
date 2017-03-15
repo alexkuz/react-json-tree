@@ -1,0 +1,1 @@
+exports[`should render JSONNestedNode 1`] = `"{\"__ava_react_jsx\":{\"type\":\"li\",\"props\":{\"style\":{\"padding\":0,\"margin\":0}},\"children\":[{\"type\":\"ul\",\"props\":{\"style\":{\"padding\":0,\"margin\":0,\"listStyle\":\"none\"}},\"children\":null}]}}"`;

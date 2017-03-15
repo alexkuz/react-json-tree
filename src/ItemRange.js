@@ -25,7 +25,7 @@ export default class ItemRange extends React.PureComponent<void, Props, State> {
 
     return this.state.expanded
       ? <div {...styling(['itemRange', 'itemRangeColor'], this.state.expanded)}>
-          {renderChildNodes(this.props, from, to)}
+          {renderChildNodes(from, to)}
         </div>
       : <div
           {...styling(['itemRange', 'itemRangeColor'], this.state.expanded)}

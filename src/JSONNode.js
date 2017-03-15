@@ -11,7 +11,8 @@ import type {
   RenderValue,
   IsCustomNode,
   ShouldExpandNode,
-  Sorter
+  Sorter,
+  PostprocessValue
 } from './types';
 import type { StylingFunction } from 'react-base16-styling';
 
@@ -26,7 +27,8 @@ type Props = {
   hideRoot: boolean,
   isCircular?: boolean,
   shouldExpandNode: ShouldExpandNode,
-  sortObjectKeys: boolean | Sorter
+  sortObjectKeys: boolean | Sorter,
+  postprocessValue: PostprocessValue
 };
 
 const JSONNode = (
@@ -41,7 +43,8 @@ const JSONNode = (
     hideRoot,
     isCircular,
     shouldExpandNode,
-    sortObjectKeys
+    sortObjectKeys,
+    postprocessValue
   }: Props
 ) => {
   const nodeType = isCustomNode(value) ? 'Custom' : objType(value);
@@ -59,12 +62,13 @@ const JSONNode = (
 
   const nestedNodeProps = {
     ...valueNodeProps,
-    data: value,
+    value,
     isCustomNode,
     hideRoot,
     isCircular,
     shouldExpandNode,
-    sortObjectKeys
+    sortObjectKeys,
+    postprocessValue
   };
 
   switch (nodeType) {

@@ -20,18 +20,19 @@ import type {
   KeyPath,
   ShouldExpandNode,
   IsCustomNode,
-  RenderValue
+  RenderValue,
+  PostprocessValue
 } from './types';
 import type { StylingFunction } from 'react-base16-styling';
 
 type DefaultProps = {
-  data: any,
   circularCache: mixed[],
   level: number,
   collectionLimit: number
 };
 
 type Props = DefaultProps & {
+  value: any,
   renderItemPreview: RenderItemPreview,
   nodeType: NestedType,
   hideRoot: boolean,
@@ -45,7 +46,7 @@ type Props = DefaultProps & {
   isCustomNode: IsCustomNode,
   renderValue: RenderValue,
   shouldExpandNode: ShouldExpandNode,
-  sortObjectKeys: Sorter | boolean
+  postprocessValue: PostprocessValue
 };
 
 type State = {
@@ -55,7 +56,7 @@ type State = {
 function renderChildNodes(props, from, to) {
   const {
     nodeType,
-    data,
+    value,
     collectionLimit,
     circularCache,
     keyPath,
@@ -72,7 +73,7 @@ function renderChildNodes(props, from, to) {
 
   const collectionEntries = getCollectionEntries(
     nodeType,
-    data,
+    value,
     sortObjectKeys,
     collectionLimit,
     from,
@@ -88,7 +89,7 @@ function renderChildNodes(props, from, to) {
           key={`ItemRange--${entry.from}-${entry.to}`}
           from={entry.from}
           to={entry.to}
-          renderChildNodes={renderChildNodes}
+          renderChildNodes={(from, to) => renderChildNodes(props, from, to)}
         />
       );
     } else {
@@ -129,7 +130,7 @@ function renderChildNodes(props, from, to) {
 function getStateFromProps(props) {
   // calculate individual node expansion if necessary
   const expanded = props.shouldExpandNode && !props.isCircular
-    ? props.shouldExpandNode(props.keyPath, props.data, props.level)
+    ? props.shouldExpandNode(props.keyPath, props.value, props.level)
     : false;
   return {
     expanded
@@ -141,7 +142,6 @@ export default class JSONNestedNode
   state: State;
 
   static defaultProps = {
-    data: [],
     circularCache: [],
     level: 0,
     collectionLimit: 0
@@ -173,7 +173,7 @@ export default class JSONNestedNode
     const {
       renderItemPreview,
       nodeType,
-      data,
+      value,
       hideRoot,
       styling,
       collectionLimit,
@@ -189,16 +189,16 @@ export default class JSONNestedNode
     const itemTypeText = createItemTypeText(nodeType);
     const itemPreviewText = createItemPreviewText(
       nodeType,
-      data,
+      value,
       collectionLimit
     );
     const renderedItemPreview = renderItemPreview(
       nodeType,
-      data,
+      value,
       itemTypeText,
       itemPreviewText
     );
-    const expandable = isExpandable(nodeType, data);
+    const expandable = isExpandable(nodeType, value);
     const stylingArgs = [keyPath, nodeType, expanded, expandable];
 
     return hideRoot

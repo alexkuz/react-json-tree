@@ -1,4 +1,4 @@
-export default {
+const solarized = {
   scheme: 'solarized:inverted',
   author: 'ethan schoonover (http://ethanschoonover.com/solarized)',
   base00: '#ffffff',
@@ -18,3 +18,5 @@ export default {
   base0E: '#6065b7',
   base0F: '#dd408c'
 };
+
+export default solarized;

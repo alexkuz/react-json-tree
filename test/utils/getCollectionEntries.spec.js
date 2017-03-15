@@ -63,8 +63,9 @@ test('should get array entries', t => {
 
 var iterable = {
   [Symbol.iterator]: function*() {
-    for (let i = 0; i < Infinity; i++)
+    for (let i = 0; i < Infinity; i++) {
       yield i;
+    }
   }
 };
 
@@ -73,4 +74,22 @@ test('should get iterable entries', t => {
     ...[0, 1, 2, 3, 4].map(i => ({ isRange: false, key: i, value: i })),
     { isRange: true, from: 5, to: 9 }
   ]);
+
+  t.deepEqual(
+    getCollectionEntries(
+      'Map',
+      new Map([[1, 'a'], [2, 'b'], [{}, 'c']]),
+      undefined,
+      100
+    ),
+    [
+      { isRange: false, key: 1, value: 'a' },
+      { isRange: false, key: 2, value: 'b' },
+      {
+        isRange: false,
+        key: '[entry 2]',
+        value: { '[key]': {}, '[value]': 'c' }
+      }
+    ]
+  );
 });

@@ -5,8 +5,9 @@ import objType from '../../src/utils/objType';
 
 var iterable = {
   [Symbol.iterator]: function*() {
-    for (;;)
+    for (;;) {
       yield 0;
+    }
   }
 };
 

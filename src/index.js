@@ -38,8 +38,6 @@ type DefaultProps = {
 type Props = DefaultProps & {
   data: Object | Array<any>,
   theme?: Theme,
-  keyPath?: KeyPath,
-  postprocessValue?: PostprocessValue,
   sortObjectKeys?: Sorter | boolean
 };
 
