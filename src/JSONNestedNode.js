@@ -110,7 +110,7 @@ export default class JSONNestedNode extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return !!Object.keys(nextProps).find(key =>
+    return !!Array.find(Object.keys(nextProps), key =>
       key !== 'circularCache' &&
       (key === 'keyPath' ?
         nextProps[key].join('/') !== this.props[key].join('/') :
