@@ -28,7 +28,9 @@ type Props = {
   isCircular?: boolean,
   shouldExpandNode: ShouldExpandNode,
   sortObjectKeys: boolean | Sorter,
-  postprocessValue: PostprocessValue
+  postprocessValue: PostprocessValue,
+  level: number,
+  collectionLimit: number
 };
 
 const JSONNode = (
@@ -44,7 +46,9 @@ const JSONNode = (
     isCircular,
     shouldExpandNode,
     sortObjectKeys,
-    postprocessValue
+    postprocessValue,
+    level,
+    collectionLimit
   }: Props
 ) => {
   const nodeType = isCustomNode(value) ? 'Custom' : objType(value);
@@ -68,7 +72,9 @@ const JSONNode = (
     isCircular,
     shouldExpandNode,
     sortObjectKeys,
-    postprocessValue
+    postprocessValue,
+    level,
+    collectionLimit
   };
 
   switch (nodeType) {

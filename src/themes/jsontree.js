@@ -1,6 +1,5 @@
-const solarized = {
-  scheme: 'solarized:inverted',
-  author: 'ethan schoonover (http://ethanschoonover.com/solarized)',
+const jsontree = {
+  scheme: 'jsontree',
   base00: '#ffffff',
   base01: '#ddffff',
   base02: '#6d838a',
@@ -19,4 +18,4 @@ const solarized = {
   base0F: '#dd408c'
 };
 
-export default solarized;
+export default jsontree;

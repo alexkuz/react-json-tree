@@ -5,8 +5,9 @@ import renderer from 'react-test-renderer';
 
 import JSONTree from '../src/index';
 
-const BASIC_DATA = { a: 1, b: 'c' };
-
 test('should render basic tree', t => {
-  t.snapshot(renderer.create(<JSONTree data={BASIC_DATA} />).toJSON());
+  const tree = renderer.create(<JSONTree data={{ a: 1, b: 'c' }} />);
+  t.snapshot(tree.toJSON());
+  tree.update(<JSONTree data={[1, 2, 'a', 'b']} theme="monokai" />);
+  t.snapshot(tree.toJSON());
 });

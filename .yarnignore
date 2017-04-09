@@ -4,5 +4,6 @@ src
 test
 coverage*
 packages
+node_modules
 
 examples

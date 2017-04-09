@@ -1,0 +1,53 @@
+.cm-s-cayman {
+  font-size: 1em;
+  line-height: 1.5em;
+  font-family: inconsolata, monospace;
+  letter-spacing: 0.3px;
+  word-spacing: 1px;
+  background: #f3f6fa;
+  color: #567482;
+}
+.cm-s-cayman .CodeMirror-gutters {
+  box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.5);
+  background-color: #FFFFFF;
+  padding-right: 10px;
+  z-index: 3;
+  border: none;
+}
+.cm-s-cayman div.CodeMirror-cursor {
+  border-left: 1px solid #567482;
+}
+.cm-s-cayman .CodeMirror-activeline-background {
+  background: #FFFFFF0D;
+}
+.cm-s-cayman .CodeMirror-selected {
+  background: #E0E0ED;
+}
+.cm-s-cayman .cm-comment {
+  color: #898989;
+}
+.cm-s-cayman .cm-keyword {
+  color: #016692;
+}
+.cm-s-cayman .cm-string {
+  color: #159957;
+}
+.cm-s-cayman .cm-number {
+  color: #7A7025;
+}
+.cm-s-cayman .cm-property {
+  color: #7A7025;
+}
+.cm-s-cayman .cm-atom {
+  color: #7A7025;
+}
+.cm-s-cayman .cm-operator {
+  color: #016692;
+}
+.cm-s-cayman .CodeMirror-linenumber {
+  color: #898989;
+}
+.cm-s-cayman .cm-tag {
+  color: #b93b16;
+}

@@ -102,7 +102,8 @@ export default class JSONTree
       children,
       isCustomNode,
       shouldExpandNode,
-      sortObjectKeys
+      sortObjectKeys,
+      collectionLimit
     } = this.props;
 
     const { styling } = this.state;
@@ -116,8 +117,10 @@ export default class JSONTree
             styling,
             isCustomNode,
             shouldExpandNode,
-            sortObjectKeys
+            sortObjectKeys,
+            collectionLimit
           }}
+          level={0}
           renderItemPreview={
             children.renderItemPreview || defaultRenderItemPreview
           }

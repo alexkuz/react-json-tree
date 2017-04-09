@@ -26,9 +26,7 @@ import type {
 import type { StylingFunction } from 'react-base16-styling';
 
 type DefaultProps = {
-  circularCache: mixed[],
-  level: number,
-  collectionLimit: number
+  circularCache: mixed[]
 };
 
 type Props = DefaultProps & {
@@ -40,13 +38,13 @@ type Props = DefaultProps & {
   collectionLimit: number,
   keyPath: KeyPath,
   renderLabel: RenderLabel,
-  shouldExpandNode: ?ShouldExpandNode,
   sortObjectKeys: Sorter<string> | boolean,
   isCircular?: boolean,
   isCustomNode: IsCustomNode,
   renderValue: RenderValue,
   shouldExpandNode: ShouldExpandNode,
-  postprocessValue: PostprocessValue
+  postprocessValue: PostprocessValue,
+  level: number
 };
 
 type State = {
@@ -67,7 +65,8 @@ function renderChildNodes(props, from, to) {
     renderItemPreview,
     renderLabel,
     renderValue,
-    shouldExpandNode
+    shouldExpandNode,
+    level
   } = props;
   const childNodes = [];
 
@@ -84,8 +83,10 @@ function renderChildNodes(props, from, to) {
     if (entry.isRange) {
       childNodes.push(
         <ItemRange
-          styling={styling}
-          nodeType={nodeType}
+          {...{
+            styling,
+            nodeType
+          }}
           key={`ItemRange--${entry.from}-${entry.to}`}
           from={entry.from}
           to={entry.to}
@@ -98,8 +99,8 @@ function renderChildNodes(props, from, to) {
 
       const node = (
         <JSONNode
-          styling={styling}
           {...{
+            styling,
             postprocessValue,
             collectionLimit,
             isCustomNode,
@@ -108,7 +109,8 @@ function renderChildNodes(props, from, to) {
             isCircular,
             renderValue,
             shouldExpandNode,
-            sortObjectKeys
+            sortObjectKeys,
+            level
           }}
           key={`Node--${key}`}
           keyPath={[key, ...keyPath]}
@@ -142,9 +144,7 @@ export default class JSONNestedNode
   state: State;
 
   static defaultProps = {
-    circularCache: [],
-    level: 0,
-    collectionLimit: 0
+    circularCache: []
   };
 
   constructor(props: Props) {

@@ -10,17 +10,14 @@ import createStylingFromTheme from '../src/utils/createStylingFromTheme';
 const styling = createStylingFromTheme(undefined);
 
 test('should render ItemRange', t => {
-  t.snapshot(
-    renderer
-      .create(
-        <ItemRange
-          styling={styling}
-          from={0}
-          to={10}
-          renderChildNodes={(from, to) => null}
-          nodeType="Array"
-        />
-      )
-      .toJSON()
+  const tree = renderer.create(
+    <ItemRange
+      styling={styling}
+      from={0}
+      to={10}
+      renderChildNodes={(from, to) => null}
+      nodeType="Array"
+    />
   );
+  t.snapshot(tree.toJSON());
 });

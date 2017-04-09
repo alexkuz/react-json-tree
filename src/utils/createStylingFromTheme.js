@@ -1,6 +1,6 @@
 // @flow
 import { createStyling } from 'react-base16-styling';
-import solarized from '../themes/solarized';
+import jsontree from '../themes/jsontree';
 
 const colorMap = theme => ({
   BACKGROUND_COLOR: theme.base00,
@@ -37,13 +37,11 @@ const getDefaultThemeStyling = theme => {
     tree: {
       border: 0,
       padding: 0,
-      marginTop: '0.5em',
-      marginBottom: '0.5em',
-      marginLeft: '0.125em',
-      marginRight: 0,
+      margin: 0,
       listStyle: 'none',
       MozUserSelect: 'none',
-      WebkitUserSelect: 'none'
+      WebkitUserSelect: 'none',
+      fontFamily: 'inconsolata, monospace'
     },
 
     treeColor: {
@@ -54,12 +52,12 @@ const getDefaultThemeStyling = theme => {
       style: {
         ...style,
         paddingTop: '0.25em',
+        paddingLeft: keyPath.length > 1 ? '2.125em' : '1.25em',
         paddingRight: 0,
         marginLeft: '0.875em',
         WebkitUserSelect: 'text',
         MozUserSelect: 'text',
         wordWrap: 'break-word',
-        paddingLeft: keyPath.length > 1 ? '2.125em' : '1.25em',
         textIndent: '-0.5em',
         wordBreak: 'break-all',
         whiteSpace: 'pre-wrap'
@@ -140,7 +138,7 @@ const getDefaultThemeStyling = theme => {
       style: {
         ...style,
         position: 'relative',
-        paddingTop: '0.25em',
+        paddingTop: keyPath.length > 1 ? '0.25em' : 0,
         marginLeft: keyPath.length > 1 ? '0.875em' : 0,
         paddingLeft: !expandable ? '1.125em' : 0
       }
@@ -195,5 +193,6 @@ const getDefaultThemeStyling = theme => {
 };
 
 export default createStyling(getDefaultThemeStyling, {
-  defaultBase16: solarized
+  defaultBase16: jsontree,
+  base16Themes: { jsontree }
 });
