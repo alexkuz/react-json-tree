@@ -3,7 +3,8 @@
 // Dave Vedder <veddermatic@gmail.com> http://www.eskimospy.com/
 // port by Daniele Zannotti http://www.github.com/dzannotti <dzannotti@me.com>
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import JSONNode from './JSONNode';
 import createStylingFromTheme from './createStylingFromTheme';
 import { invertTheme } from 'react-base16-styling';
