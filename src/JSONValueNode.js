@@ -15,6 +15,11 @@ const transformString = value => {
   return !isNaN(parseFloat(replaced)) && isFinite(replaced) ? Number(replaced) : replaced;
 };
 
+const getString = ({ value, nodeType, valueGetter }) => {
+  if (nodeType === 'String') { return value; }
+  return valueGetter(value);
+};
+
 export default class JSONValueNode extends React.Component {
 
   static propTypes = {
@@ -37,22 +42,23 @@ export default class JSONValueNode extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.valueGetter(props.value),
+      value: getString(props),
       editing: false,
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.state.value) {
-      this.setState({ value: nextProps.valueGetter(nextProps.value) });
+      this.setState({
+        value: getString(nextProps),
+      });
     }
   }
 
   keydown = e => {
     // Echap, remove edit mode and reset value
     if (e.keyCode === 27) {
-      const { valueGetter, value } = this.props;
-      this.setState({ editing: false, value: valueGetter(value) });
+      this.setState({ editing: false, value: getString(this.props) });
     }
 
     // If it's not enter, do nothing
@@ -62,7 +68,9 @@ export default class JSONValueNode extends React.Component {
     const { value } = this.state;
 
     onChange({ keyPath, value: transformString(value) });
+    this.setState({ editing: false });
   }
+
   updateValue = e => this.setState({ value: e.target.value })
   toggleEdit = () => this.setState({ editing: !this.state.editing })
 
@@ -100,7 +108,7 @@ export default class JSONValueNode extends React.Component {
             onClick={isEditable && this.toggleEdit}
             {...styling('valueText', nodeType, keyPath)}
           >
-            {valueRenderer(valueGetter(value), value, ...keyPath)}
+            {valueRenderer(valueGetter(this.props.value), value, ...keyPath)}
           </span>
         )}
       </li>
