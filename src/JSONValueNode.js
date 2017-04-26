@@ -8,6 +8,7 @@ const replaces = {
   null: null,
   true: true,
   false: false,
+  undefined,
 };
 
 const transformString = value => {
