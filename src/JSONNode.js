@@ -6,6 +6,13 @@ import JSONArrayNode from './JSONArrayNode';
 import JSONIterableNode from './JSONIterableNode';
 import JSONValueNode from './JSONValueNode';
 
+function convertCustomType(value, type) {
+  if (type === 'Custom' && value.constructor !== Object && value instanceof Object) {
+    return 'Object';
+  }
+  return type;
+}
+
 const JSONNode = ({
   getItemString,
   keyPath,
@@ -16,7 +23,7 @@ const JSONNode = ({
   isCustomNode,
   ...rest
 }) => {
-  const nodeType = isCustomNode(value) ? 'Custom' : objType(value);
+  const nodeType = isCustomNode(value) ? 'Custom' : convertCustomType(value, objType(value));
 
   const simpleNodeProps = {
     getItemString,
@@ -81,4 +88,3 @@ JSONNode.propTypes = {
 };
 
 export default JSONNode;
-

@@ -30,7 +30,14 @@ const getValueLabelStyle = ({ style }, nodeType, keyPath) => ({
 // eslint-disable-next-line max-len
 const longString = 'Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.';
 
+var Custom = function(value) { this.value = value; };
+Custom.prototype[Symbol.toStringTag] = 'Custom';
+
 const data = {
+  profile: {
+    avatar: new Custom('placehold.it/50x50'),
+    name: new Custom('Name'),
+  },
   array: [1, 2, 3],
   emptyArray: [],
   bool: true,
@@ -180,4 +187,3 @@ const App = () => (
 );
 
 export default App;
-
