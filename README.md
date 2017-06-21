@@ -147,6 +147,7 @@ For `labelRenderer`, you can provide a full path - [see this PR](https://github.
 - [react-treeview](https://github.com/chenglou/react-treeview)
 - [react-json-inspector](https://github.com/Lapple/react-json-inspector)
 - [react-object-inspector](https://github.com/xyc/react-object-inspector)
+- [react-json-view](https://github.com/mac-s-g/react-json-view)
 
 ### License
 
