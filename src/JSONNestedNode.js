@@ -168,13 +168,13 @@ export default class JSONNestedNode extends React.Component {
         }
         <label
           {...styling(['label', 'nestedNodeLabel'], ...stylingArgs)}
-          onClick={expandable && this.handleClick}
+          onClick={expandable ? this.handleClick : undefined}
         >
           {labelRenderer(...stylingArgs)}
         </label>
         <span
           {...styling('nestedNodeItemString', ...stylingArgs)}
-          onClick={expandable && this.handleClick}
+          onClick={expandable ? this.handleClick : undefined}
         >
           {renderedItemString}
         </span>
