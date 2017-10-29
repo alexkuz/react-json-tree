@@ -12,7 +12,7 @@ function isIterableMap(collection) {
   return typeof collection.set === 'function';
 }
 
-function getEntries(type, collection, sortObjectKeys, from=0, to=Infinity) {
+function getEntries(type, collection, sortObjectKeys, from = 0, to = Infinity) {
   let res;
 
   if (type === 'Object') {
@@ -29,7 +29,9 @@ function getEntries(type, collection, sortObjectKeys, from=0, to=Infinity) {
     };
   } else if (type === 'Array') {
     res = {
-      entries: collection.slice(from, to + 1).map((val, idx) => ({ key: idx + from, value: val }))
+      entries: collection
+        .slice(from, to + 1)
+        .map((val, idx) => ({ key: idx + from, value: val }))
     };
   } else {
     let idx = 0;
@@ -42,15 +44,19 @@ function getEntries(type, collection, sortObjectKeys, from=0, to=Infinity) {
       if (idx > to) {
         done = false;
         break;
-      } if (from <= idx) {
+      }
+      if (from <= idx) {
         if (isMap && Array.isArray(item)) {
           if (typeof item[0] === 'string' || typeof item[0] === 'number') {
             entries.push({ key: item[0], value: item[1] });
           } else {
-            entries.push({ key: `[entry ${idx}]`, value: {
-              '[key]': item[0],
-              '[value]': item[1]
-            } });
+            entries.push({
+              key: `[entry ${idx}]`,
+              value: {
+                '[key]': item[0],
+                '[value]': item[1]
+              }
+            });
           }
         } else {
           entries.push({ key: idx, value: item });
@@ -81,9 +87,19 @@ function getRanges(from, to, limit) {
 }
 
 export default function getCollectionEntries(
-  type, collection, sortObjectKeys, limit, from=0, to=Infinity
+  type,
+  collection,
+  sortObjectKeys,
+  limit,
+  from = 0,
+  to = Infinity
 ) {
-  const getEntriesBound = getEntries.bind(null, type, collection, sortObjectKeys);
+  const getEntriesBound = getEntries.bind(
+    null,
+    type,
+    collection,
+    sortObjectKeys
+  );
 
   if (!limit) {
     return getEntriesBound().entries;
@@ -106,18 +122,17 @@ export default function getCollectionEntries(
   if (type === 'Iterable') {
     const { hasMore, entries } = getEntriesBound(from, from + limit - 1);
 
-    limitedEntries = hasMore ? [
-      ...entries,
-      ...getRanges(from + limit, from + 2 * limit - 1, limit)
-    ] : entries;
+    limitedEntries = hasMore
+      ? [...entries, ...getRanges(from + limit, from + 2 * limit - 1, limit)]
+      : entries;
   } else {
-    limitedEntries = isSubset ?
-      getRanges(from, to, limit) :
-      [
-        ...getEntriesBound(0, limit - 5).entries,
-        ...getRanges(limit - 4, length - 5, limit),
-        ...getEntriesBound(length - 4, length - 1).entries
-      ];
+    limitedEntries = isSubset
+      ? getRanges(from, to, limit)
+      : [
+          ...getEntriesBound(0, limit - 5).entries,
+          ...getRanges(limit - 4, length - 5, limit),
+          ...getEntriesBound(length - 4, length - 1).entries
+        ];
   }
 
   return limitedEntries;

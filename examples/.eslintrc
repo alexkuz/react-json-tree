@@ -1,8 +1,10 @@
 {
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
-  },
+  "extends": [
+    "eslint:recommended",
+    "standard",
+    "plugin:react/recommended",
+    "prettier"
+  ],
   "env": {
     "browser": true,
     "node": true
@@ -16,6 +18,8 @@
     "react/react-in-jsx-scope": 2
   },
   "plugins": [
+    "prettier",
+    "standard",
     "react"
   ]
 }

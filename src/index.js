@@ -11,8 +11,11 @@ import { invertTheme } from 'react-base16-styling';
 
 const identity = value => value;
 const expandRootNode = (keyName, data, level) => level === 0;
-const defaultItemString = (type, data, itemType, itemString) =>
-  <span>{itemType} {itemString}</span>;
+const defaultItemString = (type, data, itemType, itemString) => (
+  <span>
+    {itemType} {itemString}
+  </span>
+);
 const defaultLabelRenderer = ([label]) => <span>{label}:</span>;
 const noCustomNode = () => false;
 
@@ -25,8 +28,9 @@ function checkLegacyTheming(theme, props) {
     getValueStyle: 'valueText'
   };
 
-  const deprecatedStylingMethods = Object.keys(deprecatedStylingMethodsMap)
-    .filter(name => props[name]);
+  const deprecatedStylingMethods = Object.keys(
+    deprecatedStylingMethodsMap
+  ).filter(name => props[name]);
 
   if (deprecatedStylingMethods.length > 0) {
     if (typeof theme === 'string') {
@@ -38,7 +42,8 @@ function checkLegacyTheming(theme, props) {
     }
 
     deprecatedStylingMethods.forEach(name => {
-      console.error( // eslint-disable-line no-console
+      // eslint-disable-next-line no-console
+      console.error(
         `Styling method "${name}" is deprecated, use "theme" property instead`
       );
 
@@ -76,17 +81,13 @@ function getStateFromProps(props) {
 
 export default class JSONTree extends React.Component {
   static propTypes = {
-    data: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object
-    ]).isRequired,
+    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
     hideRoot: PropTypes.bool,
-    theme: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.string
-    ]),
+    theme: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     invertTheme: PropTypes.bool,
-    keyPath: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    keyPath: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    ),
     postprocessValue: PropTypes.func,
     sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool])
   };
@@ -116,11 +117,12 @@ export default class JSONTree extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return !!Object.keys(nextProps).find(k => (
-      k === 'keyPath' ?
-        nextProps[k].join('/') !== this.props[k].join('/') :
-        nextProps[k] !== this.props[k]
-    ));
+    return !!Object.keys(nextProps).find(
+      k =>
+        k === 'keyPath'
+          ? nextProps[k].join('/') !== this.props[k].join('/')
+          : nextProps[k] !== this.props[k]
+    );
   }
 
   render() {

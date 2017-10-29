@@ -21,7 +21,14 @@ function renderChildNodes(props, from, to) {
   } = props;
   const childNodes = [];
 
-  getCollectionEntries(nodeType, data, sortObjectKeys, collectionLimit, from, to).forEach(entry => {
+  getCollectionEntries(
+    nodeType,
+    data,
+    sortObjectKeys,
+    collectionLimit,
+    from,
+    to
+  ).forEach(entry => {
     if (entry.to) {
       childNodes.push(
         <ItemRange
@@ -60,9 +67,10 @@ function renderChildNodes(props, from, to) {
 
 function getStateFromProps(props) {
   // calculate individual node expansion if necessary
-  const expanded = props.shouldExpandNode && !props.isCircular ?
-    props.shouldExpandNode(props.keyPath, props.data, props.level) :
-    false;
+  const expanded =
+    props.shouldExpandNode && !props.isCircular
+      ? props.shouldExpandNode(props.keyPath, props.data, props.level)
+      : false;
   return {
     expanded
   };
@@ -103,20 +111,21 @@ export default class JSONNestedNode extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const nextState = getStateFromProps(nextProps);
-    if (
-      getStateFromProps(this.props).expanded !== nextState.expanded
-    ) {
+    if (getStateFromProps(this.props).expanded !== nextState.expanded) {
       this.setState(nextState);
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return !!Object.keys(nextProps).find(key =>
-      key !== 'circularCache' &&
-      (key === 'keyPath' ?
-        nextProps[key].join('/') !== this.props[key].join('/') :
-        nextProps[key] !== this.props[key])
-    ) || nextState.expanded !== this.state.expanded;
+    return (
+      !!Object.keys(nextProps).find(
+        key =>
+          key !== 'circularCache' &&
+          (key === 'keyPath'
+            ? nextProps[key].join('/') !== this.props[key].join('/')
+            : nextProps[key] !== this.props[key])
+      ) || nextState.expanded !== this.state.expanded
+    );
   }
 
   render() {
@@ -134,8 +143,10 @@ export default class JSONNestedNode extends React.Component {
       expandable
     } = this.props;
     const { expanded } = this.state;
-    const renderedChildren = expanded || (hideRoot && this.props.level === 0) ?
-      renderChildNodes({ ...this.props, level: this.props.level + 1 }) : null;
+    const renderedChildren =
+      expanded || (hideRoot && this.props.level === 0)
+        ? renderChildNodes({ ...this.props, level: this.props.level + 1 })
+        : null;
 
     const itemType = (
       <span {...styling('nestedNodeItemType', expanded)}>
@@ -158,14 +169,14 @@ export default class JSONNestedNode extends React.Component {
       </li>
     ) : (
       <li {...styling('nestedNode', ...stylingArgs)}>
-        {expandable &&
+        {expandable && (
           <JSONArrow
             styling={styling}
             nodeType={nodeType}
             expanded={expanded}
             onClick={this.handleClick}
           />
-        }
+        )}
         <label
           {...styling(['label', 'nestedNodeLabel'], ...stylingArgs)}
           onClick={this.handleClick}
@@ -189,5 +200,5 @@ export default class JSONNestedNode extends React.Component {
     if (this.props.expandable) {
       this.setState({ expanded: !this.state.expanded });
     }
-  }
+  };
 }

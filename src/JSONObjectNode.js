@@ -14,7 +14,7 @@ const JSONObjectNode = ({ data, ...props }) => (
   <JSONNestedNode
     {...props}
     data={data}
-    nodeType='Object'
+    nodeType="Object"
     nodeTypeIndicator={props.nodeType === 'Error' ? 'Error()' : '{}'}
     createItemString={createItemString}
     expandable={Object.getOwnPropertyNames(data).length > 0}

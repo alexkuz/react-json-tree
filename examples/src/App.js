@@ -1,6 +1,6 @@
 import React from 'react';
-import JSONTree from '../../src';
 import { Map } from 'immutable';
+import JSONTree from '../../src';
 
 const getLabelStyle = ({ style }, nodeType, expanded) => ({
   style: {
@@ -17,18 +17,26 @@ const getBoolStyle = ({ style }, nodeType) => ({
   }
 });
 
-const getItemString = (type) => (<span> // {type}</span>);
+const getItemString = type => (
+  <span>
+    {' // '}
+    {type}
+  </span>
+);
 
 const getValueLabelStyle = ({ style }, nodeType, keyPath) => ({
   style: {
     ...style,
-    color: !isNaN(keyPath[0]) && !(parseInt(keyPath, 10) % 2) ?
-      '#33F' : style.color
+    color:
+      !Number.isNaN(keyPath[0]) && !(parseInt(keyPath, 10) % 2)
+        ? '#33F'
+        : style.color
   }
 });
 
 // eslint-disable-next-line max-len
-const longString = 'Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.';
+const longString =
+  'Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.';
 
 const data = {
   array: [1, 2, 3],
@@ -57,7 +65,10 @@ const data = {
   emptyObject: {},
   symbol: Symbol('value'),
   // eslint-disable-next-line new-cap
-  immutable: Map([['key', 'value'], [{ objectKey: 'value' }, { objectKey: 'value' }]]),
+  immutable: Map([
+    ['key', 'value'],
+    [{ objectKey: 'value' }, { objectKey: 'value' }]
+  ]),
   map: new window.Map([
     ['key', 'value'],
     [0, 'value'],
@@ -98,44 +109,29 @@ const theme = {
 
 const App = () => (
   <div>
-    <JSONTree
-      data={data}
-      theme={theme}
-      invertTheme
-    />
+    <JSONTree data={data} theme={theme} invertTheme />
     <br />
     <h3>Dark Theme</h3>
-    <JSONTree
-      data={data}
-      theme={theme}
-      invertTheme={false}
-    />
+    <JSONTree data={data} theme={theme} invertTheme={false} />
     <br />
     <h3>Hidden Root</h3>
-    <JSONTree
-      data={data}
-      theme={theme}
-      hideRoot
-    />
+    <JSONTree data={data} theme={theme} hideRoot />
     <br />
     <h3>Base16 Greenscreen Theme</h3>
-    <JSONTree
-      data={data}
-      theme='greenscreen'
-      invertTheme={false}
-    />
+    <JSONTree data={data} theme="greenscreen" invertTheme={false} />
     <h4>Inverted Theme</h4>
-    <JSONTree
-      data={data}
-      theme='greenscreen'
-      invertTheme
-    />
+    <JSONTree data={data} theme="greenscreen" invertTheme />
     <br />
     <h3>Style Customization</h3>
     <ul>
-      <li>Label changes between uppercase/lowercase based on the expanded state.</li>
+      <li>
+        Label changes between uppercase/lowercase based on the expanded state.
+      </li>
       <li>Array keys are styled based on their parity.</li>
-      <li>The labels of objects, arrays, and iterables are customized as "// type".</li>
+      <li>
+        The labels of objects, arrays, and iterables are customized as &quot;//
+        type&quot;.
+      </li>
       <li>See code for details.</li>
     </ul>
     <div>
@@ -151,33 +147,38 @@ const App = () => (
       />
     </div>
     <h3>More Fine Grained Rendering</h3>
-    <p>Pass <code>labelRenderer</code> or <code>valueRenderer</code>.</p>
+    <p>
+      Pass <code>labelRenderer</code> or <code>valueRenderer</code>.
+    </p>
     <div>
       <JSONTree
         data={data}
         theme={theme}
         labelRenderer={([raw]) => <span>(({raw})):</span>}
-        valueRenderer={raw => <em>😐 {raw} 😐</em>}
+        valueRenderer={raw => (
+          <em>
+            <span role="img" aria-label="mellow">
+              😐
+            </span>{' '}
+            {raw}{' '}
+            <span role="img" aria-label="mellow">
+              😐
+            </span>
+          </em>
+        )}
       />
     </div>
-    <p>Sort object keys with <code>sortObjectKeys</code> prop.</p>
+    <p>
+      Sort object keys with <code>sortObjectKeys</code> prop.
+    </p>
     <div>
-      <JSONTree
-        data={data}
-        theme={theme}
-        sortObjectKeys
-      />
+      <JSONTree data={data} theme={theme} sortObjectKeys />
     </div>
     <p>Collapsed root node</p>
     <div>
-      <JSONTree
-        data={data}
-        theme={theme}
-        shouldExpandNode={() => false}
-      />
+      <JSONTree data={data} theme={theme} shouldExpandNode={() => false} />
     </div>
   </div>
 );
 
 export default App;
-

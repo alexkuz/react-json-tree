@@ -1,5 +1,5 @@
-import solarized from './themes/solarized';
 import { createStyling } from 'react-base16-styling';
+import solarized from './themes/solarized';
 
 const colorMap = theme => ({
   BACKGROUND_COLOR: theme.base00,
@@ -77,7 +77,7 @@ const getDefaultThemeStyling = theme => {
       }
     }),
 
-    itemRange: ({ style }, expanded) => ({
+    itemRange: (styling, expanded) => ({
       style: {
         paddingTop: expanded ? 0 : '0.25em',
         cursor: 'pointer',
@@ -155,7 +155,9 @@ const getDefaultThemeStyling = theme => {
         ...style,
         paddingLeft: '0.5em',
         cursor: 'default',
-        color: expanded ? colors.ITEM_STRING_EXPANDED_COLOR : colors.ITEM_STRING_COLOR
+        color: expanded
+          ? colors.ITEM_STRING_EXPANDED_COLOR
+          : colors.ITEM_STRING_COLOR
       }
     }),
 

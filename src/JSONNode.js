@@ -49,20 +49,39 @@ const JSONNode = ({
     case 'Set':
       return <JSONIterableNode {...nestedNodeProps} />;
     case 'String':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => `"${raw}"`} />;
+      return (
+        <JSONValueNode {...simpleNodeProps} valueGetter={raw => `"${raw}"`} />
+      );
     case 'Number':
       return <JSONValueNode {...simpleNodeProps} />;
     case 'Boolean':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => (raw ? 'true' : 'false')} />;
+      return (
+        <JSONValueNode
+          {...simpleNodeProps}
+          valueGetter={raw => (raw ? 'true' : 'false')}
+        />
+      );
     case 'Date':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw.toISOString()} />;
+      return (
+        <JSONValueNode
+          {...simpleNodeProps}
+          valueGetter={raw => raw.toISOString()}
+        />
+      );
     case 'Null':
       return <JSONValueNode {...simpleNodeProps} valueGetter={() => 'null'} />;
     case 'Undefined':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={() => 'undefined'} />;
+      return (
+        <JSONValueNode {...simpleNodeProps} valueGetter={() => 'undefined'} />
+      );
     case 'Function':
     case 'Symbol':
-      return <JSONValueNode {...simpleNodeProps} valueGetter={raw => raw.toString()} />;
+      return (
+        <JSONValueNode
+          {...simpleNodeProps}
+          valueGetter={raw => raw.toString()}
+        />
+      );
     case 'Custom':
       return <JSONValueNode {...simpleNodeProps} />;
     default:
@@ -72,7 +91,9 @@ const JSONNode = ({
 
 JSONNode.propTypes = {
   getItemString: PropTypes.func.isRequired,
-  keyPath: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+  keyPath: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  ).isRequired,
   labelRenderer: PropTypes.func.isRequired,
   styling: PropTypes.func.isRequired,
   value: PropTypes.any,
@@ -81,4 +102,3 @@ JSONNode.propTypes = {
 };
 
 export default JSONNode;
-
