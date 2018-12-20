@@ -85,7 +85,9 @@ const JSONNode = ({
     case 'Custom':
       return <JSONValueNode {...simpleNodeProps} />;
     default:
-      return null;
+      return (
+        <JSONValueNode {...simpleNodeProps} valueGetter={raw => `<${nodeType}>`} />
+      );
   }
 };
 
