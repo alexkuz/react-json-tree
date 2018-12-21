@@ -34,10 +34,6 @@ var Custom = function(value) { this.value = value; };
 Custom.prototype[Symbol.toStringTag] = 'Custom';
 
 const data = {
-  profile: {
-    avatar: new Custom('placehold.it/50x50'),
-    name: new Custom('Name'),
-  },
   array: [1, 2, 3],
   emptyArray: [],
   bool: true,
@@ -79,6 +75,10 @@ const data = {
     { objectKey: 'value2' }
   ]),
   hugeArray: Array.from({ length: 10000 }).map((_, i) => `item #${i}`),
+  customProfile: {
+    avatar: new Custom('placehold.it/50x50'),
+    name: new Custom('Name'),
+  },
   longString
 };
 
