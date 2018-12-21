@@ -18,15 +18,8 @@ function getEntries(type, collection, sortObjectKeys, from = 0, to = Infinity) {
   if (type === 'Object') {
     let keys = Object.getOwnPropertyNames(collection);
 
-    switch (typeof sortObjectKeys) {
-      case 'boolean':
-        keys.sort();
-        break;
-      case 'function':
-        keys.sort(sortObjectKeys);
-        break;
-      default:
-      // Do nothing
+    if (sortObjectKeys) {
+      keys.sort(sortObjectKeys === true ? undefined : sortObjectKeys);
     }
 
     keys = keys.slice(from, to + 1);
