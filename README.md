@@ -1,5 +1,7 @@
 # react-json-tree
 
+>This package was merged into [`redux-devtools` monorepo](https://github.com/reduxjs/redux-devtools). Please refer to that repository for the latest updates, issues and pull requests.
+
 React JSON Viewer Component, Extracted from [redux-devtools](https://github.com/gaearon/redux-devtools). Supports [iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable) objects, such as [Immutable.js](https://facebook.github.io/immutable-js/).
 
 ![](https://img.shields.io/npm/v/react-json-tree.svg)
