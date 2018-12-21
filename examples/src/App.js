@@ -38,6 +38,9 @@ const getValueLabelStyle = ({ style }, nodeType, keyPath) => ({
 const longString =
   'Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.Loremipsumdolorsitamet,consecteturadipiscingelit.Namtempusipsumutfelisdignissimauctor.Maecenasodiolectus,finibusegetultricesvel,aliquamutelit.';
 
+var Custom = function(value) { this.value = value; };
+Custom.prototype[Symbol.toStringTag] = 'Custom';
+
 const data = {
   array: [1, 2, 3],
   emptyArray: [],
@@ -83,6 +86,10 @@ const data = {
     { objectKey: 'value2' }
   ]),
   hugeArray: Array.from({ length: 10000 }).map((_, i) => `item #${i}`),
+  customProfile: {
+    avatar: new Custom('placehold.it/50x50'),
+    name: new Custom('Name'),
+  },
   longString
 };
 

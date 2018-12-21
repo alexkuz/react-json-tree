@@ -4,5 +4,10 @@ export default function objType(obj) {
     return 'Iterable';
   }
 
+  if (type === 'Custom' && obj.constructor !== Object && obj instanceof Object) {
+    // For projects implementing objects overriding `.prototype[Symbol.toStringTag]`
+    return 'Object';
+  }
+
   return type;
 }
